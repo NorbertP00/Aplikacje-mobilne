@@ -1,0 +1,1027 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>AndroLab Lekcja 1</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;900&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#F4F7F4; --surface:#FFFFFF; --surface2:#EAF0EA; --ink:#1B231E; --muted:#5C6B60;
+  --line:#D6DFD7; --accent:#0C8A4E; --accent-ink:#FFFFFF; --accent-soft:#DCF2E5;
+  --warn:#8A6D00; --warn-bg:#FFF3C4; --err:#B23A2A; --err-bg:#FDE3DE; --ok:#0C8A4E; --ok-bg:#DCF2E5;
+  --code-bg:#2B2B2B; --code-line:#3C3F41;
+  --shadow:0 1px 3px rgba(27,35,30,.10),0 4px 14px rgba(27,35,30,.06);
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101512; --surface:#1A211C; --surface2:#232B25; --ink:#E4EAE5; --muted:#97A69B;
+    --line:#2E3830; --accent:#3DDC84; --accent-ink:#06281A; --accent-soft:#1D3A2A;
+    --warn:#FFC94D; --warn-bg:#3A3212; --err:#FF8A73; --err-bg:#40201A; --ok:#4ADE94; --ok-bg:#173527;
+    --shadow:0 1px 3px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101512; --surface:#1A211C; --surface2:#232B25; --ink:#E4EAE5; --muted:#97A69B;
+  --line:#2E3830; --accent:#3DDC84; --accent-ink:#06281A; --accent-soft:#1D3A2A;
+  --warn:#FFC94D; --warn-bg:#3A3212; --err:#FF8A73; --err-bg:#40201A; --ok:#4ADE94; --ok-bg:#173527;
+  --shadow:0 1px 3px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:Roboto,system-ui,sans-serif;font-size:15px;line-height:1.55}
+h1,h2,h3{font-family:Archivo,Roboto,sans-serif;text-wrap:balance;margin:0}
+button{font-family:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px 60px}
+.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:22px}
+.logo{display:flex;align-items:center;gap:10px;font-family:Archivo;font-weight:900;font-size:22px;letter-spacing:-.02em}
+.logo small{font-family:Roboto;font-weight:400;font-size:12px;color:var(--muted);letter-spacing:.04em;display:block}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.tabs button{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 14px;border-radius:999px;font-size:14px;cursor:pointer}
+nav.tabs button:hover{border-color:var(--accent)}
+nav.tabs button[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:500}
+nav.tabs button:focus-visible,.btn:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:var(--shadow)}
+.btn{border:none;border-radius:8px;padding:9px 16px;font-size:14px;font-weight:500;cursor:pointer;background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:var(--surface);border:1px solid var(--line);color:var(--ink)}
+.btn.small{padding:5px 10px;font-size:13px}
+.btn:hover{filter:brightness(1.06)}
+.btn:disabled{opacity:.45;cursor:not-allowed;filter:none}
+.muted{color:var(--muted)}
+code{background:var(--surface2);padding:1px 5px;border-radius:4px;font-family:"JetBrains Mono",Consolas,monospace;font-size:.9em}
+pre{font-family:"JetBrains Mono",Consolas,monospace;background:var(--code-bg);color:#E8E8E8;padding:12px;border-radius:10px;overflow-x:auto;font-size:12.5px;line-height:1.55}
+.secHead{margin:26px 0 14px}
+.secHead h2{font-size:22px;font-weight:900}
+.secHead p{color:var(--muted);margin:4px 0 0;max-width:75ch}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:500}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}
+/* START */
+#tab-start h1{font-size:clamp(30px,4.5vw,44px);font-weight:900;letter-spacing:-.02em}
+#tab-start .lead{max-width:62ch;font-size:17px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:20px}
+.steps .card b{display:block;margin-bottom:4px}
+.steps .card span.n{font-family:"JetBrains Mono";font-size:12px;color:var(--accent);font-weight:600;display:block;margin-bottom:6px}
+.credit{margin-top:26px;font-size:13px;color:var(--muted);max-width:70ch}
+.defBox{border-left:4px solid var(--accent);background:var(--surface);border-radius:0 12px 12px 0;padding:16px 18px;margin:14px 0;max-width:75ch;box-shadow:var(--shadow)}
+.theoryHead{margin:32px 0 12px;font-size:19px;font-weight:900}
+.factGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;max-width:1000px}
+.factGrid .card p{margin:6px 0 0;font-size:14px}
+.factGrid .card b{font-size:15px}
+.theoryP{max-width:75ch;margin:10px 0}
+.challenge{background:var(--accent-soft);border:1px solid var(--accent);border-radius:12px;padding:18px;margin-top:30px;max-width:1000px}
+.challenge .chGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:6px}
+.challenge b{display:block;margin-bottom:4px}
+/* TIMELINE */
+.tl{position:relative;margin:10px 0 26px;padding-left:26px}
+.tl::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:3px;background:var(--line);border-radius:2px}
+.tlItem{position:relative;margin-bottom:10px}
+.tlItem::before{content:"";position:absolute;left:-24px;top:14px;width:13px;height:13px;border-radius:50%;background:var(--accent);border:3px solid var(--bg)}
+.tlItem summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:baseline;padding:10px 14px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.tlItem summary::-webkit-details-marker{display:none}
+.tlItem[open] summary{border-color:var(--accent);border-radius:10px 10px 0 0}
+.tlItem .yr{font-family:"JetBrains Mono";font-weight:600;color:var(--accent);flex:none;min-width:64px}
+.tlItem .tlBody{border:1px solid var(--accent);border-top:none;border-radius:0 0 10px 10px;padding:12px 16px;background:var(--surface);max-width:75ch}
+.tlItem .tlBody p{margin:0 0 8px}
+.chrono{margin-top:8px}
+.chips,.slots{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.chips button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 14px;font-size:14px;cursor:pointer}
+.chips button:hover{border-color:var(--accent)}
+.chips button.gone{visibility:hidden}
+.slots span{border:1px dashed var(--line);border-radius:999px;padding:8px 14px;font-size:14px;color:var(--muted);background:var(--surface2)}
+.slots span.filled{border-style:solid;border-color:var(--ok);color:var(--ink);background:var(--ok-bg)}
+.shake{animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+@media (prefers-reduced-motion: reduce){.shake{animation:none}}
+/* WIZARD (Android Studio look — deliberately fixed dark IDE) */
+.ide{background:#3C3F41;border:1px solid #2B2B2B;border-radius:10px;overflow:hidden;color:#BBBBBB;max-width:820px}
+.ide .titlebar{background:#2B2B2B;padding:8px 14px;font-size:13px;color:#BBB;display:flex;gap:8px;align-items:center}
+.ide .titlebar .wctrl{margin-left:auto;color:#9AA0A6;font-size:12px;letter-spacing:7px;font-family:"JetBrains Mono",monospace}
+.rdPanel{margin-top:12px;background:#2B2B2B;border:1px solid #5E6060;border-radius:8px;overflow:hidden;max-width:320px;font-size:13px}
+.rdHead{display:flex;padding:8px 12px;color:#E8E8E8;border-bottom:1px solid #5E6060}
+.rdSub{padding:6px 12px 2px;color:#9AA0A6;font-size:11.5px}
+.rdItem{padding:7px 12px;color:#DDD;cursor:default}
+.rdItem.sel{background:#2D3B4E}
+.avdSteps{margin:0 0 16px;max-width:840px}
+.asHead{display:flex;align-items:center;gap:12px}
+.asHead h3{font-size:16px}
+.asProg{margin-left:auto;font-family:"JetBrains Mono";font-size:13px;color:var(--muted)}
+.asList{list-style:none;margin:12px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px 18px;counter-reset:as}
+.asList li{counter-increment:as;position:relative;padding:8px 8px 8px 42px;border-radius:9px;background:var(--surface2);transition:background .2s}
+.asList li::before{content:counter(as);position:absolute;left:10px;top:10px;width:23px;height:23px;border-radius:50%;background:var(--surface);border:1.5px solid var(--line);font-family:"JetBrains Mono";font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.asList li b{display:block;font-size:14px}
+.asList li span{font-size:12.5px;color:var(--muted)}
+.asList li.done{background:var(--ok-bg)}
+.asList li.done::before{content:"✓";background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.asFoot{font-size:12.5px;color:var(--muted);margin:12px 0 0}
+@media (prefers-reduced-motion: reduce){.asList li{transition:none}}
+/* start hero */
+.heroGrid{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:26px;align-items:center;background:radial-gradient(560px 260px at 88% 0%,var(--accent-soft),transparent 72%);border-radius:16px}
+@media(max-width:860px){.heroGrid{grid-template-columns:1fr}.heroArt{display:none}}
+.eyebrow{font-family:"JetBrains Mono";font-size:11.5px;letter-spacing:.14em;color:var(--accent);font-weight:600;margin-bottom:10px}
+.heroArt{width:100%;height:auto}
+.theoryHead{display:flex;align-items:center;gap:10px}
+.theoryHead::before{content:"";flex:none;width:22px;height:4px;border-radius:2px;background:var(--accent)}
+.factGrid .card{transition:transform .15s ease}
+.factGrid .card:hover{transform:translateY(-2px)}
+@media (prefers-reduced-motion: reduce){.factGrid .card{transition:none}.factGrid .card:hover{transform:none}}
+/* milionerzy */
+.milWrap{display:grid;grid-template-columns:minmax(0,1fr) 215px;gap:18px;align-items:start;max-width:1000px}
+@media(max-width:820px){.milWrap{grid-template-columns:1fr}}
+.milBoard{background:#151A38;border:1px solid #2A3160;border-radius:16px;padding:18px;color:#E8EAF6}
+.milTop{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.life{border:1.5px solid #4A57A8;background:#1E2650;color:#AEB8F0;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;cursor:pointer}
+.life:hover:not(:disabled){border-color:#8FA0FF}
+.life:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+.milAmt{margin-left:auto;font-family:"JetBrains Mono";font-size:13px;color:#FFC94D}
+.milQ{background:#1E2650;border:1px solid #3A4488;border-radius:12px;padding:14px 16px;font-size:16px;font-weight:500;min-height:3em;display:flex;align-items:center}
+.milAns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+@media(max-width:640px){.milAns{grid-template-columns:1fr}}
+.milAns button{display:flex;gap:8px;align-items:baseline;text-align:left;background:#1E2650;border:1.5px solid #3A4488;color:#E8EAF6;border-radius:999px;padding:10px 18px;font-size:14px;cursor:pointer}
+.milAns button i{font-style:normal;color:#FFC94D;font-weight:700;font-family:"JetBrains Mono"}
+.milAns button:hover{border-color:#8FA0FF}
+.milAns button.dead{opacity:.22;pointer-events:none}
+.milAns button.lockedA{background:#8A6D00;border-color:#E8A33D;color:#FFF}
+.milAns button.goodA{background:#0C6B3D;border-color:#3DDC84;color:#FFF}
+.milAns button.badA{background:#7A2A1E;border-color:#FF8A73;color:#FFF}
+.milAudBars{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 4px 20px;align-items:end;height:92px}
+.milAudBars .bar{background:#3A4488;border-radius:6px 6px 0 0;position:relative;min-height:4px}
+.milAudBars .bar b{position:absolute;top:-20px;left:0;right:0;text-align:center;font-size:11px;color:#AEB8F0}
+.milAudBars .bar span{position:absolute;bottom:-18px;left:0;right:0;text-align:center;font-size:11px;color:#FFC94D;font-family:"JetBrains Mono"}
+.milMsg{margin-top:12px;font-size:13.5px;color:#AEB8F0;min-height:1.4em}
+.milCtl{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.milCtl .btn{background:#FFC94D;color:#151A38}
+.milLadder{list-style:none;margin:0;padding:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column-reverse;gap:2px}
+@media(max-width:820px){.milLadder{flex-direction:row-reverse;overflow-x:auto;gap:6px}.milLadder li{flex:none}}
+.milLadder li{display:flex;justify-content:space-between;gap:10px;font-family:"JetBrains Mono";font-size:12px;padding:4px 10px;border-radius:6px;color:var(--muted)}
+.milLadder li.safeRow{color:var(--ink);font-weight:600}
+.milLadder li.cur{background:var(--accent);color:var(--accent-ink)}
+.milLadder li.passed{color:var(--accent)}
+.ide .body{padding:20px}
+.ide h3{color:#E8E8E8;font-family:Roboto;font-weight:500;font-size:17px;margin-bottom:14px}
+.ide label{display:block;font-size:13px;margin:12px 0 4px;color:#BBB}
+.ide input,.ide select{width:100%;max-width:420px;background:#45494A;border:1px solid #5E6060;color:#E8E8E8;border-radius:4px;padding:7px 9px;font-size:14px;font-family:inherit}
+.ide input:focus,.ide select:focus{outline:none;border-color:#3D8AF0}
+.ide .row{display:flex;gap:10px;justify-content:flex-end;margin-top:18px;border-top:1px solid #2B2B2B;padding-top:14px}
+.ide .ibtn{background:#4C5052;border:1px solid #5E6060;color:#E8E8E8;border-radius:4px;padding:7px 18px;font-size:13px;cursor:pointer}
+.ide .ibtn.primary{background:#365880;border-color:#4A76A8}
+.ide .ibtn:disabled{opacity:.4;cursor:not-allowed}
+.ide .fieldMsg{font-size:12.5px;margin-top:3px;min-height:1.2em}
+.ide .fieldMsg.bad{color:#FF8A73}.ide .fieldMsg.good{color:#6FCF97}
+.tplGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.tpl{border:2px solid #5E6060;border-radius:8px;background:#45494A;padding:10px;cursor:pointer;text-align:center;color:#DDD;font-size:12.5px}
+.tpl svg{display:block;margin:0 auto 6px}
+.tpl.sel{border-color:#3D8AF0;background:#2D3B4E}
+.wizNote{font-size:12.5px;color:#9AA0A6;margin-top:6px}
+.stepDots{display:flex;gap:6px;margin-bottom:12px}
+.stepDots i{width:8px;height:8px;border-radius:50%;background:#5E6060}
+.stepDots i.on{background:#3D8AF0}
+.genFiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:12px}
+.avdRow{display:flex;gap:10px;flex-wrap:wrap}
+.avdRow .tpl{min-width:140px}
+.bootScreen{background:#000;border-radius:14px;height:190px;display:flex;align-items:center;justify-content:center;color:#3DDC84;font-family:Archivo;font-weight:900;font-size:22px;letter-spacing:.06em;margin-top:12px}
+/* dev mode phone */
+.miniphone{width:300px;max-width:100%;background:#111;border-radius:24px;padding:8px;box-shadow:0 8px 22px rgba(0,0,0,.3)}
+.miniscreen{background:#FFF;color:#1C1B1F;border-radius:18px;overflow:hidden;min-height:380px;font-family:Roboto;position:relative;display:flex;flex-direction:column}
+.msBar{background:#EEE;color:#333;padding:10px 14px;font-weight:500;font-size:14px;display:flex;gap:8px;align-items:center}
+.msBar button{border:none;background:none;cursor:pointer;font-size:16px;color:#333;padding:0}
+.msList{flex:1}
+.msRow{padding:13px 16px;border-bottom:1px solid #EEE;cursor:pointer;font-size:14px}
+.msRow small{display:block;color:#777;font-size:12px}
+.msRow:hover{background:#F7F7F7}
+.msRow.newRow{background:#E8F5EC}
+.mtoast{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);background:#323232;color:#fff;padding:8px 16px;border-radius:20px;font-size:12.5px;opacity:0;transition:opacity .25s;pointer-events:none;max-width:88%;text-align:center}
+.mtoast.show{opacity:.96}
+.switchRow{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;font-size:14px;border-bottom:1px solid #EEE}
+.sw{width:40px;height:22px;border-radius:11px;background:#CCC;position:relative;cursor:pointer;border:none;flex:none}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#FFF;transition:left .15s}
+.sw.on{background:#34A853}.sw.on::after{left:20px}
+.dlg{position:absolute;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:20px}
+.dlg .box{background:#FFF;border-radius:14px;padding:18px;font-size:13.5px;max-width:240px;color:#1C1B1F}
+.dlg .box b{display:block;margin-bottom:8px}
+.dlg .box .drow{display:flex;justify-content:flex-end;gap:14px;margin-top:14px}
+.dlg .box button{border:none;background:none;color:#6750A4;font-weight:500;cursor:pointer;font-size:13.5px}
+.devDone{margin-top:10px}
+/* TREE */
+.projLayout{display:grid;grid-template-columns:minmax(260px,340px) minmax(0,1fr);gap:16px;align-items:start}
+@media(max-width:800px){.projLayout{grid-template-columns:1fr}}
+.tree{background:var(--code-bg);border-radius:10px;padding:10px 6px;font-family:"JetBrains Mono";font-size:13px;color:#A9B7C6}
+.tree ul{list-style:none;margin:0;padding-left:18px}
+.tree>ul{padding-left:6px}
+.tree .node{display:flex;gap:6px;align-items:center;padding:3px 8px;border-radius:6px;cursor:pointer;color:#A9B7C6}
+.tree .node:hover{background:#3A4A3E}
+.tree .node.sel{background:#0D3A26;color:#8CE0B0}
+.tree .node.flash{outline:2px solid #FFC94D}
+.tree .tw{width:1em;flex:none;transition:transform .12s;display:inline-block}
+.tree li.closed>ul{display:none}
+.tree li.closed .tw{transform:rotate(-90deg)}
+.fileInfo h3{font-size:16px;margin-bottom:6px}
+.fileInfo .path{font-family:"JetBrains Mono";font-size:12px;color:var(--muted);margin-bottom:10px}
+.treeQuiz{margin-top:14px}
+.tqPrompt{font-weight:500}
+.tqMsg{min-height:1.4em;font-size:13.5px;margin-top:6px}
+/* LIFECYCLE */
+.lcLayout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+@media(max-width:860px){.lcLayout{grid-template-columns:1fr}}
+.lcDiagram{display:flex;flex-direction:column;align-items:center;gap:2px}
+.lcNode{border:2px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 22px;font-family:"JetBrains Mono";font-size:13.5px;min-width:170px;text-align:center;transition:background .15s,border-color .15s}
+.lcNode.state{border-style:dashed;background:var(--surface2);font-family:Roboto;font-weight:500;font-size:13px}
+.lcNode.lit{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.lcArrow{color:var(--muted);font-size:15px;line-height:1}
+.lcBranch{display:flex;gap:26px;align-items:flex-start}
+.lcSide{display:flex;flex-direction:column;align-items:center;gap:2px}
+.lcSide .note{font-size:11.5px;color:var(--muted);max-width:130px;text-align:center}
+.lcCtrl{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.lcLog{background:var(--code-bg);border-radius:10px;padding:10px 12px;font-family:"JetBrains Mono";font-size:12.5px;color:#A9B7C6;height:200px;overflow:auto}
+.lcLog .d{color:#8CE0B0}
+.lcPhoneState{text-align:center;font-size:13px;color:var(--muted);margin-top:6px}
+.lcApp{height:150px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:Roboto;font-weight:500;transition:background .2s}
+.lcApp.on{background:#6750A4;color:#FFF}
+.lcApp.homescr{background:#DDE7F5;color:#456}
+.lcApp.dead{background:#111;color:#666}
+/* QUIZ */
+.quiz{max-width:760px}
+.q{margin-bottom:16px}
+.q h3{font-size:15.5px;margin-bottom:10px}
+.q .opts{display:grid;gap:8px}
+.q .opts button{text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:9px;padding:10px 14px;font-size:14px;cursor:pointer}
+.q .opts button:hover:not(:disabled){border-color:var(--accent)}
+.q .opts button.right{background:var(--ok-bg);border-color:var(--ok)}
+.q .opts button.wrong{background:var(--err-bg);border-color:var(--err)}
+.q .expl{display:none;font-size:13.5px;color:var(--muted);margin-top:8px;border-left:3px solid var(--accent);padding-left:10px}
+.q[data-done="1"] .expl{display:block}
+.scoreBox{position:sticky;top:12px;z-index:2;display:flex;gap:14px;align-items:center;margin-bottom:18px}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="logo">
+    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect x="3" y="10" width="28" height="17" rx="7" fill="#3DDC84"/><circle cx="12" cy="18" r="2.2" fill="#06281A"/><circle cx="22" cy="18" r="2.2" fill="#06281A"/><line x1="9" y1="6" x2="12.5" y2="10.5" stroke="#3DDC84" stroke-width="2.4" stroke-linecap="round"/><line x1="25" y1="6" x2="21.5" y2="10.5" stroke="#3DDC84" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <div>AndroLab <span style="color:var(--accent)">1</span><small>od pomysłu do własnego projektu</small></div>
+  </div>
+  <nav class="tabs" id="mainTabs">
+    <button data-tab="start" aria-current="true">Start</button>
+    <button data-tab="historia">Historia</button>
+    <button data-tab="kreator">Kreator projektu</button>
+    <button data-tab="pliki">Pliki projektu</button>
+    <button data-tab="cykl">Cykl życia</button>
+    <button data-tab="quiz">Milionerzy</button>
+  </nav>
+</header>
+
+<!-- ===== START ===== -->
+<section id="tab-start">
+  <div class="heroGrid">
+    <div>
+      <div class="eyebrow">LEKCJA 1 · APLIKACJE MOBILNE · INF.04</div>
+      <h1>Zanim napiszesz kod —<br>poznaj mobilny świat.</h1>
+      <p class="lead">Lekcja 1 w wersji interaktywnej: historia Androida, którą się klika, symulator Android Studio,
+      w którym bez instalowania czegokolwiek przejdziesz przez tworzenie projektu i emulatora, oraz cykl życia
+      aktywności, który zobaczysz w ruchu. Ale najpierw — pięć minut teorii.</p>
+    </div>
+    <svg class="heroArt" viewBox="0 0 250 290" aria-hidden="true">
+      <rect x="55" y="14" width="140" height="262" rx="26" fill="var(--surface)" stroke="var(--line)" stroke-width="2.5"/>
+      <rect x="67" y="42" width="116" height="206" rx="10" fill="var(--surface2)"/>
+      <line x1="100" y1="97" x2="109" y2="110" stroke="#3DDC84" stroke-width="6" stroke-linecap="round"/>
+      <line x1="150" y1="97" x2="141" y2="110" stroke="#3DDC84" stroke-width="6" stroke-linecap="round"/>
+      <rect x="87" y="108" width="76" height="48" rx="22" fill="#3DDC84"/>
+      <circle cx="108" cy="129" r="5.5" fill="#06281A"/><circle cx="142" cy="129" r="5.5" fill="#06281A"/>
+      <rect x="10" y="52" width="120" height="26" rx="13" fill="var(--accent-soft)"/>
+      <text x="22" y="70" font-family="JetBrains Mono,monospace" font-size="12" fill="var(--accent)">&lt;LinearLayout&gt;</text>
+      <rect x="116" y="196" width="124" height="26" rx="13" fill="var(--accent-soft)"/>
+      <text x="128" y="214" font-family="JetBrains Mono,monospace" font-size="12" fill="var(--accent)">findViewById()</text>
+      <rect x="26" y="238" width="70" height="26" rx="13" fill="var(--warn-bg)"/>
+      <text x="39" y="256" font-family="JetBrains Mono,monospace" font-size="12" fill="var(--warn)">INF.04</text>
+    </svg>
+  </div>
+
+  <h3 class="theoryHead">Czym jest aplikacja mobilna?</h3>
+  <div class="defBox"><strong>Aplikacja mobilna</strong> to natywne oprogramowanie działające na urządzeniach
+  przenośnych (smartfonach, tabletach), zaprojektowane i skompilowane z myślą o konkretnym systemie
+  operacyjnym — w naszym przypadku o <strong>Androidzie</strong>.</div>
+  <p class="theoryP">Początkowo aplikacje pełniły funkcje czysto użytkowe: przeglądarka, poczta, kalendarz,
+  odtwarzacz muzyki. Dziś najpopularniejsze kategorie to bankowość mobilna, sklepy i kupony rabatowe,
+  gry oraz komunikatory — a pobieramy je ze sklepów cyfrowych (Google Play, App Store), w większości bezpłatnie.</p>
+  <div class="factGrid">
+    <div class="card"><b>Ograniczone zasoby</b><p>CPU, RAM i bateria są na wagę złota. Dlatego programista mobilny musi pisać <strong>wydajny kod</strong> — to różni go od programisty aplikacji na komputery.</p></div>
+    <div class="card"><b>Dlaczego Android?</b><p>Miliardy urządzeń, otwarta platforma (jądro Unix, licencja GNU GPL) i ogromny rynek. Android działa dziś nie tylko na telefonach, ale i na telewizorach czy smartwatchach.</p></div>
+    <div class="card"><b>Skąd się wziął?</b><p>Startup Android Inc. przejęty przez Google w 2005 roku za 50 mln dolarów. Całą historię — od organizera z 2 kB RAM — przeklikasz w zakładce <em>Historia</em>.</p></div>
+  </div>
+
+  <h3 class="theoryHead">Twój warsztat pracy — cztery elementy</h3>
+  <div class="factGrid">
+    <div class="card"><b>Android Studio</b><p>Oficjalne środowisko Google (od 2013 r., zastąpiło Eclipse). Zbudowane na bazie <strong>IntelliJ IDEA</strong> firmy JetBrains, dostępne bezpłatnie (licencja Apache) na Windows, macOS i Linux. Obsługuje Javę, Kotlina i C++. Pobierzesz je z <code>developer.android.com/studio</code>.</p></div>
+    <div class="card"><b>Java JDK</b><p>Kompilator i maszyna wirtualna Javy — instalujemy <strong>przed</strong> Android Studio (ze strony oracle.com). Bez JDK kod nie ruszy.</p></div>
+    <div class="card"><b>Emulator (AVD)</b><p>Wirtualny telefon do testowania aplikacji bez fizycznego urządzenia. Tworzysz go w <strong>Device Manager</strong> — przećwiczysz to w zakładce <em>Kreator projektu</em>.</p></div>
+    <div class="card"><b>Fizyczny telefon</b><p>Najlepszy do testów wydajnościowych. Wymaga trybu programisty (7 kliknięć w „Numer wersji") i włączonego <strong>debugowania USB</strong>.</p></div>
+  </div>
+
+  <h3 class="theoryHead">Trzy SDK, które musisz rozróżniać</h3>
+  <div class="defBox"><strong>Minimum SDK</strong> decyduje, na jakich urządzeniach zadziała aplikacja.
+  <strong>CompileSDK</strong> i <strong>TargetSDK</strong> kontrolują, z których funkcji systemu możesz korzystać.
+  Zasada z lekcji: wybieraj <strong>najwyższy dostępny</strong> poziom API.</div>
+
+  <h3 class="theoryHead">Co sprawdza egzamin INF.04?</h3>
+  <div class="factGrid">
+    <div class="card"><b>Interfejs użytkownika</b><p>Budowanie UI w XML: LinearLayout, ConstraintLayout, przyciski i pola tekstowe — odtworzenie ekranu z arkusza.</p></div>
+    <div class="card"><b>Logika w Javie</b><p>Odczyt danych z pól, instrukcje warunkowe, pętle i prosta logika aplikacji.</p></div>
+    <div class="card"><b>Debugowanie</b><p>Logcat, punkty przerwań i analiza błędów — codzienna praca każdego programisty.</p></div>
+  </div>
+
+  <div class="challenge">
+    <b>🎯 Wyzwanie na dziś</b>
+    <div class="chGrid">
+      <div>Przejdź wszystkie zakładki tej strony: ułóż oś czasu, wyklikaj projekt i emulator, odblokuj tryb programisty, przeklikaj pliki projektu i cykl życia — na końcu zdobądź komplet punktów w quizie.</div>
+      <div><b style="display:inline">⚡ Następny krok:</b> w domu uruchom prawdziwe „Hello World" w Android Studio, krok po kroku, samodzielnie. Dokumentacja to Twój przyjaciel: <code>developer.android.com</code>.</div>
+    </div>
+    <p class="theoryP" style="margin-bottom:0;font-size:13.5px">Pamiętaj: każdy ekspert był kiedyś początkującym. Egzamin INF.04 to tylko sprawdzenie umiejętności, które właśnie zaczynasz zdobywać — pierwsza aplikacja to Twój najważniejszy krok.</p>
+  </div>
+
+  <h3 class="theoryHead">Jak pracować z tą stroną</h3>
+  <div class="steps">
+    <div class="card"><span class="n">01 · HISTORIA</span><b>Architektura mobilnego świata</b>Od organizera z 2&nbsp;kB RAM do miliardów urządzeń. Na końcu ułóż wydarzenia w dobrej kolejności.</div>
+    <div class="card"><span class="n">02 · KREATOR</span><b>Twój warsztat pracy</b>Wyklikaj nowy projekt i emulator Pixel 6a dokładnie tak, jak w prawdziwym Android Studio. Odblokuj też tryb programisty na telefonie.</div>
+    <div class="card"><span class="n">03 · PROJEKT</span><b>Anatomia projektu</b>Przeklikaj drzewo plików (co gdzie leży i po co), a potem zobacz, jak aktywność rodzi się i umiera — metoda po metodzie.</div>
+  </div>
+  <div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap">
+    <button class="btn" id="goHist">Zaczynamy →</button>
+    <a class="btn ghost" href="AndroLab-Lekcja2.html" id="linkL2" style="text-decoration:none;display:inline-flex;align-items:center">Lekcja 2: układy i przyciski →</a>
+  </div>
+  <p class="credit">Zakres: temat 1 „Aplikacje mobilne: od pomysłu do własnego projektu" — przygotowanie do egzaminu INF.04, technik programista. To symulator dydaktyczny: prawdziwe projekty utworzysz w Android Studio (developer.android.com/studio).</p>
+</section>
+
+<!-- ===== HISTORIA ===== -->
+<section id="tab-historia" hidden>
+  <div class="secHead"><h2>Architektura mobilnego świata</h2>
+  <p>Kliknij każdy punkt osi czasu. Potem sprawdź się w układance chronologicznej na dole.</p></div>
+  <div id="tlWrap"><div class="tl" id="timeline"></div></div>
+  <div class="card chrono">
+    <h3 style="font-size:16px">Układanka: co było pierwsze?</h3>
+    <div id="chronoGate">
+      <p class="muted" style="font-size:13.5px;margin:6px 0 12px">Sprawdzisz, czy pamiętasz kolejność <strong>bez ściągania</strong> — na czas układanki oś czasu się schowa. 😉</p>
+      <button class="btn" id="chronoStart">Schowaj oś czasu i układaj</button>
+    </div>
+    <div id="chronoBody" hidden>
+      <p class="muted" style="font-size:13.5px;margin:6px 0 0">Klikaj wydarzenia w kolejności od najstarszego do najnowszego.</p>
+      <div class="slots" id="chronoSlots"></div>
+      <div class="chips" id="chronoChips"></div>
+      <div id="chronoMsg" style="min-height:1.4em;font-size:14px"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn ghost small" id="chronoReset">Wymieszaj od nowa</button>
+        <button class="btn ghost small" id="chronoQuit">Poddaję się — pokaż oś czasu</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== KREATOR ===== -->
+<section id="tab-kreator" hidden>
+  <div class="secHead"><h2>Twój warsztat pracy</h2>
+  <p>Trzy symulatory: nowy projekt, emulator AVD i tryb programisty na fizycznym telefonie. Wszystko wygląda jak w prawdziwym Android Studio — zapamiętaj te kroki, wykonasz je na następnych zajęciach naprawdę.</p></div>
+
+  <div class="secHead"><h3 style="font-size:17px">1 · Nowy projekt — File → New → New Project</h3></div>
+  <div class="ide" id="wizard">
+    <div class="titlebar"><span>New Project</span><span class="wctrl">— ▢ ✕</span></div>
+    <div class="body">
+      <div class="stepDots"><i class="on" id="dot0"></i><i id="dot1"></i><i id="dot2"></i></div>
+      <div id="wizStep0">
+        <h3>Wybierz szablon projektu (Templates → Phone and Tablet)</h3>
+        <div class="tplGrid" id="tplGrid"></div>
+        <p class="wizNote" id="tplMsg">Podpowiedź z lekcji: jeżeli zadanie nie mówi inaczej — zawsze ten sam szablon…</p>
+        <div class="row"><button class="ibtn" disabled>Previous</button><button class="ibtn primary" id="tplNext" disabled>Next</button></div>
+      </div>
+      <div id="wizStep1" hidden>
+        <h3>Skonfiguruj projekt</h3>
+        <label for="wName">Name</label>
+        <input id="wName" value="Aplikacja1" autocomplete="off">
+        <div class="fieldMsg" id="wNameMsg"></div>
+        <label for="wPkg">Package name</label>
+        <input id="wPkg" value="" placeholder="np. com.example.myapplication" autocomplete="off" spellcheck="false">
+        <div class="fieldMsg" id="wPkgMsg">Małe litery i co najmniej jedna kropka (np. com.example.myapplication) — to unikalna identyfikacja aplikacji.</div>
+        <label for="wLoc">Save location</label>
+        <input id="wLoc" readonly value="C:\Users\uczen\AndroidStudioProjects\Aplikacja1">
+        <label for="wLang">Language</label>
+        <select id="wLang"><option>Kotlin</option><option>Java</option></select>
+        <div class="fieldMsg" id="wLangMsg"></div>
+        <label for="wSdk">Minimum SDK</label>
+        <select id="wSdk">
+          <option value="24">API 24 — Android 7.0 (Nougat)</option>
+          <option value="34">API 34 — Android 14.0 (UpsideDownCake)</option>
+          <option value="36">API 36 — Android 16.0 (Baklava)</option>
+          <option value="37">API 37 — Android 17.0 (najnowszy)</option>
+        </select>
+        <div class="fieldMsg" id="wSdkMsg">Minimum SDK decyduje, na jakich urządzeniach zadziała aplikacja. Zalecenie z lekcji: najwyższy dostępny (tutaj API 37).</div>
+        <label for="wBuild">Build configuration language</label>
+        <select id="wBuild"><option>Kotlin DSL (build.gradle.kts) — zalecane</option><option>Groovy DSL (build.gradle)</option></select>
+        <div class="row"><button class="ibtn" id="wizBack">Previous</button><button class="ibtn primary" id="wizFinish">Finish</button></div>
+      </div>
+      <div id="wizStep2" hidden>
+        <h3 id="wizDoneTitle">Gradle buduje projekt…</h3>
+        <p style="font-size:13.5px;color:#BBB" id="wizDoneText"></p>
+        <div class="genFiles" id="genFiles" hidden>
+          <div><p style="font-size:12.5px;color:#9AA0A6;margin:0 0 4px">kotlin+java / <span class="genPkg"></span> / <b style="color:#E8E8E8">MainActivity.java</b></p>
+<pre>public class MainActivity
+        extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle s) {
+        super.onCreate(s);
+        setContentView(
+            R.layout.activity_main);
+    }
+}</pre></div>
+          <div><p style="font-size:12.5px;color:#9AA0A6;margin:0 0 4px">res / layout / <b style="color:#E8E8E8">activity_main.xml</b></p>
+<pre>&lt;LinearLayout ...
+  android:orientation="vertical"&gt;
+
+  &lt;!-- tu trafią widżety
+       (to już Lekcja 2!) --&gt;
+
+&lt;/LinearLayout&gt;</pre></div>
+        </div>
+        <div class="row"><button class="ibtn" id="wizAgain">Utwórz kolejny projekt</button><button class="ibtn primary" id="goPliki2" hidden>Zobacz strukturę projektu →</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="secHead"><h3 style="font-size:17px">2 · Emulator AVD — Device Manager</h3>
+  <p>Emulator to wirtualny system operacyjny umożliwiający testowanie aplikacji bez fizycznego telefonu. Zarządzamy nim przez Device Manager w Android Studio.</p></div>
+  <div class="avdSteps card">
+    <div class="asHead"><h3>Konfiguracja w 6 krokach</h3><span class="asProg" id="asProg">0/6</span></div>
+    <ol class="asList" id="asList">
+      <li data-s="0"><b>Otwórz Device Manager</b><span>Zakładka po prawej stronie okna Android Studio.</span></li>
+      <li data-s="1"><b>Kliknij ＋ (Create Virtual Device)</b><span>Otwiera okno wyboru urządzenia.</span></li>
+      <li data-s="2"><b>Wybierz kategorię Phone → Pixel 6a</b><span>Ekran 6,13", 1080×2400, 420dpi.</span></li>
+      <li data-s="3"><b>Wybierz System Image</b><span>Najwyższy dostępny — u nas API 37.1 (Android 17).</span></li>
+      <li data-s="4"><b>Verify Configuration</b><span>Nadaj nazwę AVD (np. Telefon2) → kliknij Finish.</span></li>
+      <li data-s="5"><b>Uruchom aplikację</b><span>Kliknij zielony trójkąt ▶ w pasku narzędzi.</span></li>
+    </ol>
+    <p class="asFoot">Aby zobaczyć działający emulator, przejdź do zakładki <strong>Running Devices</strong> po prawej stronie panelu głównego. Wszystkie kroki wykonasz w symulatorze poniżej — lista odhacza się sama. ✓</p>
+  </div>
+  <div class="ide" id="avd">
+    <div class="titlebar"><span>Device Manager</span><span class="wctrl">— ▢ ✕</span></div>
+    <div class="body" id="avdBody">
+      <div id="avdStep0">
+        <h3>Twoje wirtualne urządzenia</h3>
+        <p style="font-size:13.5px;color:#9AA0A6">Lista jest pusta. Kliknij plus, aby utworzyć urządzenie.</p>
+        <button class="ibtn primary" id="avdPlus">＋ Create Virtual Device</button>
+      </div>
+      <div id="avdStep1" hidden>
+        <h3>Wybierz sprzęt (Category: Phone)</h3>
+        <div class="avdRow" id="avdHw"></div>
+        <div class="fieldMsg" id="avdHwMsg"></div>
+      </div>
+      <div id="avdStep2" hidden>
+        <h3>Wybierz obraz systemu (System Image)</h3>
+        <div class="avdRow" id="avdImg"></div>
+        <div class="fieldMsg" id="avdImgMsg"></div>
+      </div>
+      <div id="avdStep3" hidden>
+        <h3>Verify Configuration</h3>
+        <label for="avdName">AVD Name</label>
+        <input id="avdName" value="Telefon2">
+        <p class="wizNote" id="avdSummary"></p>
+        <div class="row"><button class="ibtn primary" id="avdFinish">Finish</button></div>
+      </div>
+      <div id="avdStep4" hidden>
+        <h3>Emulator startuje… znajdziesz go w panelu Running Devices</h3>
+        <div class="bootScreen" id="bootScreen">android</div>
+        <div class="rdPanel" id="rdPanel" hidden>
+          <div class="rdHead">Running Devices <span style="margin-left:auto">＋</span></div>
+          <div class="rdSub">Virtual Devices</div>
+          <div class="rdItem sel" id="rdItem">▷ Telefon2 API 37.1</div>
+          <div class="rdItem">📶 Pair Devices Using Wi-Fi</div>
+        </div>
+        <button class="ibtn" id="avdRunApp" hidden style="margin-top:12px;background:#2E5C3A;border-color:#3D7A4E">▶ Uruchom aplikację (zielony trójkąt)</button>
+        <p class="wizNote">Dokładnie tak dodasz urządzenie w prawdziwym Android Studio: panel Running Devices → ＋ → Virtual Devices. Zielony trójkąt ▶ uruchamia aplikację.</p>
+        <div class="row"><button class="ibtn" id="avdAgain">Utwórz jeszcze raz</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="secHead"><h3 style="font-size:17px">3 · Fizyczny telefon — odblokuj tryb programisty</h3>
+  <p>Na prawdziwym telefonie: Ustawienia → Telefon — informacje → Informacje o oprogramowaniu → i kliknij
+  <strong>7 razy</strong> „Numer wersji". Spróbuj tutaj:</p></div>
+  <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">
+    <div class="miniphone"><div class="miniscreen" id="devPhone">
+      <div class="msBar"><button id="devBack" aria-label="Wstecz">←</button><span id="devTitle">Ustawienia</span></div>
+      <div class="msList" id="devList"></div>
+      <div class="mtoast" id="devToast" role="status"></div>
+    </div></div>
+    <div class="card devDone" id="devStatus" style="max-width:340px">
+      <h3 style="font-size:15px">Status połączenia</h3>
+      <p class="muted" id="devStatusText" style="font-size:13.5px;margin:8px 0 0">Tryb programisty: wyłączony. Debugowanie USB: wyłączone.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PLIKI ===== -->
+<section id="tab-pliki" hidden>
+  <div class="secHead"><h2>Anatomia projektu</h2>
+  <p>Projekt Android to nie tylko pliki .java — każdy folder ma swoje zadanie. Klikaj elementy drzewa, a potem sprawdź się w mini-teście.</p></div>
+  <div class="projLayout">
+    <div class="tree" id="projTree"></div>
+    <div>
+      <div class="card fileInfo" id="fileInfo">
+        <h3>Wybierz plik z drzewa ←</h3>
+        <p class="muted" style="font-size:13.5px">Tak wygląda panel Project w Android Studio (widok „Android"). Trzy najważniejsze katalogi to <code>manifests</code>, <code>kotlin+java</code> i <code>res</code>.</p>
+      </div>
+      <div class="card treeQuiz">
+        <h3 style="font-size:15px">Sprawdź się: gdzie to leży?</h3>
+        <p class="tqPrompt" id="tqPrompt" style="margin:8px 0 2px">Kliknij „Start", aby zacząć.</p>
+        <div class="tqMsg" id="tqMsg"></div>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+          <button class="btn small" id="tqStart">Start</button>
+          <span class="muted" id="tqScore" style="font-size:13px"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CYKL ===== -->
+<section id="tab-cykl" hidden>
+  <div class="secHead"><h2>Cykl życia aktywności</h2>
+  <p>Aktywność (Activity) przechodzi przez określone stany. Klikaj przyciski zdarzeń i patrz, które metody wywołuje system — i w jakiej kolejności. Zwróć uwagę, co się dzieje przy obrocie ekranu!</p></div>
+  <div class="lcCtrl">
+    <button class="btn" id="ev-launch">▶ Uruchom aplikację</button>
+    <button class="btn ghost" id="ev-home" disabled>◉ Home (zminimalizuj)</button>
+    <button class="btn ghost" id="ev-return" disabled>↩ Wróć do aplikacji</button>
+    <button class="btn ghost" id="ev-rotate" disabled>⟳ Obróć ekran</button>
+    <button class="btn ghost" id="ev-close" disabled>✕ Zamknij (Back)</button>
+  </div>
+  <div class="lcLayout">
+    <div class="card">
+      <div class="lcDiagram" id="lcDiagram">
+        <div class="lcNode" data-m="onCreate">onCreate()</div><div class="lcArrow">↓</div>
+        <div class="lcNode" data-m="onStart">onStart()</div><div class="lcArrow">↓</div>
+        <div class="lcNode" data-m="onResume">onResume()</div><div class="lcArrow">↓</div>
+        <div class="lcNode state" data-m="running">Aktywność działa 🟢</div><div class="lcArrow">↓</div>
+        <div class="lcNode" data-m="onPause">onPause()</div><div class="lcArrow">↓</div>
+        <div class="lcNode" data-m="onStop">onStop()</div>
+        <div class="lcBranch">
+          <div class="lcSide"><div class="lcArrow">↓</div><div class="lcNode" data-m="onDestroy">onDestroy()</div><div class="lcArrow">↓</div><div class="lcNode state" data-m="dead">Zniszczona ⚫</div></div>
+          <div class="lcSide"><div class="lcArrow">↘</div><div class="lcNode" data-m="onRestart">onRestart()</div><div class="note">…i z powrotem do onStart() — gdy użytkownik wraca do aplikacji</div></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <div class="lcApp dead" id="lcApp">wyłączona</div>
+        <p class="lcPhoneState" id="lcState">Aplikacja nie została jeszcze uruchomiona.</p>
+      </div>
+      <div class="lcLog" id="lcLog" style="margin-top:12px" aria-live="polite"><span class="muted">Logcat czeka na zdarzenia…</span></div>
+    </div>
+  </div>
+  <p class="muted" style="max-width:75ch;font-size:13.5px;margin-top:14px">Metody cyklu życia piszemy w Javie (np. <code>onCreate()</code> już znasz — to tu wywołujemy <code>setContentView()</code>). Do uruchamiania <em>nowych</em> aktywności i przekazywania danych między nimi służy obiekt <code>Intent</code> — zajmiemy się nim przy nawigacji między ekranami.</p>
+</section>
+
+<!-- ===== QUIZ ===== -->
+<section id="tab-quiz" hidden>
+  <div class="secHead"><h2>Milionerzy — teoria do egzaminu</h2>
+  <p>12 pytań z lekcji, od 500 zł do miliona. Masz dwa koła ratunkowe (50:50 i głos publiczności) na całą grę.
+  Progi gwarantowane: 1 000 zł i 40 000 zł. Zła odpowiedź = spadasz do progu i grasz od nowa.</p></div>
+  <div class="milWrap">
+    <div class="milBoard">
+      <div class="milTop">
+        <button class="life" id="mil50" title="Usuwa dwie błędne odpowiedzi">50:50</button>
+        <button class="life" id="milAud" title="Pokazuje głosy publiczności">Publiczność</button>
+        <span class="milAmt" id="milAmt"></span>
+      </div>
+      <div class="milQ" id="milQ"></div>
+      <div class="milAudBars" id="milAudBars" hidden></div>
+      <div class="milAns" id="milAns"></div>
+      <div class="milMsg" id="milMsg"></div>
+      <div class="milCtl" id="milCtl"></div>
+    </div>
+    <ol class="milLadder" id="milLadder"></ol>
+  </div>
+  <p class="muted" id="milBestLine" style="font-size:13px;margin-top:12px"></p>
+</section>
+</div>
+
+<script>
+"use strict";
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store={get(k,d){try{const v=localStorage.getItem("androlab1:"+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem("androlab1:"+k,JSON.stringify(v))}catch(e){}}};
+const REDUCED=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* tabs */
+function showTab(name){
+  $$("#mainTabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===name));
+  ["start","historia","kreator","pliki","cykl","quiz"].forEach(t=>{$("#tab-"+t).hidden=(t!==name)});
+  try{history.replaceState(null,"","#"+name)}catch(e){}
+}
+$("#mainTabs").addEventListener("click",e=>{const b=e.target.closest("button[data-tab]");if(b)showTab(b.dataset.tab)});
+$("#goHist").addEventListener("click",()=>showTab("historia"));
+
+/* ===== TIMELINE ===== */
+const TL=[
+["1984","Psion Organizer — pierwsze urządzenie z wbudowaną aplikacją","Procesor Hitachi 6301, <strong>2 kB pamięci RAM</strong>, na pokładzie kalkulator i zegar. Dla porównania: dzisiejszy telefon z 8 GB RAM ma <strong>4 miliony razy więcej pamięci</strong> — a i tak programista musi pisać wydajny kod, bo CPU, RAM i bateria zawsze są ograniczone."],
+["2001","Symbian — pierwszy mobilny system operacyjny","Inicjatywa Nokii, która otworzyła erę smartfonów. To właśnie nad konkurencją dla Symbiana pracowali później założyciele Android Inc."],
+["2005","Google przejmuje Android Inc.","Startup Android Inc. założyło trzech programistów. W lipcu 2005 roku Google kupił firmę za <strong>50 milionów dolarów</strong>. System oparto na jądrze Unix i udostępniono na otwartej licencji GNU GPL — w przeciwieństwie do zamkniętego iPhone'a."],
+["2008","HTC Dream — pierwszy smartfon z Androidem","Od niego wszystko się zaczęło. Dziś Android działa nie tylko na telefonach i tabletach, ale też na telewizorach i smartwatchach. Ciekawostka: kolejne wersje systemu nosiły nazwy słodyczy po kolejnych literach alfabetu (Cupcake, Donut, Eclair, Froyo…)."],
+["dziś","Google Play / App Store — miliardy urządzeń","Aplikacje pobieramy ze sklepów cyfrowych, większość bezpłatnie. Najpopularniejsze kategorie: bankowość mobilna, sklepy, gry i komunikatory. Ogromny rynek + otwarta społeczność = dlatego uczymy się Androida."]];
+$("#timeline").innerHTML=TL.map(([yr,t,body],i)=>'<details class="tlItem"'+(i===0?" open":"")+'><summary><span class="yr">'+yr+'</span><span>'+t+'</span></summary><div class="tlBody"><p>'+body+"</p></div></details>").join("");
+
+/* chrono game */
+const CHRONO=[["Psion Organizer","1984"],["System Symbian","2001"],["Google kupuje Androida","2005"],["HTC Dream","2008"],["Android na smartwatchach","dziś"]];
+let chronoNext=0;
+function chronoInit(){
+  chronoNext=0; $("#chronoMsg").textContent="";
+  $("#chronoSlots").innerHTML=CHRONO.map((_,i)=>'<span data-slot="'+i+'">'+(i+1)+".</span>").join("");
+  const order=[...CHRONO.keys()].sort(()=>Math.random()-.5);
+  $("#chronoChips").innerHTML=order.map(i=>'<button data-ci="'+i+'">'+esc(CHRONO[i][0])+"</button>").join("");
+}
+$("#chronoChips").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-ci]"); if(!b||b.classList.contains("gone"))return;
+  const ci=+b.dataset.ci;
+  if(ci===chronoNext){
+    b.classList.add("gone");
+    const slot=$('#chronoSlots [data-slot="'+chronoNext+'"]');
+    slot.textContent=(chronoNext+1)+". "+CHRONO[ci][0]+" ("+CHRONO[ci][1]+")"; slot.classList.add("filled");
+    chronoNext++;
+    if(chronoNext===CHRONO.length){$("#chronoMsg").textContent="🏆 Brawo! Cała historia po kolei.";$("#tlWrap").hidden=false;}
+    else $("#chronoMsg").textContent="";
+    $("#chronoMsg").style.color="var(--ok)";
+  }else{
+    b.classList.remove("shake"); void b.offsetWidth; b.classList.add("shake");
+    $("#chronoMsg").textContent="Hmm, coś było wcześniej… spójrz jeszcze raz na oś czasu.";
+    $("#chronoMsg").style.color="var(--err)";
+  }
+});
+$("#chronoReset").addEventListener("click",chronoInit);
+$("#chronoStart").addEventListener("click",()=>{chronoInit();$("#tlWrap").hidden=true;$("#chronoGate").hidden=true;$("#chronoBody").hidden=false});
+$("#chronoQuit").addEventListener("click",()=>{$("#tlWrap").hidden=false;$("#chronoGate").hidden=false;$("#chronoBody").hidden=true});
+chronoInit();
+
+/* ===== WIZARD ===== */
+const TPLS=["No Activity","Empty Activity","Empty Views Activity","Bottom Navigation Views Activity","Navigation Drawer Views Activity"];
+const TPL_OK=2;
+let tplSel=-1;
+$("#tplGrid").innerHTML=TPLS.map((t,i)=>'<div class="tpl" data-i="'+i+'" role="button" tabindex="0"><svg width="52" height="72" viewBox="0 0 52 72"><rect x="1" y="1" width="50" height="70" rx="6" fill="#2B2B2B" stroke="#5E6060"/>'+(i>=2?'<rect x="6" y="8" width="40" height="6" rx="2" fill="#5E6060"/>':"")+(i===1?'<rect x="14" y="30" width="24" height="4" rx="2" fill="#5E6060"/><rect x="18" y="38" width="16" height="4" rx="2" fill="#4C5052"/>':"")+(i===3?'<rect x="6" y="58" width="40" height="8" rx="2" fill="#5E6060"/>':"")+(i===4?'<rect x="6" y="8" width="12" height="56" fill="#4C5052"/>':"")+"</svg>"+t+"</div>").join("");
+function pickTpl(i){
+  tplSel=i; $$("#tplGrid .tpl").forEach(el=>el.classList.toggle("sel",+el.dataset.i===i));
+  $("#tplNext").disabled=false;
+  $("#tplMsg").textContent=i===TPL_OK?"✔ Dobrze! Empty Views Activity — ten szablon wybieramy zawsze, gdy zadanie nie mówi inaczej."
+    :i===1?"Uwaga, pułapka! Empty Activity to szablon Jetpack Compose (Kotlin, bez XML). My budujemy widoki w XML — wybierz Empty Views Activity."
+    :"Na lekcjach i egzaminie wybieramy Empty Views Activity — zaznacz go, zanim klikniesz Next.";
+  $("#tplMsg").style.color=i===TPL_OK?"#6FCF97":"#FFC94D";
+}
+$("#tplGrid").addEventListener("click",e=>{const t=e.target.closest(".tpl");if(t)pickTpl(+t.dataset.i)});
+$("#tplGrid").addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){const t=e.target.closest(".tpl");if(t){e.preventDefault();pickTpl(+t.dataset.i)}}});
+$("#tplNext").addEventListener("click",()=>{
+  if(tplSel!==TPL_OK){pickTpl(tplSel);return}
+  $("#wizStep0").hidden=true;$("#wizStep1").hidden=false;$("#dot1").classList.add("on");
+});
+$("#wName").addEventListener("input",()=>{
+  const v=$("#wName").value.trim();
+  $("#wLoc").value="C:\\Users\\uczen\\AndroidStudioProjects\\"+(v||"…");
+  $("#wNameMsg").textContent=v?"":"Nazwa nie może być pusta";
+  $("#wNameMsg").className="fieldMsg bad";
+});
+const PKG_RE=/^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)+$/;
+$("#wPkg").addEventListener("input",()=>{
+  const v=$("#wPkg").value.trim(), m=$("#wPkgMsg");
+  if(!v){m.textContent="Małe litery i co najmniej jedna kropka — to unikalna identyfikacja aplikacji.";m.className="fieldMsg";return}
+  if(PKG_RE.test(v)){m.textContent="✔ Poprawna nazwa pakietu";m.className="fieldMsg good"}
+  else{m.textContent="✘ Tylko małe litery/cyfry i kropka, np. przyklad.nr1 (bez spacji i wielkich liter)";m.className="fieldMsg bad"}
+});
+$("#wizBack").addEventListener("click",()=>{$("#wizStep1").hidden=true;$("#wizStep0").hidden=false;$("#dot1").classList.remove("on")});
+$("#wizFinish").addEventListener("click",()=>{
+  const name=$("#wName").value.trim(), pkg=$("#wPkg").value.trim(), lang=$("#wLang").value, sdk=$("#wSdk").value;
+  let ok=true;
+  if(!name){$("#wNameMsg").textContent="Nazwa nie może być pusta";$("#wNameMsg").className="fieldMsg bad";ok=false}
+  if(!PKG_RE.test(pkg)){$("#wPkgMsg").textContent="✘ Popraw nazwę pakietu, np. przyklad.nr1";$("#wPkgMsg").className="fieldMsg bad";ok=false}
+  if(lang!=="Java"){$("#wLangMsg").textContent="✘ Nasz kurs (i te lekcje) prowadzimy w Javie — zmień język!";$("#wLangMsg").className="fieldMsg bad";ok=false}
+  else{$("#wLangMsg").textContent="✔ Java — zgadza się z lekcją";$("#wLangMsg").className="fieldMsg good"}
+  if(!ok)return;
+  $("#wizStep1").hidden=true;$("#wizStep2").hidden=false;$("#dot2").classList.add("on");
+  $("#wizDoneTitle").textContent="Gradle buduje projekt…";
+  $("#genFiles").hidden=true;$("#goPliki2").hidden=true;
+  const note=sdk==="37"?"":" Uwaga: wybrano API "+sdk+" — projekt powstanie, ale zalecenie z lekcji to najwyższy dostępny (API 37).";
+  setTimeout(()=>{
+    $("#wizDoneTitle").textContent="✔ Projekt „"+name+"” gotowy!";
+    $("#wizDoneText").textContent="Android Studio wygenerowało strukturę projektu — dwa najważniejsze pliki poniżej."+note;
+    $$(".genPkg").forEach(el=>el.textContent=pkg);
+    $("#genFiles").hidden=false;$("#goPliki2").hidden=false;
+  },REDUCED?0:900);
+});
+$("#wizAgain").addEventListener("click",()=>{
+  $("#wizStep2").hidden=true;$("#wizStep0").hidden=false;
+  $("#dot1").classList.remove("on");$("#dot2").classList.remove("on");
+  tplSel=-1;$$("#tplGrid .tpl").forEach(el=>el.classList.remove("sel"));$("#tplNext").disabled=true;
+  $("#tplMsg").textContent="Podpowiedź z lekcji: jeżeli zadanie nie mówi inaczej — zawsze ten sam szablon…";$("#tplMsg").style.color="";
+});
+$("#goPliki2").addEventListener("click",()=>showTab("pliki"));
+
+/* ===== AVD ===== */
+const HW=[["Pixel 6a","6,13\" · 1080×2400 · 420dpi",true],["Pixel Tablet","10,95\" · tablet",false],["Wear OS Round","zegarek",false]];
+const IMG=[["API 37.1","Android 17.0 · x86_64 (najnowszy)",true],["Baklava","API 36 · Android 16.0",false],["KitKat","API 19 · Android 4.4 (muzeum!)",false]];
+let avdHwSel=-1,avdImgSel=-1;
+function avdShow(n){[0,1,2,3,4].forEach(i=>$("#avdStep"+i).hidden=(i!==n))}
+const asDone=new Set();
+function asMark(){for(const i of arguments)asDone.add(i);
+  $$("#asList li").forEach(li=>li.classList.toggle("done",asDone.has(+li.dataset.s)));
+  $("#asProg").textContent=asDone.size+"/6"+(asDone.size===6?" — komplet! 🏆":"");}
+$("#avdHw").innerHTML=HW.map((h,i)=>'<div class="tpl" data-i="'+i+'" role="button" tabindex="0"><svg width="40" height="56" viewBox="0 0 40 56"><rect x="1" y="1" width="38" height="54" rx="5" fill="#2B2B2B" stroke="#5E6060"/></svg><b>'+h[0]+"</b><br><span style='font-size:11px;color:#9AA0A6'>"+h[1]+"</span></div>").join("");
+$("#avdImg").innerHTML=IMG.map((h,i)=>'<div class="tpl" data-i="'+i+'" role="button" tabindex="0"><b>'+h[0]+"</b><br><span style='font-size:11px;color:#9AA0A6'>"+h[1]+"</span></div>").join("");
+$("#avdPlus").addEventListener("click",()=>{asMark(0,1);avdShow(1)});
+$("#avdHw").addEventListener("click",e=>{const t=e.target.closest(".tpl");if(!t)return;avdHwSel=+t.dataset.i;
+  $$("#avdHw .tpl").forEach(el=>el.classList.toggle("sel",+el.dataset.i===avdHwSel));
+  if(HW[avdHwSel][2]){$("#avdHwMsg").textContent="✔ Pixel 6a — dokładnie jak na lekcji";$("#avdHwMsg").className="fieldMsg good";asMark(2);setTimeout(()=>avdShow(2),REDUCED?0:500)}
+  else{$("#avdHwMsg").textContent="Na zajęciach tworzymy telefon: wybierz Pixel 6a (kategoria Phone).";$("#avdHwMsg").className="fieldMsg bad"}});
+$("#avdImg").addEventListener("click",e=>{const t=e.target.closest(".tpl");if(!t)return;avdImgSel=+t.dataset.i;
+  $$("#avdImg .tpl").forEach(el=>el.classList.toggle("sel",+el.dataset.i===avdImgSel));
+  if(IMG[avdImgSel][2]){$("#avdImgMsg").textContent="✔ API 37.1 — najnowszy dostępny obraz systemu";$("#avdImgMsg").className="fieldMsg good";asMark(3);
+    $("#avdSummary").textContent="Pixel 6a · API 37.1 (Android 17) — nadaj nazwę i kliknij Finish.";
+    setTimeout(()=>avdShow(3),REDUCED?0:500)}
+  else{$("#avdImgMsg").textContent=avdImgSel===2?"API 19 to muzeum — nowa aplikacja w ogóle by tu nie ruszyła. Wybierz najnowszy obraz (API 37.1).":"Zadziała, ale zasada z lekcji: najwyższy dostępny — wybierz API 37.1.";$("#avdImgMsg").className="fieldMsg bad"}});
+$("#avdFinish").addEventListener("click",()=>{
+  avdShow(4); asMark(4);
+  const b=$("#bootScreen");b.textContent="";$("#rdPanel").hidden=true;$("#avdRunApp").hidden=true;
+  const nm=$("#avdName").value.trim()||"Telefon2";
+  setTimeout(()=>{b.textContent="android"},REDUCED?0:200);
+  setTimeout(()=>{b.innerHTML='<span style="font-size:15px;color:#8CE0B0;font-family:Roboto">✔ „'+esc(nm)+'” uruchomiony — teraz zielony trójkąt!</span>';
+    $("#rdItem").textContent="▷ "+nm+" API 37.1"; $("#rdPanel").hidden=false; $("#avdRunApp").hidden=false;},REDUCED?300:2000);
+});
+$("#avdRunApp").addEventListener("click",()=>{
+  $("#bootScreen").innerHTML='<div style="background:#fff;border-radius:10px;width:122px;height:168px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.5)"><div style="background:#6750A4;color:#fff;font-size:10px;padding:4px 8px;font-family:Roboto">Aplikacja1</div><div style="flex:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:#1C1B1F;font-family:Roboto">Hello World!</div></div>';
+  $("#avdRunApp").hidden=true; asMark(5);
+});
+$("#avdAgain").addEventListener("click",()=>{avdHwSel=avdImgSel=-1;$$("#avd .tpl").forEach(el=>el.classList.remove("sel"));$("#avdHwMsg").textContent="";$("#avdImgMsg").textContent="";$("#rdPanel").hidden=true;$("#avdRunApp").hidden=true;avdShow(0)});
+
+/* ===== DEV MODE GAME ===== */
+let devTaps=0, devUnlocked=false, devUsb=false, devScreen="main";
+let devToastTimer=null;
+function devToast(msg){const t=$("#devToast");t.textContent=msg;t.classList.add("show");clearTimeout(devToastTimer);devToastTimer=setTimeout(()=>t.classList.remove("show"),1700)}
+function devStatus(){
+  $("#devStatusText").innerHTML="Tryb programisty: <strong>"+(devUnlocked?"włączony ✔":"wyłączony")+"</strong>.<br>Debugowanie USB: <strong>"+(devUsb?"włączone ✔":"wyłączone")+"</strong>."
+   +(devUsb?"<br><br><span class='pill ok'>Telefon widoczny w Device Manager jako „Physical” — kliknij ▶, aby zainstalować aplikację!</span>":"");
+}
+function devRender(){
+  const L=$("#devList");
+  if(devScreen==="main"){
+    $("#devTitle").textContent="Ustawienia";
+    L.innerHTML='<div class="msRow" data-go="none">Sieć i internet<small>Wi-Fi, dane mobilne</small></div>'
+      +'<div class="msRow" data-go="none">Dźwięk<small>Głośność, wibracje</small></div>'
+      +(devUnlocked?'<div class="msRow newRow" data-go="dev">Opcje programisty<small>debugowanie USB i inne</small></div>':"")
+      +'<div class="msRow" data-go="about">Telefon — informacje<small>nazwa, numer wersji</small></div>';
+  }else if(devScreen==="about"){
+    $("#devTitle").textContent="Telefon — informacje";
+    L.innerHTML='<div class="msRow" data-go="soft">Informacje o oprogramowaniu<small>wersja Androida, numer kompilacji</small></div>'
+      +'<div class="msRow" data-go="none">Stan<small>numer seryjny, IMEI</small></div>';
+  }else if(devScreen==="soft"){
+    $("#devTitle").textContent="Informacje o oprogramowaniu";
+    L.innerHTML='<div class="msRow" data-go="none">Wersja Androida<small>14</small></div>'
+      +'<div class="msRow" data-go="tap">Numer wersji<small>UP1A.231005.007</small></div>';
+  }else if(devScreen==="dev"){
+    $("#devTitle").textContent="Opcje programisty";
+    L.innerHTML='<div class="switchRow">Debugowanie USB<button class="sw'+(devUsb?" on":"")+'" id="usbSw" role="switch" aria-checked="'+devUsb+'" aria-label="Debugowanie USB"></button></div>'
+      +'<div class="msRow" data-go="none">Pokazuj dotknięcia<small>wyłączone</small></div>';
+  }
+  devStatus();
+}
+$("#devList").addEventListener("click",e=>{
+  const sw=e.target.closest("#usbSw");
+  if(sw){ if(devUsb){devUsb=false;devRender();return}
+    const scr=$("#devPhone");
+    const dlg=document.createElement("div");dlg.className="dlg";
+    dlg.innerHTML='<div class="box"><b>Zezwolić na debugowanie USB?</b>Komputer uzyska dostęp do telefonu przez Android Studio.<div class="drow"><button data-a="no">Anuluj</button><button data-a="yes">Zezwól</button></div></div>';
+    dlg.addEventListener("click",ev=>{const a=ev.target.closest("[data-a]");if(!a)return;
+      if(a.dataset.a==="yes"){devUsb=true;devToast("Debugowanie USB włączone")}
+      dlg.remove();devRender();});
+    scr.appendChild(dlg); return;
+  }
+  const r=e.target.closest(".msRow"); if(!r)return;
+  const go=r.dataset.go;
+  if(go==="about"||go==="soft"||go==="dev"){devScreen=go;devRender()}
+  else if(go==="tap"){
+    if(devUnlocked){devToast("Nie musisz — jesteś już programistą 😄");return}
+    devTaps++;
+    if(devTaps>=7){devUnlocked=true;devToast("Jesteś teraz programistą!");devScreen="main";setTimeout(devRender,REDUCED?0:900)}
+    else if(devTaps>=3)devToast("Jeszcze "+(7-devTaps)+" — zostaniesz programistą");
+    else devToast("…");
+    devRender();
+  }
+});
+$("#devBack").addEventListener("click",()=>{
+  devScreen = devScreen==="soft"?"about" : "main";
+  devRender();
+});
+devRender();
+
+/* ===== PROJECT TREE ===== */
+const TREE=[
+["app","dir",[
+  ["manifests","dir",[["AndroidManifest.xml","file","manifest"]]],
+  ["kotlin+java","dir",[["com.example.myapplication","dir",[["MainActivity","file","main"]]]]],
+  ["java (generated)","file","gen"],
+  ["res","dir",[
+    ["drawable","dir",[["ic_launcher_background.xml","file","draw"]]],
+    ["layout","dir",[["activity_main.xml","file","layout"]]],
+    ["mipmap","dir",[["ic_launcher","file","icon"]]],
+    ["values","dir",[["colors.xml","file","colors"],["strings.xml","file","strings"]]]
+  ]]
+]],
+["Gradle Scripts","dir",[
+  ["build.gradle.kts (Project: My_Application)","file","gradleP"],
+  ["build.gradle.kts (Module :app)","file","gradle"],
+  ["gradle.properties","file","gprops"],
+  ["libs.versions.toml","file","toml"],
+  ["settings.gradle.kts","file","gsettings"]
+]]];
+const FILEINFO={
+ manifest:["AndroidManifest.xml","app / manifests","„Dowód osobisty” aplikacji — deklaruje uprawnienia (np. dostęp do internetu), listę aktywności i metadane. System Android czyta ten plik, zanim uruchomi aplikację."],
+ main:["MainActivity","app / kotlin+java / com.example.myapplication","Aktywność — logika aplikacji pisana w Javie. Definiuje, CO robi aplikacja: reakcje na przyciski, obliczenia, cykl życia. Uwaga: w nowych wersjach Android Studio katalog nazywa się kotlin+java — nawet gdy piszesz w Javie."],
+ gen:["java (generated)","app","Pliki generowane automatycznie podczas budowania — m.in. klasa R, z której bierzemy R.id.nazwa i R.layout.activity_main. Nie edytujemy ich ręcznie."],
+ draw:["drawable","app / res / drawable","Grafiki i tła używane w aplikacji — odwołujemy się do nich przez @drawable/nazwa."],
+ layout:["activity_main.xml","app / res / layout","Układ ekranu w języku XML. Definiuje, JAK wygląda aplikacja: LinearLayout, TextView, EditText, Button… Układy zawsze mają rozszerzenie .xml i leżą w res/layout."],
+ strings:["strings.xml","app / res / values","Zasoby tekstowe. Zamiast wpisywać napisy na sztywno (hardcoded text — żółty Warning!), trzymamy je tutaj i wstawiamy przez @string/nazwa."],
+ colors:["colors.xml","app / res / values","Definicje kolorów używanych w aplikacji — można się do nich odwoływać przez @color/nazwa."],
+ icon:["ic_launcher","app / res / mipmap","Ikony aplikacji w różnych rozdzielczościach — to je widać na ekranie głównym telefonu."],
+ gradle:["build.gradle.kts (Module :app)","Gradle Scripts","Konfiguracja budowania modułu aplikacji: compileSdk, minSdk, targetSdk i zależności (biblioteki). Końcówka .kts oznacza Kotlin DSL — nowszy zapis, który działa tak samo jak dawny build.gradle."],
+ gradleP:["build.gradle.kts (Project)","Gradle Scripts","Konfiguracja całego projektu — wtyczki wspólne dla wszystkich modułów. Gradle to automatyczny menedżer budowania."],
+ gprops:["gradle.properties","Gradle Scripts","Ustawienia procesu budowania, np. ilość pamięci dla Gradle."],
+ toml:["libs.versions.toml","Gradle Scripts","Katalog wersji (Version Catalog) — nowe Android Studio trzyma tu w jednym miejscu numery wersji wszystkich bibliotek."],
+ gsettings:["settings.gradle.kts","Gradle Scripts","Lista modułów projektu i repozytoria, z których Gradle pobiera biblioteki."]};
+function buildTree(nodes){
+  let h="<ul>";
+  nodes.forEach(n=>{
+    const [name,kind,extra]=n;
+    if(kind==="dir"){h+='<li><div class="node dir"><span class="tw">▾</span>📁 '+esc(name)+"</div>"+buildTree(extra)+"</li>"}
+    else{h+='<li><div class="node file" data-f="'+extra+'"><span class="tw" style="visibility:hidden">▾</span>📄 '+esc(name)+"</div></li>"}
+  });
+  return h+"</ul>";
+}
+$("#projTree").innerHTML=buildTree(TREE);
+let tq={on:false,i:0,score:0};
+const TQ=[
+ ["Kliknij plik będący „dowodem osobistym” aplikacji","manifest"],
+ ["Kliknij plik, w którym zdefiniujesz WYGLĄD ekranu","layout"],
+ ["Kliknij plik z logiką aplikacji w Javie","main"],
+ ["Kliknij plik, w którym trzymamy napisy (@string/…)","strings"],
+ ["Kliknij plik, w którym ustawia się minSdk i dodaje biblioteki (moduł :app)","gradle"]];
+$("#projTree").addEventListener("click",e=>{
+  const node=e.target.closest(".node"); if(!node)return;
+  if(node.classList.contains("dir")){node.parentElement.classList.toggle("closed");return}
+  const f=node.dataset.f;
+  $$("#projTree .node").forEach(x=>x.classList.remove("sel"));
+  node.classList.add("sel");
+  const [t,path,desc]=FILEINFO[f];
+  $("#fileInfo").innerHTML="<h3>"+esc(t)+'</h3><div class="path">'+esc(path)+'</div><p style="margin:0;font-size:14px">'+esc(desc)+"</p>";
+  if(tq.on){
+    const want=TQ[tq.i][1], msg=$("#tqMsg");
+    if(f===want){tq.score++;msg.textContent="✔ Dokładnie tak!";msg.style.color="var(--ok)";tq.i++;
+      if(tq.i>=TQ.length){tq.on=false;$("#tqPrompt").textContent="Koniec! Wynik: "+tq.score+" / "+TQ.length+(tq.score===TQ.length?" — perfekcyjnie! 🏆":"");$("#tqStart").textContent="Jeszcze raz";}
+      else $("#tqPrompt").textContent=(tq.i+1)+". "+TQ[tq.i][0];
+    }else{msg.textContent="✘ To "+FILEINFO[f][0]+" — czytaj opisy i spróbuj ponownie.";msg.style.color="var(--err)"}
+    $("#tqScore").textContent="trafienia: "+tq.score;
+  }
+});
+$("#tqStart").addEventListener("click",()=>{
+  tq={on:true,i:0,score:0};
+  $("#tqPrompt").textContent="1. "+TQ[0][0];
+  $("#tqMsg").textContent="";$("#tqScore").textContent="trafienia: 0";
+});
+
+/* ===== LIFECYCLE ===== */
+let lcState="dead", lcBusy=false;
+const lcLogEl=$("#lcLog");
+function lcLog(m){
+  if(lcLogEl.querySelector(".muted"))lcLogEl.innerHTML="";
+  const d=document.createElement("div");d.innerHTML='<span class="d">D/Lifecycle:</span> '+esc(m);
+  lcLogEl.appendChild(d);lcLogEl.scrollTop=lcLogEl.scrollHeight;
+}
+function lcSetApp(mode,txt){const a=$("#lcApp");a.className="lcApp "+mode;a.textContent=txt}
+function lcButtons(){
+  $("#ev-launch").disabled=!(lcState==="dead")||lcBusy;
+  $("#ev-home").disabled=!(lcState==="running")||lcBusy;
+  $("#ev-return").disabled=!(lcState==="stopped")||lcBusy;
+  $("#ev-rotate").disabled=!(lcState==="running")||lcBusy;
+  $("#ev-close").disabled=!(lcState==="running"||lcState==="stopped")||lcBusy;
+}
+function lcPlay(seq,endState,endTxt,appMode,appTxt){
+  lcBusy=true;lcButtons();
+  $$(".lcNode").forEach(n=>n.classList.remove("lit"));
+  const step=i=>{
+    if(i>0){const prev=$('.lcNode[data-m="'+seq[i-1]+'"]');if(prev&&!["running","dead"].includes(seq[i-1]))prev.classList.remove("lit")}
+    if(i>=seq.length){lcState=endState;lcBusy=false;lcButtons();$("#lcState").textContent=endTxt;lcSetApp(appMode,appTxt);return}
+    const n=$('.lcNode[data-m="'+seq[i]+'"]');
+    if(n)n.classList.add("lit");
+    if(!["running","dead"].includes(seq[i]))lcLog(seq[i]+"()");
+    setTimeout(()=>step(i+1),REDUCED?0:420);
+  };
+  step(0);
+}
+$("#ev-launch").addEventListener("click",()=>{lcLog("--- użytkownik dotyka ikony aplikacji ---");lcPlay(["onCreate","onStart","onResume","running"],"running","Aktywność działa — jest na ekranie i reaguje na dotyk.","on","Twoja aplikacja 🙂")});
+$("#ev-home").addEventListener("click",()=>{lcLog("--- użytkownik naciska Home ---");lcPlay(["onPause","onStop"],"stopped","Aktywność zatrzymana — niewidoczna, ale system trzyma ją w pamięci.","homescr","ekran główny telefonu")});
+$("#ev-return").addEventListener("click",()=>{lcLog("--- użytkownik wraca do aplikacji ---");lcPlay(["onRestart","onStart","onResume","running"],"running","Aktywność znów działa — bez ponownego onCreate()!","on","Twoja aplikacja 🙂")});
+$("#ev-rotate").addEventListener("click",()=>{lcLog("--- obrót ekranu: system NISZCZY i tworzy aktywność od nowa! ---");lcPlay(["onPause","onStop","onDestroy","onCreate","onStart","onResume","running"],"running","Po obrocie ekranu aktywność została zbudowana od zera — dlatego niezapisane dane potrafią zniknąć.","on","Twoja aplikacja 🔄")});
+$("#ev-close").addEventListener("click",()=>{
+  const seq=lcState==="running"?["onPause","onStop","onDestroy","dead"]:["onDestroy","dead"];
+  lcLog("--- użytkownik zamyka aplikację ---");
+  lcPlay(seq,"dead","Aktywność zniszczona — system zwolnił pamięć.","dead","wyłączona");
+});
+lcButtons();
+
+/* ===== QUIZ ===== */
+const QUIZ=[
+["Kto i kiedy przejął firmę Android Inc.?",["Google, w 2005 roku (za 50 mln dolarów)","Apple, w 2007 roku","Nokia, w 2001 roku","Samsung, w 2010 roku"],0,"Startup Android Inc. został kupiony przez Google w lipcu 2005 za 50 milionów dolarów."],
+["Pierwszy smartfon z systemem Android to…",["HTC Dream","iPhone","Nokia 3310","Pixel 6a"],0,"HTC Dream (2008). Pixel 6a to telefon, którego używamy dziś jako wzoru emulatora."],
+["Android Studio zbudowano na bazie…",["IntelliJ IDEA firmy JetBrains","Eclipse","Visual Studio","NetBeans"],0,"Android Studio (2013) powstało na bazie IntelliJ IDEA i zastąpiło wcześniejszego Eclipse'a."],
+["Co trzeba zainstalować PRZED Android Studio?",["Pakiet Java JDK","Photoshopa","Drugi system operacyjny","Nic — Android Studio niczego nie wymaga"],0,"Bez JDK (kompilator i maszyna wirtualna Javy) kod nie ruszy. Pobieramy go z oracle.com."],
+["Jaki szablon projektu wybieramy na lekcjach i egzaminie?",["Empty Views Activity","No Activity","Navigation Drawer Views Activity","Game Activity"],0,"Empty Views Activity — chyba że zadanie egzaminacyjne wprost każe wybrać inny."],
+["O czym decyduje Minimum SDK?",["Na jakich urządzeniach zadziała aplikacja","O kolorze aplikacji","O nazwie pakietu","O cenie aplikacji w Google Play"],0,"Minimum SDK = najstarsza wersja Androida, na której aplikacja się uruchomi. CompileSDK/TargetSDK kontrolują dostępne funkcje systemu."],
+["„Dowód osobisty” aplikacji — uprawnienia, aktywności, metadane — to…",["AndroidManifest.xml","strings.xml","build.gradle","activity_main.xml"],0,"AndroidManifest.xml w katalogu manifests deklaruje, czym aplikacja jest i co może."],
+["Czym zajmuje się Gradle?",["Buduje projekt i zarządza zależnościami","Rysuje interfejs użytkownika","Testuje aplikację na telefonie","Tłumaczy aplikację na inne języki"],0,"Gradle to automatyczny menedżer budowania — kompilacja projektu i pobieranie bibliotek."],
+["Która metoda cyklu życia aktywności wywoływana jest jako PIERWSZA?",["onCreate()","onResume()","onStart()","onDestroy()"],0,"Kolejność startu: onCreate() → onStart() → onResume(). W onCreate() wywołujemy setContentView()."],
+["Jak włącza się tryb programisty na telefonie?",["Klikając 7 razy „Numer wersji” w informacjach o oprogramowaniu","Instalując specjalną aplikację","Wyjmując baterię na 10 sekund","Dzwoniąc do serwisu"],0,"7 kliknięć w „Numer wersji” — potem w Opcjach programisty włączamy Debugowanie USB."],
+["Gdzie w Android Studio tworzymy emulator (wirtualny telefon)?",["W Device Manager (Create Virtual Device)","W pliku strings.xml","W Google Play","W AndroidManifest.xml"],0,"Device Manager → „+” → Phone → Pixel 6a → obraz systemu (API 34) → Finish."],
+["Kolejne wersje Androida tradycyjnie nosiły nazwy…",["Słodyczy, po kolejnych literach alfabetu","Planet Układu Słonecznego","Rzek świata","Zwierząt"],0,"Cupcake, Donut, Eclair, Froyo, Gingerbread… — tradycja, która uczyniła system rozpoznawalnym."]];
+const AMOUNTS=[500,1000,2000,5000,10000,20000,40000,75000,125000,250000,500000,1000000];
+const SAFE=[1,6];
+const fmtZl=a=>a.toLocaleString("pl-PL")+" zł";
+let mil=null;
+function milGuaranteed(l){let g=0;SAFE.forEach(s=>{if(l>s)g=AMOUNTS[s]});return g}
+function milPerm(){if(!mil.perm)mil.perm=[0,1,2,3].sort(()=>Math.random()-.5);return mil.perm}
+function milBestPaint(){const b=store.get("milBest",0);
+  $("#milBestLine").textContent=b?"Rekord na tym komputerze: "+fmtZl(b):"Zagraj — Twój rekord zapisze się na tym komputerze.";}
+function milSaveBest(v){const b=store.get("milBest",0);if(v>b)store.set("milBest",v);milBestPaint();}
+function milStart(){
+  mil={order:[...QUIZ.keys()].sort(()=>Math.random()-.5),lvl:0,fifty:true,aud:true,perm:null,dead:[],locked:false,over:false};
+  milRender();
+}
+function milRender(){
+  $("#milLadder").innerHTML=AMOUNTS.map((a,i)=>{
+    const cls=(i===mil.lvl&&!mil.over?"cur ":i<mil.lvl?"passed ":"")+(SAFE.includes(i)?"safeRow":"");
+    return '<li class="'+cls+'"><b>'+(i+1)+"</b><span>"+fmtZl(a)+"</span></li>";
+  }).join("");
+  $("#mil50").disabled=!mil.fifty||mil.locked||mil.over;
+  $("#milAud").disabled=!mil.aud||mil.locked||mil.over;
+  $("#milAmt").textContent="Pytanie "+(mil.lvl+1)+"/12 o "+fmtZl(AMOUNTS[mil.lvl]);
+  const q=QUIZ[mil.order[mil.lvl]], perm=milPerm(), letters=["A","B","C","D"];
+  $("#milQ").textContent=q[0];
+  $("#milAns").innerHTML=perm.map((oi,pos)=>'<button data-oi="'+oi+'"'+(mil.dead.includes(oi)?' class="dead"':"")+'><i>'+letters[pos]+":</i><span>"+esc(q[1][oi])+"</span></button>").join("");
+  $("#milMsg").innerHTML=""; $("#milCtl").innerHTML="";
+  $("#milAudBars").hidden=true;
+  milBestPaint();
+}
+$("#milAns").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-oi]"); if(!b||mil.locked||mil.over)return;
+  mil.locked=true; b.classList.add("lockedA");
+  $("#mil50").disabled=true; $("#milAud").disabled=true;
+  const q=QUIZ[mil.order[mil.lvl]], correct=q[2], expl=q[3];
+  setTimeout(()=>{
+    const chosen=+b.dataset.oi;
+    $$("#milAns button").forEach(x=>{if(+x.dataset.oi===correct)x.classList.add("goodA")});
+    if(chosen===correct){
+      b.classList.remove("lockedA");
+      if(mil.lvl===AMOUNTS.length-1){
+        mil.over=true; milSaveBest(1000000);
+        $("#milMsg").innerHTML="🏆 <strong>MILION! Wygrywasz grę!</strong> "+esc(expl);
+        $("#milCtl").innerHTML='<button class="btn" id="milAgain">Zagraj jeszcze raz</button>';
+      }else{
+        $("#milMsg").innerHTML="✔ Dobrze! "+esc(expl);
+        $("#milCtl").innerHTML='<button class="btn" id="milNext">Następne pytanie →</button>';
+      }
+    }else{
+      b.classList.add("badA");
+      mil.over=true; const g=milGuaranteed(mil.lvl); milSaveBest(g);
+      $("#milMsg").innerHTML="✘ "+esc(expl)+"<br>Kończysz z gwarantowanym: <strong>"+fmtZl(g)+"</strong>.";
+      $("#milCtl").innerHTML='<button class="btn" id="milAgain">Zagraj od nowa</button>';
+    }
+  },REDUCED?0:900);
+});
+$("#milCtl").addEventListener("click",e=>{
+  if(e.target.id==="milNext"){mil.lvl++;mil.perm=null;mil.dead=[];mil.locked=false;milRender()}
+  else if(e.target.id==="milAgain")milStart();
+});
+$("#mil50").addEventListener("click",()=>{
+  if(!mil.fifty||mil.locked||mil.over)return; mil.fifty=false;
+  const correct=QUIZ[mil.order[mil.lvl]][2];
+  mil.dead=[0,1,2,3].filter(o=>o!==correct).sort(()=>Math.random()-.5).slice(0,2);
+  $$("#milAns button").forEach(x=>{if(mil.dead.includes(+x.dataset.oi))x.classList.add("dead")});
+  $("#mil50").disabled=true;
+});
+$("#milAud").addEventListener("click",()=>{
+  if(!mil.aud||mil.locked||mil.over)return; mil.aud=false; $("#milAud").disabled=true;
+  const correct=QUIZ[mil.order[mil.lvl]][2];
+  const alive=[0,1,2,3].filter(o=>!mil.dead.includes(o));
+  const perc={}; let base=(alive.length===2?60:48)+Math.floor(Math.random()*22);
+  perc[correct]=base; let rest=100-base;
+  const others=alive.filter(o=>o!==correct);
+  others.forEach((o,i)=>{const v=(i===others.length-1)?rest:Math.floor(Math.random()*(rest+1));perc[o]=v;rest-=v});
+  const letters=["A","B","C","D"];
+  $("#milAudBars").innerHTML=milPerm().map((oi,pos)=>{const p=perc[oi]??0;
+    return '<div class="bar" style="height:'+Math.max(4,Math.round(p*0.72))+'px"><b>'+p+'%</b><span>'+letters[pos]+"</span></div>"}).join("");
+  $("#milAudBars").hidden=false;
+});
+milStart();
+
+/* init */
+const h=(location.hash||"").slice(1);
+if(["historia","kreator","pliki","cykl","quiz"].includes(h))showTab(h);
+</script>
+
+</html>

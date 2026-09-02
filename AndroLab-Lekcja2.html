@@ -1,0 +1,1881 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>AndroLab</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;900&family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@500;600&display=swap">
+<style>
+:root{
+  --bg:#F4F7F4; --surface:#FFFFFF; --surface2:#EAF0EA; --ink:#1B231E; --muted:#5C6B60;
+  --line:#D6DFD7; --accent:#0C8A4E; --accent-ink:#FFFFFF; --accent-soft:#DCF2E5;
+  --warn:#8A6D00; --warn-bg:#FFF3C4; --err:#B23A2A; --err-bg:#FDE3DE; --ok:#0C8A4E; --ok-bg:#DCF2E5;
+  --code-bg:#2B2B2B; --code-ink:#A9B7C6; --code-line:#3C3F41;
+  --shadow:0 1px 3px rgba(27,35,30,.10),0 4px 14px rgba(27,35,30,.06);
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101512; --surface:#1A211C; --surface2:#232B25; --ink:#E4EAE5; --muted:#97A69B;
+    --line:#2E3830; --accent:#3DDC84; --accent-ink:#06281A; --accent-soft:#1D3A2A;
+    --warn:#FFC94D; --warn-bg:#3A3212; --err:#FF8A73; --err-bg:#40201A; --ok:#4ADE94; --ok-bg:#173527;
+    --shadow:0 1px 3px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101512; --surface:#1A211C; --surface2:#232B25; --ink:#E4EAE5; --muted:#97A69B;
+  --line:#2E3830; --accent:#3DDC84; --accent-ink:#06281A; --accent-soft:#1D3A2A;
+  --warn:#FFC94D; --warn-bg:#3A3212; --err:#FF8A73; --err-bg:#40201A; --ok:#4ADE94; --ok-bg:#173527;
+  --shadow:0 1px 3px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:Roboto,system-ui,sans-serif;font-size:15px;line-height:1.55}
+h1,h2,h3{font-family:Archivo,Roboto,sans-serif;text-wrap:balance;margin:0}
+button{font-family:inherit}
+.wrap{max-width:1360px;margin:0 auto;padding:0 20px 60px}
+.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:22px}
+.logo{display:flex;align-items:center;gap:10px;font-family:Archivo;font-weight:900;font-size:22px;letter-spacing:-.02em}
+.logo svg{flex:none}
+.logo small{font-family:Roboto;font-weight:400;font-size:12px;color:var(--muted);letter-spacing:.04em;display:block}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+nav.tabs button{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 14px;border-radius:999px;font-size:14px;cursor:pointer}
+nav.tabs button:hover{border-color:var(--accent)}
+nav.tabs button[aria-current="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:500}
+nav.tabs button:focus-visible,.btn:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;box-shadow:var(--shadow)}
+.btn{border:none;border-radius:8px;padding:9px 16px;font-size:14px;font-weight:500;cursor:pointer;background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:var(--surface);border:1px solid var(--line);color:var(--ink)}
+.btn.small{padding:5px 10px;font-size:13px}
+.btn:hover{filter:brightness(1.06)}
+.pill{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:500}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}
+.pill.todo{background:var(--surface2);color:var(--muted)}
+.muted{color:var(--muted)}
+code,textarea.code{font-family:"JetBrains Mono",Consolas,monospace}
+code{background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:.9em}
+/* ==== START ==== */
+#tab-start h1{font-size:clamp(30px,4.5vw,44px);font-weight:900;letter-spacing:-.02em}
+#tab-start .lead{max-width:62ch;font-size:17px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:20px}
+.steps .card b{display:block;font-size:15px;margin-bottom:4px}
+.steps .card span.n{font-family:"JetBrains Mono";font-size:12px;color:var(--accent);font-weight:600;display:block;margin-bottom:6px}
+.credit{margin-top:26px;font-size:13px;color:var(--muted);max-width:70ch}
+/* handout — kartka teorii w stylu materiałów z lekcji (celowo stały, jasny papier) */
+.handout{background:#F7F2E1;color:#42362D;border:1px solid #E3D9BE;border-radius:14px;padding:28px 30px;max-width:920px;margin:26px 0 6px;box-shadow:var(--shadow)}
+.hTitle{font-family:"Playfair Display",Georgia,serif;font-weight:500;font-size:clamp(24px,3.2vw,32px);line-height:1.25;color:#4A3527;margin:0 0 12px;text-wrap:balance}
+.hSub{font-family:"Playfair Display",Georgia,serif;font-weight:500;font-size:22px;color:#4A3527;margin:10px 0 8px;text-wrap:balance}
+.hHead{font-family:"Playfair Display",Georgia,serif;font-weight:600;font-size:17.5px;color:#4A3527;margin:24px 0 8px}
+.handout p{font-size:14.5px;line-height:1.6;color:#5A4C40;margin:0 0 6px}
+.handout strong{color:#3E2F23}
+.handout code{background:#EDE1C1;color:#5A4326}
+.hRule{border:none;border-top:1px solid #C9BC9C;margin:16px 0}
+.hTag{display:inline-block;background:#EDE1C1;color:#6B5138;font-size:11.5px;letter-spacing:.08em;padding:3px 10px;border-radius:4px;font-weight:600}
+.hGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:6px 28px}
+.hGrid>div{border-top:2px solid #C9852F;padding-top:8px;margin-top:6px}
+.hGrid b{display:block;font-size:14.5px;color:#3E2F23;margin-bottom:2px}
+.hFlow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-family:"JetBrains Mono",monospace;font-size:13px;color:#6B5138;margin:8px 0 10px}
+.hFlow span{background:#EDE1C1;border-radius:8px;padding:6px 12px}
+.hWork{font-family:Archivo,Roboto,sans-serif;font-size:19px;font-weight:900;margin:30px 0 12px}
+.hKrok{display:inline-block;background:#EDE1C1;color:#6B5138;font-size:11px;letter-spacing:.08em;padding:3px 10px;border-radius:4px;font-weight:600;margin-bottom:8px}
+.hKrok.exam{background:#F3D9C4;color:#8A4A1E}
+.handout pre{background:#EFEBDA;color:#4A3B2E;border:1px solid #E0D7BC;border-radius:8px;padding:12px;font-size:12.5px;line-height:1.55;overflow-x:auto;font-family:"JetBrains Mono",monospace;margin:8px 0}
+.hCols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.hMini{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin-top:10px}
+.hMini>div{background:#FBF8EC;border:1px solid #E3D9BE;border-radius:10px;padding:12px}
+.hMini b{display:block;font-family:"Playfair Display",Georgia,serif;font-size:15px;color:#4A3527;margin-bottom:4px}
+.hMini p{font-size:13px;margin:0}
+.hNote{background:#F6E2D2;border-radius:10px;padding:12px 16px;font-size:13.5px;color:#6B4630;margin:12px 0 0}
+#tab-teoria .handout{margin:0 0 18px}
+/* milionerzy */
+.milWrap{display:grid;grid-template-columns:minmax(0,1fr) 215px;gap:18px;align-items:start;max-width:1000px}
+@media(max-width:820px){.milWrap{grid-template-columns:1fr}}
+.milBoard{background:#151A38;border:1px solid #2A3160;border-radius:16px;padding:18px;color:#E8EAF6}
+.milTop{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.life{border:1.5px solid #4A57A8;background:#1E2650;color:#AEB8F0;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;cursor:pointer}
+.life:hover:not(:disabled){border-color:#8FA0FF}
+.life:disabled{opacity:.35;text-decoration:line-through;cursor:not-allowed}
+.milAmt{margin-left:auto;font-family:"JetBrains Mono";font-size:13px;color:#FFC94D}
+.milQ{background:#1E2650;border:1px solid #3A4488;border-radius:12px;padding:14px 16px;font-size:16px;font-weight:500;min-height:3em;display:flex;align-items:center}
+.milAns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+@media(max-width:640px){.milAns{grid-template-columns:1fr}}
+.milAns button{display:flex;gap:8px;align-items:baseline;text-align:left;background:#1E2650;border:1.5px solid #3A4488;color:#E8EAF6;border-radius:999px;padding:10px 18px;font-size:14px;cursor:pointer}
+.milAns button i{font-style:normal;color:#FFC94D;font-weight:700;font-family:"JetBrains Mono"}
+.milAns button:hover{border-color:#8FA0FF}
+.milAns button.dead{opacity:.22;pointer-events:none}
+.milAns button.lockedA{background:#8A6D00;border-color:#E8A33D;color:#FFF}
+.milAns button.goodA{background:#0C6B3D;border-color:#3DDC84;color:#FFF}
+.milAns button.badA{background:#7A2A1E;border-color:#FF8A73;color:#FFF}
+.milAudBars{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 4px 20px;align-items:end;height:92px}
+.milAudBars .bar{background:#3A4488;border-radius:6px 6px 0 0;position:relative;min-height:4px}
+.milAudBars .bar b{position:absolute;top:-20px;left:0;right:0;text-align:center;font-size:11px;color:#AEB8F0}
+.milAudBars .bar span{position:absolute;bottom:-18px;left:0;right:0;text-align:center;font-size:11px;color:#FFC94D;font-family:"JetBrains Mono"}
+.milMsg{margin-top:12px;font-size:13.5px;color:#AEB8F0;min-height:1.4em}
+.milCtl{margin-top:10px;display:flex;gap:10px;flex-wrap:wrap}
+.milCtl .btn{background:#FFC94D;color:#151A38}
+.milLadder{list-style:none;margin:0;padding:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column-reverse;gap:2px}
+@media(max-width:820px){.milLadder{flex-direction:row-reverse;overflow-x:auto;gap:6px}.milLadder li{flex:none}}
+.milLadder li{display:flex;justify-content:space-between;gap:10px;font-family:"JetBrains Mono";font-size:12px;padding:4px 10px;border-radius:6px;color:var(--muted)}
+.milLadder li.safeRow{color:var(--ink);font-weight:600}
+.milLadder li.cur{background:var(--accent);color:var(--accent-ink)}
+.milLadder li.passed{color:var(--accent)}
+/* ==== IDE PLAYGROUND ==== */
+.secHead{margin:26px 0 14px}
+.secHead h2{font-size:22px;font-weight:900}
+.secHead p{color:var(--muted);margin:4px 0 0;max-width:80ch}
+.edToolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+select,input[type=text]{font-family:inherit;font-size:13px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:6px 8px;max-width:100%}
+.play{display:grid;grid-template-columns:210px minmax(0,1fr) 372px;gap:16px;align-items:start}
+@media(max-width:1120px){.play{grid-template-columns:minmax(0,1fr) 372px}.projPanel{display:none}}
+@media(max-width:900px){.play{grid-template-columns:1fr}}
+/* project tree (Android Studio dark) */
+.projPanel{background:var(--code-bg);border:1px solid var(--code-line);border-radius:10px;overflow:hidden}
+.projPanel header{background:#3C3F41;color:#BBB;font-size:12px;padding:7px 12px;font-family:"JetBrains Mono"}
+.tree{padding:8px 4px;font-family:"JetBrains Mono";font-size:12.5px;color:#A9B7C6}
+.tree ul{list-style:none;margin:0;padding-left:14px}
+.tree>ul{padding-left:4px}
+.tree .node{display:flex;gap:5px;align-items:center;padding:3px 8px;border-radius:6px;cursor:pointer;white-space:nowrap}
+.tree .node:hover{background:#3A4A3E}
+.tree .node.sel{background:#0D3A26;color:#8CE0B0}
+/* editor */
+.edTabs{display:flex;gap:2px;flex-wrap:wrap}
+.edTabs button{border:1px solid transparent;background:transparent;color:var(--muted);padding:8px 13px;font-size:12.5px;font-family:"JetBrains Mono";cursor:pointer;border-radius:8px 8px 0 0}
+.edTabs button[aria-current="true"]{background:var(--code-bg);color:#E8E8E8;border-color:var(--code-line);border-bottom-color:var(--code-bg)}
+.edPane{background:var(--code-bg);border:1px solid var(--code-line);border-radius:0 10px 10px 10px;overflow:hidden}
+textarea.code{width:100%;min-height:430px;resize:vertical;border:none;background:var(--code-bg);color:#E8E8E8;padding:14px;font-size:13px;line-height:1.6;display:block;tab-size:4}
+textarea.code:focus{outline:none;box-shadow:inset 0 0 0 2px #4A6B50}
+textarea.code[readonly]{color:#8A9A8E}
+.logcat{margin-top:12px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.logcat header{background:var(--surface2);padding:6px 12px;font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.logcat ul{list-style:none;margin:0;padding:6px 0;background:var(--surface);max-height:150px;overflow:auto}
+.logcat li{padding:3px 12px;font-family:"JetBrains Mono";font-size:12.5px;display:flex;gap:8px;align-items:baseline}
+.logcat li b{flex:none;font-weight:600;border-radius:4px;padding:0 6px;font-size:11px}
+.logcat li.err b{background:var(--err-bg);color:var(--err)}
+.logcat li.warn b{background:var(--warn-bg);color:var(--warn)}
+.logcat li.info b{background:var(--surface2);color:var(--muted)}
+.logcat li.okrow b{background:var(--ok-bg);color:var(--ok)}
+/* phone / running devices */
+.phoneWrap{position:sticky;top:16px}
+@media(max-width:900px){.phoneWrap{position:static}}
+.runHead{display:flex;align-items:center;gap:10px;background:var(--code-bg);border:1px solid var(--code-line);border-radius:10px 10px 0 0;padding:7px 12px;color:#BBB;font-family:"JetBrains Mono";font-size:12px}
+.runBtn{margin-left:auto;border:none;background:#365880;color:#E8E8E8;border-radius:6px;padding:5px 14px;font-size:13px;cursor:pointer;display:flex;gap:6px;align-items:center}
+.runBtn:hover{filter:brightness(1.15)}
+.runBtn .tri{color:#5FD38A}
+.phoneShell{background:var(--code-bg);border:1px solid var(--code-line);border-top:none;border-radius:0 0 10px 10px;padding:14px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.phone{width:330px;max-width:100%;background:#111;border-radius:28px;padding:9px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.screen{background:#FFFFFF;border-radius:21px;overflow:hidden;min-height:540px;display:flex;flex-direction:column;position:relative;font-family:Roboto,sans-serif;color:#1C1B1F}
+.statusbar{background:#4A148C;color:#fff;font-size:11px;padding:4px 14px;display:flex;justify-content:space-between;font-family:Roboto}
+.appbar{background:#6750A4;color:#fff;padding:11px 16px;font-size:16px;font-weight:500;font-family:Roboto}
+.content{flex:1;overflow:auto;position:relative}
+.phoneCaption{font-size:11.5px;color:#8A9A8E;font-family:"JetBrains Mono"}
+.dirtyNote{font-size:12px;color:var(--warn);min-height:1.2em;font-family:"JetBrains Mono"}
+/* android widgets */
+.aw-tv{padding:4px 2px;font-size:14px;color:#1C1B1F;min-height:1em;overflow-wrap:anywhere}
+.aw-et{border:none;border-bottom:2px solid #79747E;background:#F3EDF7;padding:10px 8px 8px;font-size:15px;font-family:Roboto;color:#1C1B1F;border-radius:4px 4px 0 0;margin:4px 2px}
+.aw-et:focus{outline:none;border-bottom-color:#6750A4}
+.aw-et::placeholder{color:#8A8792}
+.aw-btn{border:none;border-radius:20px;background:#6200EE;color:#fff;font-family:Roboto;font-weight:500;font-size:14px;letter-spacing:.05em;text-transform:uppercase;padding:10px 20px;margin:6px 2px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.aw-btn:active{filter:brightness(.9)}
+.aw-seek{accent-color:#6200EE;margin:10px 2px}
+.aw-check,.aw-radio{display:flex;gap:10px;align-items:center;margin:7px 2px;font-size:14.5px;font-family:Roboto;color:#1C1B1F;cursor:pointer}
+.aw-check input,.aw-radio input{width:19px;height:19px;accent-color:#6200EE;margin:0;flex:none}
+.aw-unknown{margin:4px 2px;padding:6px 10px;background:#FFF3C4;color:#8A6D00;font-size:12px;border-radius:6px;font-family:"JetBrains Mono"}
+.toast{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);background:#323232;color:#fff;padding:9px 18px;border-radius:22px;font-size:13px;font-family:Roboto;opacity:0;transition:opacity .25s;pointer-events:none;max-width:88%;text-align:center}
+.toast.show{opacity:.96}
+@media (prefers-reduced-motion: reduce){.toast{transition:none}}
+/* ==== TASKS ==== */
+.taskGrid{display:grid;gap:14px;max-width:900px}
+.task .thead{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.task .thead h3{font-size:16px}
+.task p{margin:8px 0 10px;max-width:78ch}
+details.hint{font-size:13.5px;margin-top:8px}
+details.hint summary{cursor:pointer;color:var(--accent);font-weight:500}
+details.hint pre{background:var(--code-bg);color:#E8E8E8;padding:10px;border-radius:8px;overflow-x:auto;font-size:12.5px;font-family:"JetBrains Mono";line-height:1.55}
+.homework details.hw{border:1px solid var(--line);border-radius:10px;background:var(--surface);margin-bottom:10px}
+.homework summary{padding:12px 16px;cursor:pointer;font-weight:500}
+.homework .hwBody{padding:0 16px 14px;max-width:78ch}
+/* ==== QUIZ ==== */
+.quiz{max-width:760px}
+.q{margin-bottom:16px}
+.q h3{font-size:15.5px;margin-bottom:10px}
+.q .opts{display:grid;gap:8px}
+.q .opts button{text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:9px;padding:10px 14px;font-size:14px;cursor:pointer}
+.q .opts button:hover:not(:disabled){border-color:var(--accent)}
+.q .opts button.right{background:var(--ok-bg);border-color:var(--ok);color:var(--ink)}
+.q .opts button.wrong{background:var(--err-bg);border-color:var(--err);color:var(--ink)}
+.q .expl{display:none;font-size:13.5px;color:var(--muted);margin-top:8px;border-left:3px solid var(--accent);padding-left:10px}
+.q[data-done="1"] .expl{display:block}
+.scoreBox{position:sticky;top:12px;z-index:2;display:flex;gap:14px;align-items:center;margin-bottom:18px}
+/* ==== BUGS ==== */
+.bug{margin-bottom:22px;max-width:900px}
+.bug pre{margin:10px 0 0;background:var(--code-bg);border-radius:10px;overflow-x:auto;padding:8px 0}
+.bug .ln{display:flex;cursor:pointer;padding:2px 14px;font-family:"JetBrains Mono";font-size:13px;color:#E8E8E8;white-space:pre}
+.bug .ln:hover{background:#3A4A3E}
+.bug .ln .no{color:#6B6B6B;width:2.2em;flex:none;user-select:none}
+.bug .ln.hit{background:#274434;box-shadow:inset 3px 0 0 var(--ok)}
+.bug .ln.miss{background:#4A2A24}
+.bug .verdict{font-size:13.5px;margin-top:8px}
+.bug .verdict.good{color:var(--ok)} .bug .verdict.bad{color:var(--err)}
+/* ==== SHEET ==== */
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.sheet .card h3{font-size:14.5px;margin-bottom:8px}
+.sheet pre{background:var(--code-bg);color:#E8E8E8;padding:10px;border-radius:8px;overflow-x:auto;font-size:12px;line-height:1.55;margin:0 0 8px;font-family:"JetBrains Mono"}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="logo">
+    <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect x="3" y="10" width="28" height="17" rx="7" fill="#3DDC84"/><circle cx="12" cy="18" r="2.2" fill="#06281A"/><circle cx="22" cy="18" r="2.2" fill="#06281A"/><line x1="9" y1="6" x2="12.5" y2="10.5" stroke="#3DDC84" stroke-width="2.4" stroke-linecap="round"/><line x1="25" y1="6" x2="21.5" y2="10.5" stroke="#3DDC84" stroke-width="2.4" stroke-linecap="round"/></svg>
+    <div>AndroLab<small>pracownia Androida w przeglądarce</small></div>
+  </div>
+  <nav class="tabs" id="mainTabs">
+    <button data-tab="start" aria-current="true">Start</button>
+    <button data-tab="teoria">Teoria</button>
+    <button data-tab="play">Plac zabaw</button>
+    <button data-tab="tasks">Zadania</button>
+    <button data-tab="quiz">Milionerzy</button>
+    <button data-tab="bugs">Znajdź błąd</button>
+    <button data-tab="sheet">Ściąga</button>
+  </nav>
+</header>
+
+<!-- ============ START ============ -->
+<section id="tab-start">
+  <h1>Zbuduj aplikację Android.<br>Bez Android Studio.</h1>
+  <p class="lead">Dziś pracujesz jak w prawdziwym IDE: piszesz układ ekranu w <code>activity_main.xml</code>
+  i <strong>prawdziwy kod Java</strong> w <code>MainActivity.java</code>, a telefon w panelu Running Devices
+  pokazuje działającą aplikację — dokładnie jak na egzaminie <strong>INF.04</strong>, tylko bez czekania na emulator.</p>
+
+  <div class="handout">
+    <h3 class="hTitle">2. Tworzenie aplikacji Android — od układu do działającego przycisku</h3>
+    <p>Nauczysz się budować ekran aplikacji w XML i reagować na kliknięcia przycisku w Javie —
+    materiał przygotowujący do egzaminu <strong>INF.04 CKE</strong> dla technikum, kierunek technik programista.</p>
+    <hr class="hRule">
+    <span class="hTag">TEMAT 2</span>
+    <h4 class="hSub">Układy, widoki i pierwsza interakcja z użytkownikiem</h4>
+    <p>Poznaj LinearLayout, kluczowe widżety i naucz się łączyć kod XML z logiką w Javie —
+    to fundament każdego zadania na egzaminie.</p>
+
+    <h4 class="hHead">Co musisz umieć na egzaminie INF.04?</h4>
+    <div class="hGrid">
+      <div><b>Układ ekranu (XML)</b><p>Poprawna budowa layoutu: LinearLayout z widżetami TextView, EditText i Button — każdy na właściwym miejscu.</p></div>
+      <div><b>Atrybut android:id</b><p>Unikalny identyfikator każdego widżetu — niezbędny, by pobrać go w Javie metodą findViewById().</p></div>
+      <div><b>Obsługa kliknięcia</b><p>Podpięcie akcji do przycisku przez setOnClickListener() i wyświetlenie wyniku — np. Toast albo zmiana tekstu.</p></div>
+      <div><b>Pobranie danych z pola</b><p>Odczyt tego, co użytkownik wpisał w EditText, przez .getText().toString() i użycie tego w logice aplikacji.</p></div>
+    </div>
+
+    <h4 class="hHead">Trzy pojęcia, które będą w każdym zadaniu</h4>
+    <div class="hGrid">
+      <div><b>Układ (Layout)</b><p>JAK wygląda aplikacja. Pliki .xml w katalogu res/layout — sposób rozmieszczenia elementów na ekranie.</p></div>
+      <div><b>Aktywność (Activity)</b><p>CO robi aplikacja. Pliki .java w katalogu java — np. reakcja na wciśnięcie przycisku.</p></div>
+      <div><b>Widok (View / widżet)</b><p>Element umieszczony w układzie: pole tekstowe TextView, pole edycyjne EditText, przycisk Button.</p></div>
+    </div>
+
+    <h4 class="hHead">Wymiary i napisy</h4>
+    <p><strong>match_parent</strong> rozciąga element do rozmiaru rodzica (np. na pełną szerokość ekranu),
+    a <strong>wrap_content</strong> dopasowuje go do zawartości (np. do długości napisu na przycisku).
+    W LinearLayout atrybut <strong>android:orientation</strong> ustawia elementy jeden pod drugim (vertical)
+    albo obok siebie (horizontal). Napisy trzymamy w pliku <strong>strings.xml</strong> (katalog res/values)
+    i wstawiamy przez <code>@string/nazwa</code> — tekst wpisany na sztywno to żółte ostrzeżenie <em>hardcoded text</em>.</p>
+
+    <h4 class="hHead">Warning kontra Error</h4>
+    <div class="hGrid">
+      <div><b>⚠ Warning (żółty)</b><p>Sygnał „można napisać lepiej” — aplikacja mimo to się uruchomi. Przykład: hardcoded text.</p></div>
+      <div><b>⛔ Error (czerwony)</b><p>Emulator nie uruchomi aplikacji z błędem — najpierw trzeba go naprawić. Przykład: błąd składni XML, nieznany symbol.</p></div>
+    </div>
+
+    <h4 class="hHead">Schemat każdego zadania egzaminacyjnego</h4>
+    <div class="hFlow"><span>Kliknięcie</span>→<span>onClick()</span>→<span>pobierz dane</span>→<span>wyświetl wynik</span></div>
+    <p style="margin-bottom:0">Bez względu na treść zadania zawsze powtarza się ten sam wzorzec: kliknięcie → pobranie danych →
+    przetworzenie → wyświetlenie wyniku. Gotowe wzorce kodu znajdziesz w zakładce <strong>Ściąga</strong>,
+    a wszystko przećwiczysz w <strong>Placu zabaw</strong>.</p>
+  </div>
+
+  <h3 class="hWork">Jak pracować z tą stroną</h3>
+  <div class="steps">
+    <div class="card"><span class="n">KROK 1</span><b>Plac zabaw</b>Otwórz <em>Plac zabaw</em>: po lewej drzewo projektu, w środku edytor XML i Javy, po prawej telefon. Zmień coś i kliknij zielone ▶.</div>
+    <div class="card"><span class="n">KROK 2</span><b>Zadania</b>Wykonaj 5 zadań z lekcji, pisząc XML i Javę. Przycisk <em>Sprawdź</em> naprawdę klika Twoją aplikację i ocenia, czy działa.</div>
+    <div class="card"><span class="n">KROK 3</span><b>Quiz i Znajdź błąd</b>Na koniec sprawdź teorię w quizie i wytrop błędy w kodzie — takie same, jakie łapią uczniów na egzaminie.</div>
+  </div>
+  <div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="goPlay">Zaczynamy →</button>
+  <a class="btn ghost" id="linkL1" href="AndroLab-Lekcja1.html" style="text-decoration:none;display:inline-flex;align-items:center">← Lekcja 1: historia, środowisko, cykl życia</a></div>
+  <p class="credit">Zakres: temat 2 „Tworzenie aplikacji Android — od układu do działającego przycisku" (LinearLayout, TextView, EditText, Button, CheckBox, RadioGroup, SeekBar, findViewById, setOnClickListener, Toast). Przygotowanie do egzaminu zawodowego INF.04 — technik programista. Uwaga: to symulator dydaktyczny obsługujący lekcyjny podzbiór Javy — prawdziwe aplikacje kompilujemy w Android Studio.</p>
+</section>
+
+<!-- ============ TEORIA ============ -->
+<section id="tab-teoria" hidden>
+  <div class="secHead"><h2>Teoria — temat 2 krok po kroku</h2>
+  <p>Kompletny materiał lekcji. Czytaj po kolei — każdy KROK oznaczony „EGZAMIN!" to umiejętność sprawdzana wprost na INF.04. Wszystko przećwiczysz potem w <strong>Placu zabaw</strong>.</p></div>
+
+  <div class="handout"><span class="hKrok">KROK 1</span>
+    <h4 class="hSub">Tworzenie nowej aplikacji — krok po kroku</h4>
+    <p>Tworzenie nowej aplikacji zawsze rozpoczynamy od otwarcia nowego projektu. W lewym górnym rogu okna wybieramy <strong>File → New → New Project</strong>.</p>
+    <div class="hMini">
+      <div><b>File → New → New Project</b><p>Otwieramy menu File w lewym górnym rogu Android Studio.</p></div>
+      <div><b>Wybieramy: Empty Views Activity</b><p>Jeżeli w zadaniu egzaminacyjnym nie podano innego szablonu — zawsze wybieramy właśnie ten.</p></div>
+      <div><b>Konfiguracja projektu</b><p>Uzupełniamy: Name (np. Aplikacja2), Package name (np. przyklad.nr2), Language → Java, Minimum SDK → najwyższy dostępny.</p></div>
+      <div><b>Finish</b><p>Android Studio generuje strukturę projektu z plikami MainActivity.java i activity_main.xml.</p></div>
+    </div>
+  </div>
+
+  <div class="handout"><span class="hKrok">KROK 2</span>
+    <h4 class="hSub">Podstawowe pojęcia — Układ, Aktywność, Widok</h4>
+    <p>Te trzy pojęcia będą się pojawiać w każdym zadaniu egzaminacyjnym.</p>
+    <div class="hMini">
+      <div><b>Układ (Layout)</b><p>Sposób rozmieszczenia elementów na ekranie. Pliki układów leżą w katalogu res/layout i zawsze mają rozszerzenie .xml. To tu definiujemy, JAK wygląda aplikacja.</p></div>
+      <div><b>Aktywność (Activity)</b><p>Działanie, jakie wykonuje aplikacja — np. reakcja na wciśnięcie przycisku. Pliki .java w katalogu java. To tu definiujemy, CO robi aplikacja.</p></div>
+      <div><b>Widok (View / widżet)</b><p>Element umieszczony w układzie: pole tekstowe TextView, pole edycyjne EditText, przycisk Button.</p></div>
+    </div>
+  </div>
+
+  <div class="handout"><span class="hKrok">KROK 3</span>
+    <h4 class="hSub">Układ liniowy — LinearLayout</h4>
+    <p>Cecha charakterystyczna LinearLayout: każdy element jest układany <strong>jeden po drugim</strong> — w kolejności, w jakiej jest wpisany w pliku XML.</p>
+<pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"&gt;
+
+  &lt;TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/tekst1" /&gt;
+
+  &lt;Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/przycisk1" /&gt;
+
+  &lt;Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/przycisk2" /&gt;
+
+&lt;/LinearLayout&gt;</pre>
+    <div class="hMini">
+      <div><b>android:orientation</b><p><strong>vertical</strong> — elementy jeden pod drugim; <strong>horizontal</strong> — elementy obok siebie.</p></div>
+      <div><b>match_parent</b><p>Rozciąga element do rozmiaru rodzica — np. do pełnej szerokości ekranu.</p></div>
+      <div><b>wrap_content</b><p>Dopasowuje rozmiar do zawartości — np. do długości napisu na przycisku.</p></div>
+    </div>
+    <p style="margin-top:10px">Po uruchomieniu Przycisk 1 (match_parent) jest rozciągnięty na pełną szerokość ekranu, a Przycisk 2 (wrap_content) ma szerokość dopasowaną do napisu.</p>
+  </div>
+
+  <div class="handout"><span class="hKrok">KROK 4</span>
+    <h4 class="hSub">Plik strings.xml — zasoby tekstowe</h4>
+    <div class="hCols">
+      <div>
+        <p><strong>Dlaczego unikać hardcoded text?</strong> Android Studio zgłasza ostrzeżenie (warning), gdy tekst jest wpisany bezpośrednio w układzie. Hardcoding utrudnia też tłumaczenie aplikacji na inne języki.</p>
+<pre>&lt;resources&gt;
+  &lt;string name="app_name"&gt;Aplikacja2&lt;/string&gt;
+  &lt;string name="tekst1"&gt;Witaj programisto&lt;/string&gt;
+  &lt;string name="przycisk1"&gt;To jest przycisk 1&lt;/string&gt;
+  &lt;string name="przycisk2"&gt;To jest przycisk 2&lt;/string&gt;
+&lt;/resources&gt;</pre>
+      </div>
+      <div>
+        <p><strong>Odwołanie do zasobu w układzie.</strong> Znak @ informuje, że sięgamy do innego pliku; po ukośniku podajemy nazwę łańcucha.</p>
+<pre>android:text="@string/tekst1"
+android:text="@string/przycisk1"
+android:text="@string/przycisk2"</pre>
+        <p>Wygląd aplikacji nie zmienia się — z edytora znikają tylko żółte ostrzeżenia.</p>
+      </div>
+    </div>
+    <p style="margin-top:10px">Trzy najważniejsze katalogi projektu to: <strong>manifests</strong>, <strong>java</strong> i <strong>res</strong>. Plik strings.xml znajdziemy w katalogu res/values.</p>
+  </div>
+
+  <div class="handout"><span class="hKrok">KROK 5</span>
+    <h4 class="hSub">Warning a Error — rodzaje błędów</h4>
+    <div class="hMini">
+      <div><b>⚠ Warning (ostrzeżenie)</b><p>Oznaczony żółtym kolorem. Sygnał, że coś można napisać lepiej — ale aplikacja uruchomi się mimo ostrzeżeń. Przykład: hardcoded text.</p></div>
+      <div><b>⛔ Error (błąd)</b><p>Oznaczony czerwonym kolorem. Emulator nie uruchomi aplikacji, w której znajdzie Error — np. brakującą klasę, nieznany symbol, błąd składni XML. Napraw go przed uruchomieniem!</p></div>
+    </div>
+    <p style="margin-top:10px"><strong>Jak ponownie uruchomić aplikację po zmianach?</strong> Kliknij zieloną zaokrągloną strzałkę (przycisk Rerun) w górnym pasku narzędzi — Android Studio skompiluje projekt od nowa i załaduje zmiany w emulatorze.</p>
+  </div>
+
+  <div class="handout"><span class="hKrok exam">KROK 6 — EGZAMIN!</span>
+    <h4 class="hSub">Atrybut android:id — klucz do Javy</h4>
+    <p>Do tej pory budowaliśmy tylko wygląd aplikacji. Czas połączyć interfejs XML z kodem Java — podstawą tego połączenia jest atrybut <strong>android:id</strong>, który nadaje widżetowi unikalny identyfikator.</p>
+<pre>&lt;TextView
+    android:id="@+id/tekstPowitania"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/tekst1" /&gt;
+
+&lt;EditText
+    android:id="@+id/poleImie"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Wpisz swoje imię" /&gt;
+
+&lt;Button
+    android:id="@+id/przyciskWitaj"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Przywitaj mnie" /&gt;</pre>
+    <div class="hMini">
+      <div><b>Składnia: @+id/nazwaWidzetu</b><p>Znak @+id/ tworzy nowy identyfikator w pliku zasobów R.java. Nazwę po ukośniku nadawaj opisowo, np. poleImie, przyciskWitaj.</p></div>
+      <div><b>android:hint — podpowiedź</b><p>Wyświetla szarą podpowiedź wewnątrz pustego pola EditText. Znika automatycznie, gdy użytkownik zaczyna pisać.</p></div>
+    </div>
+  </div>
+
+  <div class="handout"><span class="hKrok exam">KROK 7 — EGZAMIN!</span>
+    <h4 class="hSub">Nowy widżet: EditText — pole do wpisywania tekstu</h4>
+    <p>EditText to pole edycyjne, w którym użytkownik może wpisać tekst — pojawia się w niemal każdym zadaniu mobilnym INF.04.</p>
+    <div class="hMini">
+      <div><b>android:hint</b><p>Szara podpowiedź w pustym polu — informuje użytkownika, co wpisać.</p></div>
+      <div><b>android:inputType</b><p>Typ klawiatury: text, textPersonName, number, phone — dopasowuje klawiaturę do rodzaju danych.</p></div>
+      <div><b>android:id — obowiązkowy!</b><p>Bez id nie pobierzemy wartości pola w Javie. Zawsze nadawaj id widżetom używanym w kodzie.</p></div>
+    </div>
+  </div>
+
+  <div class="handout"><span class="hKrok exam">KROK 8 — EGZAMIN!</span>
+    <h4 class="hSub">Łączenie XML z Javą — metoda findViewById()</h4>
+    <p>Aby używać widżetów w kodzie Java, musimy je najpierw „odnaleźć" metodą <strong>findViewById()</strong> — przekazujemy jej identyfikator, a ona zwraca obiekt, którym możemy sterować.</p>
+<pre>public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // Pobieramy widżety z układu XML za pomocą ich id
+        TextView tekstPowitania = (TextView) findViewById(R.id.tekstPowitania);
+        EditText poleImie       = (EditText) findViewById(R.id.poleImie);
+        Button   przyciskWitaj  = (Button)   findViewById(R.id.przyciskWitaj);
+    }
+}</pre>
+    <div class="hMini">
+      <div><b>R.id.nazwaWidzetu</b><p>Android generuje plik R.java z ID wszystkich zasobów. Piszemy R.id. i podajemy nazwę z atrybutu android:id.</p></div>
+      <div><b>Rzutowanie (casting)</b><p>Nawias z typem, np. (TextView), informuje Javę, jaki obiekt pobieramy. W nowych wersjach Android Studio można go pominąć.</p></div>
+      <div><b>Kolejność ma znaczenie!</b><p>setContentView() MUSI być przed findViewById(). Najpierw ładujemy układ, potem szukamy w nim widżetów. Odwrotnie = błąd!</p></div>
+    </div>
+  </div>
+
+  <div class="handout"><span class="hKrok exam">KROK 9 — EGZAMIN!</span>
+    <h4 class="hSub">Obsługa kliknięcia — setOnClickListener()</h4>
+    <p>Gdy użytkownik klika przycisk, Java musi zareagować. Metodę <strong>setOnClickListener()</strong> podpinamy pod obiekt Button, a wewnątrz piszemy kod, który ma się wykonać po kliknięciu.</p>
+<pre>przyciskWitaj.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        // Pobieramy tekst z pola EditText
+        String imie = poleImie.getText().toString();
+        // Wyświetlamy wynik w TextView
+        tekstPowitania.setText("Witaj, " + imie + "!");
+    }
+});</pre>
+    <div class="hMini">
+      <div><b>setOnClickListener()</b><p>Metoda przypisana do obiektu Button — reaguje na każde kliknięcie przycisku.</p></div>
+      <div><b>onClick(View v)</b><p>Wywoływana automatycznie przy każdym kliknięciu. Tu piszemy całą logikę działania przycisku.</p></div>
+      <div><b>.getText().toString()</b><p>Pobiera tekst wpisany w EditText i zamienia go na typ String.</p></div>
+      <div><b>.setText("tekst")</b><p>Ustawia nowy tekst w widżecie TextView — wyświetla wynik na ekranie.</p></div>
+    </div>
+  </div>
+
+  <div class="handout"><span class="hKrok exam">KROK 10 — EGZAMIN!</span>
+    <h4 class="hSub">Toast — krótki komunikat wyskakujący</h4>
+    <p>Toast pojawia się na ekranie na kilka sekund i znika automatycznie. Na egzaminie to częsty sposób wyświetlania wyniku działania przycisku.</p>
+<pre>Toast.makeText(
+    getApplicationContext(),
+    "Witaj, " + imie + "!",
+    Toast.LENGTH_SHORT
+).show();</pre>
+    <div class="hMini">
+      <div><b>Toast.makeText()</b><p>Tworzy obiekt komunikatu. Przyjmuje 3 parametry: kontekst (getApplicationContext()), tekst wiadomości i czas wyświetlania.</p></div>
+      <div><b>Toast.LENGTH_SHORT</b><p>Komunikat widać przez ok. 2 sekundy. Użyj LENGTH_LONG dla ok. 3,5 sekundy.</p></div>
+      <div><b>.show()</b><p>Obowiązkowe wywołanie na końcu! Bez .show() Toast zostanie utworzony, ale nie pokaże się na ekranie.</p></div>
+    </div>
+    <p style="margin-top:10px">Aby użyć Toast, dodaj import na początku pliku: <code>import android.widget.Toast;</code></p>
+  </div>
+
+  <div class="handout"><span class="hKrok exam">KROK 11 — EGZAMIN!</span>
+    <h4 class="hSub">Widżety egzaminacyjne — SeekBar i kolory tła</h4>
+    <div class="hCols">
+      <div>
+        <p><strong>SeekBar (suwak)</strong> pozwala wybrać wartość z zakresu — pojawia się w wielu zadaniach (np. „Właściwości czcionki" 2023, „Urządzenia domowe" 2025).</p>
+<pre>&lt;SeekBar
+  android:id="@+id/suwak"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:max="40" /&gt;</pre>
+<pre>suwak.setOnSeekBarChangeListener(
+  new SeekBar.OnSeekBarChangeListener() {
+    @Override
+    public void onProgressChanged(SeekBar s,
+            int progress, boolean fromUser) {
+        // progress = aktualna wartość suwaka
+        labelWynik.setText("Wartość: " + progress);
+    }
+    @Override
+    public void onStartTrackingTouch(SeekBar s) {}
+    @Override
+    public void onStopTrackingTouch(SeekBar s) {}
+});</pre>
+      </div>
+      <div>
+        <p><strong>Kolory tła widżetów.</strong> Na egzaminie CKE często podany jest konkretny kolor (np. #558B2F). Ustawiamy go atrybutem android:background (TextView/LinearLayout) lub android:backgroundTint (Button).</p>
+<pre>&lt;!-- Kolor tła TextView lub LinearLayout --&gt;
+&lt;TextView
+  android:background="#558B2F"
+  android:textColor="#FFFFFF" /&gt;
+
+&lt;!-- Kolor tła przycisku --&gt;
+&lt;Button
+  android:backgroundTint="#558B2F"
+  android:textColor="#FFFFFF" /&gt;
+
+&lt;!-- Marginesy dla całej strony --&gt;
+&lt;LinearLayout
+  android:padding="20dp" /&gt;</pre>
+      </div>
+    </div>
+    <div class="hNote">Na egzaminie zawsze czytaj uważnie wymagania dotyczące kolorów i marginesów — są podane wprost w arkuszu i sprawdzane przez egzaminatora!</div>
+  </div>
+
+  <div class="handout"><span class="hKrok exam">KROK 12 — EGZAMIN!</span>
+    <h4 class="hSub">Tablice w Javie — cykliczne przełączanie treści</h4>
+    <p>Częste zadanie CKE: przycisk cyklicznie przełącza między kilkoma wartościami. Rozwiązanie: <strong>tablica + licznik indeksu jako pole klasy</strong>.</p>
+<pre>public class MainActivity extends AppCompatActivity {
+
+    String[] cytaty = {"Dzień dobry", "Good morning", "Buenos dias"};
+    int aktualny = 0;   // pole klasy — POZA onCreate!
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        TextView labelCytat = (TextView) findViewById(R.id.labelCytat);
+        Button btnNastepny  = (Button)   findViewById(R.id.btnNastepny);
+
+        labelCytat.setText(cytaty[0]);   // pierwszy element na starcie
+
+        btnNastepny.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aktualny++;
+                if (aktualny >= cytaty.length) {
+                    aktualny = 0;   // po ostatnim wracamy do początku
+                }
+                labelCytat.setText(cytaty[aktualny]);
+            }
+        });
+    }
+}</pre>
+    <div class="hMini">
+      <div><b>cytaty[0]</b><p>Dostęp do elementu tablicy po indeksie — numeracja od zera.</p></div>
+      <div><b>cytaty.length</b><p>Długość tablicy (liczba elementów).</p></div>
+      <div><b>aktualny++</b><p>Zwiększenie indeksu o 1.</p></div>
+      <div><b>Zmienna „aktualny"</b><p>Musi być polem klasy (poza onCreate), żeby zachować wartość między kliknięciami.</p></div>
+    </div>
+    <div class="hNote">Ten schemat pojawił się na egzaminie w czerwcu 2023 („Właściwości czcionki") — tablica 3 cytatów przełączanych przyciskiem. Zapamiętaj go! W Placu zabaw wczytasz go jako gotowy przykład.</div>
+  </div>
+
+  <div class="handout"><span class="hKrok">PODSUMOWANIE</span>
+    <h4 class="hSub">Kompletna aplikacja — XML + Java razem</h4>
+    <p>Aplikacja pobiera imię użytkownika i wyświetla powitanie — dokładnie tak, jak wiele zadań egzaminacyjnych. Te same pliki masz wczytane w Placu zabaw jako przykład „Powitanie".</p>
+    <div class="hCols">
+      <div><p><strong>Plik activity_main.xml</strong></p>
+<pre>&lt;LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:orientation="vertical"
+  android:padding="16dp"&gt;
+
+  &lt;TextView
+    android:id="@+id/labelWynik"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Podaj swoje imię:" /&gt;
+
+  &lt;EditText
+    android:id="@+id/poleImie"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Wpisz imię tutaj"
+    android:inputType="textPersonName" /&gt;
+
+  &lt;Button
+    android:id="@+id/btnWitaj"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Przywitaj mnie" /&gt;
+
+&lt;/LinearLayout&gt;</pre></div>
+      <div><p><strong>Plik MainActivity.java</strong></p>
+<pre>import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MainActivity
+        extends AppCompatActivity {
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    TextView labelWynik =
+        (TextView) findViewById(R.id.labelWynik);
+    EditText poleImie =
+        (EditText) findViewById(R.id.poleImie);
+    Button btnWitaj =
+        (Button) findViewById(R.id.btnWitaj);
+
+    btnWitaj.setOnClickListener(
+        new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        String imie =
+            poleImie.getText().toString();
+        labelWynik.setText("Witaj, " + imie + "!");
+        Toast.makeText(
+            getApplicationContext(),
+            "Kliknięto przycisk!",
+            Toast.LENGTH_SHORT
+        ).show();
+      }
+    });
+  }
+}</pre></div>
+    </div>
+  </div>
+
+  <div class="handout">
+    <h4 class="hSub">Diagram przepływu — od kliknięcia do wyniku</h4>
+    <div class="hFlow"><span>Kliknięcie</span>→<span>onClick()</span>→<span>Pobierz tekst</span>→<span>Wyświetl wynik</span></div>
+    <div class="hMini">
+      <div><b>Kliknięcie</b><p>Użytkownik dotyka przycisku na ekranie — punkt startowy całej akcji.</p></div>
+      <div><b>onClick()</b><p>Java automatycznie wywołuje tę metodę w odpowiedzi na kliknięcie — tu piszemy logikę.</p></div>
+      <div><b>Pobierz tekst</b><p>Odczytujemy wpis użytkownika przez .getText().toString().</p></div>
+      <div><b>Wyświetl wynik</b><p>Pokazujemy efekt przez setText() na TextView albo przez Toast.</p></div>
+    </div>
+    <div class="hNote">Zapamiętaj ten schemat — bez względu na treść zadania zawsze powtarza się ten sam wzorzec: kliknięcie → pobranie danych → przetworzenie → wyświetlenie wyniku.</div>
+  </div>
+
+  <div class="handout">
+    <h4 class="hSub">Najczęstsze błędy uczniów — i jak ich unikać</h4>
+    <div class="hMini">
+      <div><b>findViewById() przed setContentView()</b><p>Odwrócona kolejność powoduje Error — najpierw zawsze setContentView(R.layout.activity_main).</p></div>
+      <div><b>Brak .show() przy Toast</b><p>Najczęstszy błąd! Toast zostaje stworzony, ale nigdy się nie wyświetli. Zawsze kończ wywołaniem .show().</p></div>
+      <div><b>Brak android:id na widżecie</b><p>Bez id nie pobierzemy widżetu przez findViewById(). Nadawaj id wszystkim widżetom obsługiwanym w Javie.</p></div>
+      <div><b>Brakujące importy</b><p>Toast, Button, EditText wymagają linii import android.widget.XXX. Android Studio podpowie — Alt+Enter.</p></div>
+      <div><b>Niezgodność id w XML i w Javie</b><p>android:id="@+id/btnWitaj" w XML = R.id.btnWitaj w Javie — dokładnie ta sama nazwa. Literówka = błąd kompilacji.</p></div>
+    </div>
+  </div>
+
+  <div class="handout">
+    <h4 class="hSub">Checklista przed egzaminem</h4>
+    <p>Sprawdź, czy potrafisz wykonać każdy krok samodzielnie, bez pomocy:</p>
+    <div class="hMini">
+      <div><b>Interfejs użytkownika (XML)</b><p>Zbudujesz LinearLayout z TextView, EditText i Button; nadasz każdemu widżetowi android:id.</p></div>
+      <div><b>Połączenie XML z Javą</b><p>Pobierzesz widżety przez findViewById() i podepniesz setOnClickListener() do przycisku.</p></div>
+      <div><b>Pobieranie danych z pola</b><p>Odczytasz zawartość EditText przez getText().toString() i użyjesz jej w logice.</p></div>
+      <div><b>Wyświetlenie wyniku</b><p>Wyświetlisz wynik przez setText() na TextView lub Toast.makeText(...).show().</p></div>
+    </div>
+  </div>
+
+  <div class="handout"><span class="hKrok exam">WAŻNE — EGZAMIN</span>
+    <h4 class="hSub">Java czy Kotlin? — wybór języka na egzaminie</h4>
+    <p>Na INF.04 możesz pisać aplikację mobilną w Javie LUB Kotlinie — oba języki akceptuje CKE (oficjalne rozwiązania CKE często używają Kotlina). Wybierz ten, który znasz lepiej.</p>
+    <div class="hCols">
+      <div><p><strong>Java (ten kurs):</strong></p>
+<pre>// Pobranie widżetu
+TextView label = (TextView) findViewById(R.id.label);
+
+// Obsługa kliknięcia
+button.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        label.setText("Kliknięto!");
+    }
+});
+
+// Pobranie tekstu z EditText
+String tekst = editText.getText().toString();</pre></div>
+      <div><p><strong>Kotlin (alternatywa):</strong></p>
+<pre>// Pobranie widżetu
+val label = findViewById&lt;TextView&gt;(R.id.label)
+
+// Obsługa kliknięcia — krócej!
+button.setOnClickListener {
+    label.text = "Kliknięto!"
+}
+
+// Pobranie tekstu z EditText
+val tekst = editText.text.toString()</pre></div>
+    </div>
+    <div class="hNote">Ten kurs uczy Javy — dobry wybór dla początkujących, bo Java jest bardziej „gadatliwa" i łatwiej zrozumieć, co się dzieje. Na egzaminie liczy się działający kod — nie język.</div>
+  </div>
+</section>
+
+<!-- ============ PLAYGROUND ============ -->
+<section id="tab-play" hidden>
+  <div class="secHead"><h2>Plac zabaw</h2>
+  <p>Układ jak w Android Studio: drzewo projektu, edytor z zakładkami plików, panel Running Devices. Piszesz prawdziwą Javę — po zmianach kliknij zielone <strong>▶ Uruchom</strong> (albo poczekaj chwilę: projekt przebuduje się sam). Błędy zobaczysz w <strong>Logcat</strong> na dole.</p></div>
+  <div class="edToolbar">
+    <label class="muted" for="preset" style="font-size:13px">Wczytaj przykład:</label>
+    <select id="preset">
+      <option value="default">Powitanie — kompletna aplikacja z lekcji</option>
+      <option value="empty">Pusty projekt (zacznij od zera)</option>
+      <option value="kasa">Kasa biletowa — RadioGroup i CheckBox</option>
+      <option value="exam">Egzamin INF.04 czerwiec 2023 — „Właściwości czcionki"</option>
+    </select>
+    <button class="btn ghost small" id="resetAll" title="Czyści zapisany stan i wczytuje domyślny przykład">Resetuj wszystko</button>
+  </div>
+  <div class="play">
+    <div class="projPanel">
+      <header>Project ▾ &nbsp;Android</header>
+      <div class="tree"><ul>
+        <li><div class="node">▾ 📁 app</div><ul>
+          <li><div class="node">▾ 📁 manifests</div><ul>
+            <li><div class="node" data-open="manifest">📄 AndroidManifest.xml</div></li></ul></li>
+          <li><div class="node">▾ 📁 java</div><ul>
+            <li><div class="node">▾ 📁 przyklad.nr1</div><ul>
+              <li><div class="node" data-open="java">📄 MainActivity.java</div></li></ul></li></ul></li>
+          <li><div class="node">▾ 📁 res</div><ul>
+            <li><div class="node">▾ 📁 layout</div><ul>
+              <li><div class="node" data-open="xml">📄 activity_main.xml</div></li></ul></li>
+            <li><div class="node">▾ 📁 values</div><ul>
+              <li><div class="node" data-open="strings">📄 strings.xml</div></li></ul></li></ul></li>
+        </ul></li>
+        <li><div class="node">▸ ⚙ Gradle Scripts</div></li>
+      </ul></div>
+    </div>
+    <div>
+      <div class="edTabs" id="edTabs">
+        <button data-ed="xml" aria-current="true">activity_main.xml</button>
+        <button data-ed="java">MainActivity.java</button>
+        <button data-ed="strings">strings.xml</button>
+        <button data-ed="manifest">AndroidManifest.xml</button>
+      </div>
+      <div class="edPane" id="pane-xml"><textarea class="code" id="xmlSrc" spellcheck="false" aria-label="Edytor activity_main.xml"></textarea></div>
+      <div class="edPane" id="pane-java" hidden><textarea class="code" id="javaSrc" spellcheck="false" aria-label="Edytor MainActivity.java" style="min-height:520px"></textarea></div>
+      <div class="edPane" id="pane-strings" hidden><textarea class="code" id="strSrc" spellcheck="false" aria-label="Edytor strings.xml"></textarea></div>
+      <div class="edPane" id="pane-manifest" hidden><textarea class="code" id="manifestSrc" readonly aria-label="Podgląd AndroidManifest.xml (tylko do odczytu)"></textarea></div>
+      <div class="logcat"><header>Logcat — problemy</header><ul id="problems"></ul></div>
+    </div>
+    <div class="phoneWrap">
+      <div class="runHead">Running Devices<button class="runBtn" id="runBtn" title="Przebuduj i uruchom aplikację"><span class="tri">▶</span> Uruchom</button></div>
+      <div class="phoneShell">
+        <div class="dirtyNote" id="dirtyNote"></div>
+        <div class="phone"><div class="screen">
+          <div class="statusbar"><span id="clock">12:00</span><span>▲ ▮ 🔋</span></div>
+          <div class="appbar" id="appTitle">Aplikacja2</div>
+          <div class="content" id="screenContent"></div>
+          <div class="toast" id="toast" role="status"></div>
+        </div></div>
+        <span class="phoneCaption">Pixel 6a · 360dp · API 34</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TASKS ============ -->
+<section id="tab-tasks" hidden>
+  <div class="secHead"><h2>Zadania na lekcję</h2>
+  <p>Pięć zadań z lekcji — rozwiązujesz je w <strong>Placu zabaw</strong> (XML + Java), a tutaj klikasz <em>Sprawdź</em>. Sprawdzarka naprawdę uruchamia Twoją aplikację, wpisuje dane i klika przyciski. Rób po kolei: każde kolejne rozbudowuje poprzednie.</p></div>
+  <div style="margin-bottom:14px"><button class="btn" id="checkAllTasks">Sprawdź wszystkie</button></div>
+  <div class="taskGrid" id="taskList"></div>
+  <div class="secHead homework"><h2>Praca domowa</h2>
+  <p>Zadania 1–4 możesz w całości przećwiczyć tutaj (Integer.parseInt, if-else, licznik i toUpperCase działają w symulatorze), ale finalnie wykonaj je w prawdziwym Android Studio. Do zadania 5 wczytaj przykład „Egzamin INF.04 czerwiec 2023" i przeanalizuj kod.</p></div>
+  <div class="homework" id="hwList"></div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section id="tab-quiz" hidden>
+  <div class="secHead"><h2>Milionerzy — teoria do egzaminu</h2>
+  <p>12 pytań z lekcji, od 500 zł do miliona. Masz dwa koła ratunkowe (50:50 i głos publiczności) na całą grę.
+  Progi gwarantowane: 1 000 zł i 40 000 zł. Zła odpowiedź = spadasz do progu i grasz od nowa.</p></div>
+  <div class="milWrap">
+    <div class="milBoard">
+      <div class="milTop">
+        <button class="life" id="mil50" title="Usuwa dwie błędne odpowiedzi">50:50</button>
+        <button class="life" id="milAud" title="Pokazuje głosy publiczności">Publiczność</button>
+        <span class="milAmt" id="milAmt"></span>
+      </div>
+      <div class="milQ" id="milQ"></div>
+      <div class="milAudBars" id="milAudBars" hidden></div>
+      <div class="milAns" id="milAns"></div>
+      <div class="milMsg" id="milMsg"></div>
+      <div class="milCtl" id="milCtl"></div>
+    </div>
+    <ol class="milLadder" id="milLadder"></ol>
+  </div>
+  <p class="muted" id="milBestLine" style="font-size:13px;margin-top:12px"></p>
+</section>
+
+<!-- ============ BUGS ============ -->
+<section id="tab-bugs" hidden>
+  <div class="secHead"><h2>Znajdź błąd</h2>
+  <p>Każdy fragment zawiera dokładnie jeden błąd — taki, który naprawdę zdarza się na egzaminie. Kliknij linijkę, w której się czai.</p></div>
+  <div id="bugList"></div>
+</section>
+
+<!-- ============ SHEET ============ -->
+<section id="tab-sheet" hidden>
+  <div class="secHead"><h2>Ściąga</h2>
+  <p>Najważniejsze wzorce z lekcji — dokładnie w tej formie zapisujesz je na egzaminie INF.04. Przycisk kopiuje fragment do schowka.</p></div>
+  <div class="sheet" id="sheetList"></div>
+</section>
+</div>
+
+<script>
+"use strict";
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const norm=s=>(s||"").toLowerCase().replace(/\s+/g," ").trim();
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const store={get(k,d){try{const v=localStorage.getItem("androlab2:"+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem("androlab2:"+k,JSON.stringify(v))}catch(e){}},clear(){try{Object.keys(localStorage).filter(k=>k.startsWith("androlab2:")||k.startsWith("androlab:")).forEach(k=>localStorage.removeItem(k))}catch(e){}}};
+const REDUCED=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- main tabs ---------- */
+function showTab(name){
+  $$("#mainTabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===name));
+  ["start","teoria","play","tasks","quiz","bugs","sheet"].forEach(t=>{$("#tab-"+t).hidden=(t!==name)});
+  try{history.replaceState(null,"","#"+name)}catch(e){}
+}
+$("#mainTabs").addEventListener("click",e=>{const b=e.target.closest("button[data-tab]");if(b)showTab(b.dataset.tab)});
+$("#goPlay").addEventListener("click",()=>showTab("play"));
+
+/* ---------- presets ---------- */
+const PRESETS={
+default:{
+ xml:`<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:padding="16dp">
+
+  <TextView
+    android:id="@+id/labelWynik"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Podaj swoje imię:" />
+
+  <EditText
+    android:id="@+id/poleImie"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Wpisz imię tutaj"
+    android:inputType="textPersonName" />
+
+  <Button
+    android:id="@+id/btnWitaj"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Przywitaj mnie" />
+
+</LinearLayout>`,
+ strings:`<resources>
+  <string name="app_name">Aplikacja2</string>
+</resources>`,
+ java:`package przyklad.nr1;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        TextView labelWynik = (TextView) findViewById(R.id.labelWynik);
+        EditText poleImie   = (EditText) findViewById(R.id.poleImie);
+        Button   btnWitaj   = (Button)   findViewById(R.id.btnWitaj);
+
+        btnWitaj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String imie = poleImie.getText().toString();
+                labelWynik.setText("Witaj, " + imie + "!");
+                Toast.makeText(getApplicationContext(),
+                        "Kliknięto przycisk!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}`},
+empty:{
+ xml:`<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:padding="16dp">
+
+</LinearLayout>`,
+ strings:`<resources>
+  <string name="app_name">Aplikacja2</string>
+</resources>`,
+ java:`package przyklad.nr1;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // tu pobierz widżety przez findViewById()
+        // i podepnij setOnClickListener()
+
+    }
+}`},
+kasa:{
+ xml:`<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:padding="16dp">
+
+  <TextView
+    android:id="@+id/tvTytul"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="KASA BILETOWA"
+    android:textSize="24sp"
+    android:textStyle="bold"
+    android:textColor="#1565C0"
+    android:gravity="center" />
+
+  <EditText
+    android:id="@+id/etLiczba"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="Podaj liczbę biletów"
+    android:inputType="number" />
+
+  <RadioGroup
+    android:id="@+id/rgTyp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RadioButton
+      android:id="@+id/rbNormalny"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Normalny (20 zl)"
+      android:checked="true" />
+
+    <RadioButton
+      android:id="@+id/rbUlgowy"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Ulgowy (12 zl)" />
+
+  </RadioGroup>
+
+  <CheckBox
+    android:id="@+id/cbRezerwacja"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Rezerwacja miejsca (+5 zl do biletu)" />
+
+  <Button
+    android:id="@+id/btnOblicz"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Oblicz" />
+
+  <TextView
+    android:id="@+id/tvWynik"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Do zaplaty: 0 zl"
+    android:textSize="18sp" />
+
+</LinearLayout>`,
+ strings:`<resources>
+  <string name="app_name">Kasa biletowa</string>
+</resources>`,
+ java:`package przyklad.nr1;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        EditText etLiczba = findViewById(R.id.etLiczba);
+        RadioGroup rgTyp = findViewById(R.id.rgTyp);
+        CheckBox cbRezerwacja = findViewById(R.id.cbRezerwacja);
+        Button btnOblicz = findViewById(R.id.btnOblicz);
+        TextView tvWynik = findViewById(R.id.tvWynik);
+
+        btnOblicz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String tekst = etLiczba.getText().toString().trim();
+
+                if (tekst.isEmpty()) {
+                    Toast.makeText(getApplicationContext(),
+                            "Podaj liczbę biletów!",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                int liczba = Integer.parseInt(tekst);
+                int cena = 20;
+
+                if (rgTyp.getCheckedRadioButtonId() == R.id.rbUlgowy) {
+                    cena = 12;
+                }
+                if (cbRezerwacja.isChecked()) {
+                    cena = cena + 5;
+                }
+
+                int suma = liczba * cena;
+                tvWynik.setText("Do zaplaty: " + suma + " zl");
+            }
+        });
+    }
+}`},
+exam:{
+ xml:`<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:padding="20dp">
+
+  <TextView
+    android:id="@+id/labelTytul"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Właściwości czcionki"
+    android:background="#558B2F"
+    android:textColor="#FFFFFF"
+    android:textSize="34sp"
+    android:textStyle="bold" />
+
+  <TextView
+    android:id="@+id/labelRozmiar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Rozmiar:"
+    android:textSize="20sp" />
+
+  <SeekBar
+    android:id="@+id/suwak"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:max="40" />
+
+  <TextView
+    android:id="@+id/labelCytat"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Dzień dobry" />
+
+  <Button
+    android:id="@+id/btnNastepny"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:text="&gt;&gt;"
+    android:backgroundTint="#558B2F" />
+
+</LinearLayout>`,
+ strings:`<resources>
+  <string name="app_name">Właściwości czcionki</string>
+</resources>`,
+ java:`package przyklad.nr1;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    String[] cytaty = {"Dzień dobry", "Good morning", "Buenos dias"};
+    int aktualny = 0;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        TextView labelRozmiar = (TextView) findViewById(R.id.labelRozmiar);
+        TextView labelCytat   = (TextView) findViewById(R.id.labelCytat);
+        SeekBar  suwak        = (SeekBar)  findViewById(R.id.suwak);
+        Button   btnNastepny  = (Button)   findViewById(R.id.btnNastepny);
+
+        labelCytat.setText(cytaty[0]);
+
+        suwak.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                labelRozmiar.setText("Rozmiar: " + progress);
+                labelCytat.setTextSize(progress);
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+        btnNastepny.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aktualny++;
+                if (aktualny >= cytaty.length) {
+                    aktualny = 0;
+                }
+                labelCytat.setText(cytaty[aktualny]);
+            }
+        });
+    }
+}`}
+};
+
+/* ---------- state ---------- */
+let xmlText="", strText="", javaText="";
+let widgets={}, problems=[], lastToast="", javaOk=true, dirty=false;
+
+/* ---------- editor tabs / tree ---------- */
+function openEd(name){
+  $$("#edTabs button").forEach(x=>x.setAttribute("aria-current",x.dataset.ed===name));
+  ["xml","java","strings","manifest"].forEach(p=>{$("#pane-"+p).hidden=(p!==name)});
+  $$(".tree .node[data-open]").forEach(n=>n.classList.toggle("sel",n.dataset.open===name));
+}
+$("#edTabs").addEventListener("click",e=>{const b=e.target.closest("button[data-ed]");if(b)openEd(b.dataset.ed)});
+$$(".tree .node[data-open]").forEach(n=>n.addEventListener("click",()=>openEd(n.dataset.open)));
+["xmlSrc","strSrc","javaSrc"].forEach(id=>{
+  const ta=document.getElementById(id);
+  ta.addEventListener("keydown",e=>{ if(e.key==="Tab"){e.preventDefault();
+    const s=ta.selectionStart,en=ta.selectionEnd;
+    ta.value=ta.value.slice(0,s)+"    "+ta.value.slice(en);
+    ta.selectionStart=ta.selectionEnd=s+4; ta.dispatchEvent(new Event("input"));}});
+});
+let deb=null;
+function markDirty(){dirty=true;$("#dirtyNote").textContent="Zmieniono kod — przebudowa…";
+  clearTimeout(deb);deb=setTimeout(()=>{grab();persist();rebuild()},600)}
+$("#xmlSrc").addEventListener("input",markDirty);
+$("#strSrc").addEventListener("input",markDirty);
+$("#javaSrc").addEventListener("input",markDirty);
+$("#runBtn").addEventListener("click",()=>{clearTimeout(deb);grab();persist();rebuild()});
+function grab(){xmlText=$("#xmlSrc").value;strText=$("#strSrc").value;javaText=$("#javaSrc").value}
+function persist(){store.set("xml",xmlText);store.set("str",strText);store.set("java",javaText)}
+
+/* ---------- strings.xml / manifest ---------- */
+function parseStrings(){
+  const map={}; if(!strText.trim())return map;
+  try{
+    const doc=new DOMParser().parseFromString(strText,"text/xml");
+    if(doc.getElementsByTagName("parsererror").length){problems.push(["err","strings.xml: błąd składni XML"]);return map;}
+    [...doc.getElementsByTagName("string")].forEach(el=>{const n=el.getAttribute("name");if(n)map[n]=el.textContent;});
+  }catch(e){problems.push(["err","strings.xml: "+e.message]);}
+  return map;
+}
+function renderManifest(appName){
+  $("#manifestSrc").value='<?xml version="1.0" encoding="utf-8"?>\n<manifest xmlns:android="http://schemas.android.com/apk/res/android">\n\n    <application\n        android:icon="@mipmap/ic_launcher"\n        android:label="@string/app_name"   <!-- '+appName+' -->\n        android:theme="@style/Theme.AppCompat.Light">\n\n        <activity android:name=".MainActivity">\n            <intent-filter>\n                <action android:name="android.intent.action.MAIN" />\n                <category android:name="android.intent.category.LAUNCHER" />\n            </intent-filter>\n        </activity>\n\n    </application>\n\n</manifest>\n\n(plik generowany automatycznie — tylko do odczytu)';
+}
+
+/* ---------- XML parse ---------- */
+function parseLayout(){
+  let src=xmlText.trim();
+  if(!src){problems.push(["err","activity_main.xml jest pusty"]);return null;}
+  src=src.replace(/<\?xml[^?]*\?>/,"").trim();
+  if(!/xmlns:android=/.test(src)) src=src.replace(/<([A-Za-z][\w.]*)/,'<$1 xmlns:android="http://schemas.android.com/apk/res/android"');
+  if(/tools:/.test(src)&&!/xmlns:tools=/.test(src)) src=src.replace(/<([A-Za-z][\w.]*)/,'<$1 xmlns:tools="http://schemas.android.com/tools"');
+  let doc=new DOMParser().parseFromString(src,"text/xml");
+  if(doc.getElementsByTagName("parsererror").length){
+    const doc2=new DOMParser().parseFromString('<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical">'+src+"</LinearLayout>","text/xml");
+    if(!doc2.getElementsByTagName("parsererror").length){
+      problems.push(["info","Fragment bez elementu głównego — owinięto go automatycznie w pionowy LinearLayout"]);
+      return doc2.documentElement;
+    }
+    const msg=doc.getElementsByTagName("parsererror")[0].textContent.split("\n")[0];
+    problems.push(["err","Błąd składni XML — sprawdź nawiasy < >, cudzysłowy i / na końcu widżetów. ("+msg.slice(0,120)+")"]);
+    return null;
+  }
+  return doc.documentElement;
+}
+
+/* ---------- rendering ---------- */
+const SCALE=0.9;
+function dp(v){const m=/^(-?[\d.]+)\s*(dp|sp|px)?$/.exec((v||"").trim());return m?Math.round(parseFloat(m[1])*SCALE):null;}
+function resolveText(v,strings){
+  if(v==null)return null;
+  const m=/^@string\/(\w+)$/.exec(v.trim());
+  if(m){ if(strings[m[1]]!=null)return strings[m[1]];
+    problems.push(["err",'Nie znaleziono łańcucha „'+m[1]+'” w strings.xml']); return "@string/"+m[1]; }
+  return v;
+}
+function applyCommon(el,node){
+  const w=node.getAttribute("android:layout_width"), h=node.getAttribute("android:layout_height");
+  for(const[attr,name]of[[w,"layout_width"],[h,"layout_height"]]){
+    if(attr&&!["match_parent","wrap_content","fill_parent"].includes(attr)&&dp(attr)==null)
+      problems.push(["err",'Wartość „'+attr+'” nie istnieje — '+name+' przyjmuje match_parent, wrap_content lub liczbę z dp']);
+  }
+  if(w==="match_parent"||w==="fill_parent")el.style.width="100%";
+  else if(w==="wrap_content")el.style.width="fit-content";
+  else if(dp(w)!=null)el.style.width=dp(w)+"px";
+  if(dp(h)!=null){el.style.height=dp(h)+"px";el.style.overflow="hidden"}
+  const p=dp(node.getAttribute("android:padding")); if(p!=null)el.style.padding=p+"px";
+  const mg=dp(node.getAttribute("android:layout_margin")); if(mg!=null)el.style.margin=mg+"px";
+  const bg=node.getAttribute("android:background"); if(bg&&/^#/.test(bg))el.style.background=bg;
+  if(node.getAttribute("android:layout_gravity")==="center")el.style.alignSelf="center";
+  const grav=node.getAttribute("android:gravity"); if(grav&&grav.includes("center"))el.style.textAlign="center";
+}
+function getId(node){
+  const raw=node.getAttribute("android:id"); if(!raw)return null;
+  const m=/^@\+?id\/(\w+)$/.exec(raw.trim());
+  if(!m){problems.push(["err",'Niepoprawny zapis id: „'+raw+'” — użyj @+id/nazwa']);return null;}
+  return m[1];
+}
+function reg(id,type,el,node,extra){ if(!id)return;
+  if(widgets[id])problems.push(["warn",'Zduplikowane id „'+id+'”']);
+  widgets[id]=Object.assign({type,el,node},extra||{});
+}
+function applyTextAttrs(el,node){
+  const ts=dp(node.getAttribute("android:textSize")); if(ts!=null)el.style.fontSize=ts+"px";
+  const tc=node.getAttribute("android:textColor"); if(tc&&/^#/.test(tc))el.style.color=tc;
+  const st=node.getAttribute("android:textStyle")||""; if(st.includes("bold"))el.style.fontWeight="700"; if(st.includes("italic"))el.style.fontStyle="italic";
+}
+function renderNode(node,parent,strings,groupName){
+  const tag=node.tagName, id=getId(node);
+  if(tag==="LinearLayout"||tag==="RadioGroup"){
+    const el=document.createElement("div"); el.style.display="flex";
+    const or=node.getAttribute("android:orientation");
+    el.style.flexDirection=(tag==="RadioGroup")?(or==="horizontal"?"row":"column"):(or==="vertical"?"column":"row");
+    if(tag==="LinearLayout"&&or!=="vertical"&&or!=="horizontal"&&[...node.children].length>1)
+      problems.push(["warn","LinearLayout bez android:orientation — domyślnie horizontal (elementy obok siebie)"]);
+    applyCommon(el,node);
+    reg(id,tag,el,node,tag==="RadioGroup"?{group:"rg-"+(id||Math.random().toString(36).slice(2))}:null);
+    const gname=tag==="RadioGroup"?widgets[id]?widgets[id].group:"rg-anon":groupName;
+    [...node.children].forEach(ch=>renderNode(ch,el,strings,gname));
+    parent.appendChild(el); return;
+  }
+  if(tag==="TextView"){
+    const el=document.createElement("div"); el.className="aw-tv";
+    const t=resolveText(node.getAttribute("android:text"),strings);
+    if(node.getAttribute("android:text")&&!/^@string\//.test(node.getAttribute("android:text")))
+      problems.push(["warn",'Hardcoded string „'+(node.getAttribute("android:text")||"").slice(0,30)+'” — na egzaminie OK, ale docelowo używaj @string/…']);
+    el.textContent=t??"";
+    applyTextAttrs(el,node);
+    applyCommon(el,node); reg(id,"TextView",el,node); parent.appendChild(el); return;
+  }
+  if(tag==="EditText"){
+    const el=document.createElement("input"); el.className="aw-et";
+    el.placeholder=resolveText(node.getAttribute("android:hint"),strings)??"";
+    const it=node.getAttribute("android:inputType")||"";
+    if(it.includes("number")||it==="phone")el.type="tel"; else el.type="text";
+    const t=resolveText(node.getAttribute("android:text"),strings); if(t)el.value=t;
+    applyCommon(el,node); reg(id,"EditText",el,node); parent.appendChild(el); return;
+  }
+  if(tag==="Button"){
+    const el=document.createElement("button"); el.className="aw-btn"; el.type="button";
+    el.textContent=resolveText(node.getAttribute("android:text"),strings)??"Button";
+    const bt=node.getAttribute("android:backgroundTint"); if(bt&&/^#/.test(bt))el.style.background=bt;
+    const tc=node.getAttribute("android:textColor"); if(tc&&/^#/.test(tc))el.style.color=tc;
+    applyCommon(el,node); reg(id,"Button",el,node); parent.appendChild(el); return;
+  }
+  if(tag==="CheckBox"||tag==="RadioButton"){
+    const lab=document.createElement("label"); lab.className=tag==="CheckBox"?"aw-check":"aw-radio";
+    const inp=document.createElement("input"); inp.type=tag==="CheckBox"?"checkbox":"radio";
+    if(tag==="RadioButton")inp.name=groupName||"rg-anon";
+    if((node.getAttribute("android:checked")||"")==="true")inp.checked=true;
+    const span=document.createElement("span"); span.textContent=resolveText(node.getAttribute("android:text"),strings)??"";
+    applyTextAttrs(span,node);
+    lab.appendChild(inp);lab.appendChild(span);
+    applyCommon(lab,node); reg(id,tag,lab,node,{input:inp}); parent.appendChild(lab); return;
+  }
+  if(tag==="SeekBar"){
+    const el=document.createElement("input"); el.type="range"; el.className="aw-seek";
+    el.min=0; el.max=parseInt(node.getAttribute("android:max")||"100",10)||100; el.value=0;
+    applyCommon(el,node); reg(id,"SeekBar",el,node); parent.appendChild(el); return;
+  }
+  const un=document.createElement("div"); un.className="aw-unknown";
+  un.textContent="Nieznany widżet: <"+tag+">";
+  problems.push(["warn","Widżet <"+tag+"> nie jest obsługiwany w symulatorze (znam: LinearLayout, TextView, EditText, Button, CheckBox, RadioGroup, RadioButton, SeekBar)"]);
+  parent.appendChild(un);
+}
+function renderPhone(){
+  widgets={};
+  const strings=parseStrings();
+  const appName=strings["app_name"]||"Aplikacja2";
+  $("#appTitle").textContent=appName;
+  renderManifest(appName);
+  const root=parseLayout();
+  const scr=$("#screenContent"); scr.innerHTML="";
+  if(root){
+    const host=document.createElement("div"); host.style.display="flex"; host.style.flexDirection="column"; host.style.minHeight="100%";
+    renderNode(root,host,strings,null); scr.appendChild(host);
+  }
+}
+function paintProblems(){
+  const ul=$("#problems"); ul.innerHTML="";
+  if(!problems.length){const li=document.createElement("li");li.className="okrow";li.innerHTML="<b>OK</b> Build successful — brak problemów!";ul.appendChild(li);}
+  problems.forEach(([lv,msg])=>{const li=document.createElement("li");li.className=lv;
+    li.innerHTML="<b>"+(lv==="err"?"Error":lv==="warn"?"Warning":"Info")+"</b> "+esc(msg);ul.appendChild(li);});
+}
+
+/* ---------- Java mini-interpreter ---------- */
+function stripComments(s){
+  let out="",i=0,mode=0;
+  while(i<s.length){const c=s[i],n=s[i+1];
+    if(mode===0){
+      if(c==="/"&&n==="/"){mode=1;i+=2;continue}
+      if(c==="/"&&n==="*"){mode=2;i+=2;continue}
+      if(c==='"')mode=3; else if(c==="'")mode=4;
+      out+=c;i++;continue}
+    if(mode===1){if(c==="\n"){mode=0;out+=c}i++;continue}
+    if(mode===2){if(c==="*"&&n==="/"){mode=0;i+=2;continue}i++;continue}
+    if(mode===3){out+=c;if(c==="\\"){out+=n;i+=2;continue}if(c==='"')mode=0;i++;continue}
+    if(mode===4){out+=c;if(c==="\\"){out+=n;i+=2;continue}if(c==="'")mode=0;i++;continue}
+  }
+  return out;
+}
+function maskStrings(s){
+  const lits=[]; let out="",i=0;
+  while(i<s.length){const c=s[i];
+    if(c==='"'||c==="'"){const q=c;let j=i+1,lit=q;
+      while(j<s.length){lit+=s[j];if(s[j]==="\\"){lit+=s[j+1];j+=2;continue}if(s[j]===q){j++;break}j++;}
+      lits.push(lit); out+=""+(lits.length-1)+""; i=j; continue;}
+    out+=c;i++;}
+  return {out,lits};
+}
+function unmask(s,lits){return s.replace(/(\d+)/g,(m,k)=>lits[+k])}
+function matchBrace(s,open){
+  let d=0;
+  for(let i=open;i<s.length;i++){
+    if(s[i]==="{")d++;
+    else if(s[i]==="}"){d--;if(d===0)return i}
+  }
+  throw new Error("Niedomknięty nawias { } w kodzie Java");
+}
+function stripParamTypes(p){
+  return p.split(",").map(a=>a.trim().split(/\s+/).pop()).filter(Boolean).join(",");
+}
+function transformAnon(src){
+  let re=/new\s+(?:View\.)?OnClickListener\s*\(\s*\)\s*\{/, m;
+  while((m=re.exec(src))){
+    const open=m.index+m[0].length-1, close=matchBrace(src,open);
+    const inner=src.slice(open+1,close);
+    const mm=/(?:@Override\s*)?public\s+void\s+onClick\s*\(([^)]*)\)\s*\{/.exec(inner);
+    if(!mm)throw new Error("W new View.OnClickListener() brakuje metody public void onClick(View v){ … }");
+    const bOpen=mm.index+mm[0].length-1, bClose=matchBrace(inner,bOpen);
+    const arg=stripParamTypes(mm[1])||"v";
+    src=src.slice(0,m.index)+"(function("+arg+"){"+inner.slice(bOpen+1,bClose)+"})"+src.slice(close+1);
+  }
+  re=/new\s+SeekBar\.OnSeekBarChangeListener\s*\(\s*\)\s*\{/;
+  while((m=re.exec(src))){
+    const open=m.index+m[0].length-1, close=matchBrace(src,open);
+    const inner=src.slice(open+1,close);
+    const methods=[]; const mre=/(?:@Override\s*)?public\s+void\s+(\w+)\s*\(([^)]*)\)\s*\{/g; let mm2;
+    while((mm2=mre.exec(inner))){
+      const o=mm2.index+mm2[0].length-1, c=matchBrace(inner,o);
+      methods.push(mm2[1]+":function("+stripParamTypes(mm2[2])+"){"+inner.slice(o+1,c)+"}");
+      mre.lastIndex=c+1;
+    }
+    if(!methods.some(x=>x.startsWith("onProgressChanged")))throw new Error("W OnSeekBarChangeListener brakuje metody onProgressChanged(...)");
+    src=src.slice(0,m.index)+"({"+methods.join(",")+"})"+src.slice(close+1);
+  }
+  return src;
+}
+const TYPE_WORDS="String|int|double|float|long|boolean|char|TextView|EditText|Button|SeekBar|CheckBox|RadioButton|RadioGroup|LinearLayout|View|Object";
+function transpile(java){
+  let src=stripComments(java);
+  const masked=maskStrings(src); src=masked.out;
+  src=src.replace(/^\s*(?:package|import)[^\n;]*;\s*$/gm,"");
+  let fields="", body=null;
+  const cm=/class\s+\w+[^{]*\{/.exec(src);
+  if(cm){
+    const cOpen=cm.index+cm[0].length-1, cClose=matchBrace(src,cOpen);
+    let classBody=src.slice(cOpen+1,cClose);
+    const om=/(?:@Override\s*)?(?:public|protected)\s+void\s+onCreate\s*\([^)]*\)\s*\{/.exec(classBody);
+    if(om){
+      const oOpen=om.index+om[0].length-1, oClose=matchBrace(classBody,oOpen);
+      body=classBody.slice(oOpen+1,oClose);
+      fields=classBody.slice(0,om.index)+classBody.slice(oClose+1);
+    }else{
+      throw new Error("Nie znaleziono metody onCreate(...) w klasie MainActivity");
+    }
+  }else{
+    body=src; /* tryb fragmentu — cały kod traktujemy jak wnętrze onCreate */
+  }
+  fields=fields.replace(/(?:@Override\s*)?(?:public|private|protected)\s+(?:static\s+)?(?:void|int|String|double|boolean|float)\s+(\w+)\s*\(([^)]*)\)\s*\{/g,
+    (m0,name,args)=>"function "+name+"("+stripParamTypes(args)+"){");
+  let prog=fields+"\n;\n"+body;
+  prog=prog.replace(/super\.onCreate\s*\([^)]*\)\s*;/g,"");
+  prog=prog.replace(/setContentView\s*\([^)]*\)\s*;/g,"");
+  prog=transformAnon(prog);
+  prog=prog.replace(/\(\s*(?:View\s+)?(\w+)\s*\)\s*->/g,"($1)=>").replace(/(?<![\w)])(\w+)\s*->/g,"($1)=>");
+  prog=prog.replace(new RegExp("\\(\\s*(?:"+TYPE_WORDS+")\\s*\\)\\s*(?=[\\w(])","g"),"");
+  prog=prog.replace(new RegExp("\\b(?:public\\s+|private\\s+|protected\\s+)?(?:static\\s+)?(?:final\\s+)?(?:"+TYPE_WORDS+")(?:\\s*\\[\\s*\\])?\\s+([A-Za-z_$][\\w$]*)\\s*(?==|;|,|\\))","g"),"var $1 ");
+  prog=prog.replace(/=\s*\{([^{}]*)\}/g,"= [$1]");
+  prog=prog.replace(/\.length\s*\(\s*\)/g,".length");
+  prog=prog.replace(/\.contains\s*\(/g,".includes(");
+  prog=unmask(prog,masked.lits);
+  return prog;
+}
+/* runtime shims */
+function defineProtos(){
+  try{
+    if(!String.prototype.isEmpty)Object.defineProperty(String.prototype,"isEmpty",{value:function(){return this.length===0}});
+    if(!String.prototype.equals)Object.defineProperty(String.prototype,"equals",{value:function(b){return String(this)===String(b)}});
+    if(!String.prototype.equalsIgnoreCase)Object.defineProperty(String.prototype,"equalsIgnoreCase",{value:function(b){return String(this).toLowerCase()===String(b).toLowerCase()}});
+  }catch(e){}
+}
+function runtimeError(e){problems.push(["err","Java (runtime): "+e.message]);paintProblems()}
+function widgetProxy(id){
+  const w=widgets[id]; if(w.proxy)return w.proxy;
+  const el=w.el;
+  const p={
+    setText(t){ if(w.type==="EditText")el.value=String(t);
+      else if(w.type==="CheckBox"||w.type==="RadioButton")el.querySelector("span").textContent=String(t);
+      else el.textContent=String(t); },
+    getText(){ if(w.type==="EditText")return el.value;
+      if(w.type==="CheckBox"||w.type==="RadioButton")return el.querySelector("span").textContent;
+      return el.textContent; },
+    setTextSize(v){const n=parseFloat(v);if(!isNaN(n))el.style.fontSize=Math.round(n*SCALE)+"px"},
+    setTextColor(c){el.style.color=String(c)},
+    setBackgroundColor(c){el.style.background=String(c)},
+    setEnabled(b){if("disabled" in el)el.disabled=!b},
+    setOnClickListener(fn){ el.onclick=()=>{try{fn(p)}catch(e){runtimeError(e)}}; },
+    setOnSeekBarChangeListener(obj){ if(w.type!=="SeekBar")return;
+      el.oninput=()=>{try{obj.onProgressChanged(p,parseInt(el.value,10),true)}catch(e){runtimeError(e)}}; },
+    getProgress(){return w.type==="SeekBar"?parseInt(el.value,10):0},
+    setProgress(v){if(w.type==="SeekBar")el.value=parseInt(v,10)||0},
+    isChecked(){return (w.type==="CheckBox"||w.type==="RadioButton")?w.input.checked:false},
+    setChecked(b){if(w.input)w.input.checked=!!b},
+    getCheckedRadioButtonId(){
+      if(w.type!=="RadioGroup")return -1;
+      for(const k in widgets){const rw=widgets[k];
+        if(rw.type==="RadioButton"&&rw.input&&rw.input.name===w.group&&rw.input.checked)return k;}
+      const anon=el.querySelector("input:checked"); return anon?-1:-1;
+    },
+    toString(){return "[widok "+w.type+" #"+id+"]"}
+  };
+  w.proxy=p; return p;
+}
+let toastTimer=null;
+function showToast(msg){lastToast=String(msg);const t=$("#toast");t.textContent=lastToast;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),2000)}
+function runJava(){
+  javaOk=false; lastToast="";
+  defineProtos();
+  let prog;
+  try{ prog=transpile(javaText); }
+  catch(e){ problems.push(["err","Java (składnia): "+e.message]); return false; }
+  const Rid=new Proxy({},{get:(t,k)=>String(k)});
+  const strings=parseStrings();
+  const Rstr=new Proxy({},{get:(t,k)=>String(k)});
+  const R={id:Rid,layout:{activity_main:0},string:Rstr};
+  const shims={
+    findViewById:id=>{ if(!widgets[id])throw new Error("findViewById: nie znaleziono widżetu o id „"+id+"” — sprawdź android:id w activity_main.xml");
+      return widgetProxy(id); },
+    R,
+    Toast:{LENGTH_SHORT:0,LENGTH_LONG:1,makeText:(ctx,msg,len)=>({show:()=>showToast(msg)})},
+    Integer:{parseInt:s=>{const str=String(s).trim(); if(!/^-?\d+$/.test(str))throw new Error('java.lang.NumberFormatException: For input string: "'+str+'"'); return parseInt(str,10)}},
+    Double:{parseDouble:s=>{const v=parseFloat(String(s).trim()); if(isNaN(v))throw new Error('java.lang.NumberFormatException: For input string: "'+String(s).trim()+'"'); return v}},
+    getApplicationContext:()=>({}),
+    setContentView:()=>{},
+    getString:k=>strings[k]!=null?strings[k]:"@string/"+k,
+    System:{out:{println:m=>{problems.push(["info","System.out: "+String(m)])}}},
+    Log:{d:(tag,m)=>{problems.push(["info","D/"+tag+": "+String(m)])},i:(tag,m)=>{problems.push(["info","I/"+tag+": "+String(m)])}}
+  };
+  try{
+    const names=Object.keys(shims);
+    const fn=new Function(...names,'"use strict";\n'+prog);
+    fn(...names.map(n=>shims[n]));
+    javaOk=true;
+  }catch(e){
+    problems.push(["err","Java: "+e.message+" (sprawdź średniki, nawiasy i nazwy zmiennych)"]);
+    return false;
+  }
+  return true;
+}
+function rebuild(){
+  problems=[];
+  renderPhone();
+  runJava();
+  paintProblems();
+  dirty=false; $("#dirtyNote").textContent="";
+}
+
+/* ---------- presets / persistence ---------- */
+function loadPreset(name){
+  const p=PRESETS[name]||PRESETS.default;
+  xmlText=p.xml; strText=p.strings; javaText=p.java;
+  $("#xmlSrc").value=xmlText; $("#strSrc").value=strText; $("#javaSrc").value=javaText;
+  persist(); rebuild();
+}
+$("#preset").addEventListener("change",e=>loadPreset(e.target.value));
+$("#resetAll").addEventListener("click",()=>{store.clear();$("#preset").value="default";loadPreset("default");taskState={};paintTaskBadges();});
+
+/* ---------- TASKS (behavioral checks) ---------- */
+function ids(type){return Object.keys(widgets).filter(k=>widgets[k].type===type)}
+function freshRun(){problems=[];renderPhone();const ok=runJava();paintProblems();return ok}
+function anyTVIncludes(txt){return ids("TextView").some(t=>norm(widgets[t].el.textContent).includes(txt))}
+const TASKS=[
+ {t:"Zadanie 1 — „Witaj, świecie!”",
+  d:'W pliku <code>activity_main.xml</code> umieść <code>TextView</code> z tekstem <strong>„Witaj, świecie!”</strong> oraz <code>Button</code> z napisem <strong>„Kliknij mnie”</strong>. (Podpowiedź: wczytaj przykład „Pusty projekt” i dopisz widżety.)',
+  hint:'<pre>&lt;TextView\n    android:id="@+id/labelWynik"\n    android:layout_width="match_parent"\n    android:layout_height="wrap_content"\n    android:text="Witaj, świecie!" /&gt;\n\n&lt;Button\n    android:id="@+id/btnKliknij"\n    android:layout_width="match_parent"\n    android:layout_height="wrap_content"\n    android:text="Kliknij mnie" /&gt;</pre>',
+  check(){ freshRun();
+    const tv=Object.values(widgets).some(w=>w.type==="TextView"&&norm(w.el.textContent).includes("witaj, świecie"));
+    const bt=Object.values(widgets).some(w=>w.type==="Button"&&norm(w.node.getAttribute("android:text"))==="kliknij mnie");
+    if(!tv)return "Brakuje TextView z tekstem „Witaj, świecie!”.";
+    if(!bt)return "Brakuje przycisku z napisem „Kliknij mnie”.";
+    return true;}},
+ {t:"Zadanie 2 — Przycisk zmienia tekst",
+  d:'Nadaj obu widżetom <code>android:id</code>. W <code>MainActivity.java</code> pobierz je przez <code>findViewById()</code> i podepnij <code>setOnClickListener()</code> tak, aby po kliknięciu TextView pokazywał <strong>„Przycisk został kliknięty!”</strong>. Kliknij przycisk na telefonie i sprawdź, czy działa.',
+  hint:'<pre>TextView labelWynik = (TextView) findViewById(R.id.labelWynik);\nButton btnKliknij   = (Button)   findViewById(R.id.btnKliknij);\n\nbtnKliknij.setOnClickListener(new View.OnClickListener() {\n    @Override\n    public void onClick(View v) {\n        labelWynik.setText("Przycisk został kliknięty!");\n    }\n});</pre>',
+  check(){ if(!freshRun())return "Najpierw popraw błędy Javy z Logcata.";
+    for(const b of ids("Button")){
+      freshRun(); widgets[b].el.click();
+      if(anyTVIncludes("przycisk został kliknięty"))return true;
+    }
+    return "Po kliknięciu żaden TextView nie pokazuje „Przycisk został kliknięty!”. Sprawdź setOnClickListener() i setText().";}},
+ {t:"Zadanie 3 — Pole tekstowe i powitanie",
+  d:'Dodaj <code>EditText</code> z podpowiedzią (<code>android:hint</code>) <strong>„Wpisz swoje imię”</strong>. Zmień kod tak, aby po kliknięciu TextView pokazywał <strong>„Cześć, [imię]!”</strong> — pobierz tekst przez <code>getText().toString()</code>.',
+  hint:'<pre>String imie = poleImie.getText().toString();\nlabelWynik.setText("Cześć, " + imie + "!");</pre>',
+  check(){ if(!freshRun())return "Najpierw popraw błędy Javy z Logcata.";
+    const ets=ids("EditText").filter(e=>norm(widgets[e].el.placeholder).includes("imię"));
+    if(!ets.length)return "Brakuje EditText z hint zawierającym „imię”.";
+    for(const e of ets)for(const b of ids("Button")){
+      freshRun(); widgets[e].el.value="Ala"; widgets[b].el.click();
+      if(anyTVIncludes("cześć, ala"))return true;
+    }
+    return "Wpisałem „Ala” i poklikałem przyciski — nie zobaczyłem „Cześć, Ala!”. Sprawdź getText().toString() i sklejanie tekstu plusem.";}},
+ {t:"Zadanie 4 — Toast z imieniem",
+  d:'Po kliknięciu wyświetl dodatkowo <code>Toast</code> z komunikatem <strong>„Witaj, [imię]! Miło Cię poznać.”</strong> Pamiętaj o <code>.show()</code> na końcu!',
+  hint:'<pre>Toast.makeText(getApplicationContext(),\n        "Witaj, " + imie + "! Miło Cię poznać.",\n        Toast.LENGTH_SHORT).show();</pre>',
+  check(){ if(!freshRun())return "Najpierw popraw błędy Javy z Logcata.";
+    const ets=ids("EditText");
+    for(const e of ets)for(const b of ids("Button")){
+      freshRun(); widgets[e].el.value="Ala"; widgets[b].el.click();
+      const t=norm(lastToast);
+      if(t.includes("witaj")&&t.includes("ala")&&t.includes("miło"))return true;
+    }
+    return "Nie zobaczyłem Toasta „Witaj, Ala! Miło Cię poznać.”. Sprawdź Toast.makeText(…) i czy na końcu jest .show().";}},
+ {t:"Zadanie 5 — Dwa przyciski",
+  d:'Dodaj drugi przycisk <strong>„Wyczyść”</strong>. Po jego kliknięciu: wyczyść pole EditText (<code>setText("")</code>) i przywróć w TextView tekst <strong>„Wpisz swoje imię powyżej”</strong>.',
+  hint:'<pre>btnWyczysc.setOnClickListener(new View.OnClickListener() {\n    @Override\n    public void onClick(View v) {\n        poleImie.setText("");\n        labelWynik.setText("Wpisz swoje imię powyżej");\n    }\n});</pre>',
+  check(){ if(!freshRun())return "Najpierw popraw błędy Javy z Logcata.";
+    if(ids("Button").length<2)return "Potrzebne są dwa przyciski (dodaj „Wyczyść” w XML).";
+    for(const e of ids("EditText"))for(const b of ids("Button")){
+      freshRun(); widgets[e].el.value="Ala"; widgets[b].el.click();
+      if(widgets[e].el.value===""&&anyTVIncludes("wpisz swoje imię powyżej"))return true;
+    }
+    return "Żaden przycisk nie czyści pola I nie przywraca tekstu „Wpisz swoje imię powyżej”. Obie akcje muszą być w tym samym onClick.";}}
+];
+const HOMEWORK=[
+ ["Kalkulator dodawania","Dwa pola EditText (inputType=\"number\") i przycisk „Dodaj”. Po kliknięciu pobierz liczby (Integer.parseInt), zsumuj i pokaż w TextView: „[a] + [b] = [wynik]”. Działa w symulatorze!"],
+ ["Sprawdzanie wieku","Pole na wiek i przycisk „Sprawdź”. Jeśli wiek >= 18 — Toast „Jesteś pełnoletni/a”, inaczej „Jesteś niepełnoletni/a”. Użyj if-else. Działa w symulatorze!"],
+ ["Licznik kliknięć","Przycisk „Kliknij!” i TextView „Liczba kliknięć: [n]”. Licznik zadeklaruj jako pole klasy, POZA onCreate — inaczej wyzeruje się przy każdym kliknięciu. Działa w symulatorze!"],
+ ["Zamiana na WIELKIE litery","Pole tekstowe i przycisk. Po kliknięciu wyświetl tekst zamieniony metodą .toUpperCase(). Działa w symulatorze!"],
+ ["Właściwości czcionki (egzamin INF.04, czerwiec 2023)","Tytuł na tle #558B2F, SeekBar (max 40) zmieniający rozmiar cytatu, przycisk „>>” przełączający cytaty z tablicy String[]. Wczytaj gotowy przykład w Placu zabaw, przeanalizuj kod — a potem spróbuj napisać go samodzielnie."]
+];
+let taskState=store.get("tasks",{});
+function paintTaskBadges(){TASKS.forEach((t,i)=>{const el=$("#taskBadge"+i);if(el){el.className="pill "+(taskState[i]?"ok":"todo");el.textContent=taskState[i]?"zaliczone":"do zrobienia"}})}
+function buildTasks(){
+  const list=$("#taskList");
+  TASKS.forEach((t,i)=>{
+    const c=document.createElement("div"); c.className="card task";
+    c.innerHTML='<div class="thead"><h3>'+t.t+'</h3><span class="pill todo" id="taskBadge'+i+'">do zrobienia</span>'
+      +'<button class="btn small" style="margin-left:auto" data-check="'+i+'">Sprawdź</button></div>'
+      +"<p>"+t.d+"</p>"
+      +'<details class="hint"><summary>Podpowiedź (kod)</summary>'+t.hint+"</details>"
+      +'<div class="verdict muted" id="taskMsg'+i+'" style="font-size:13.5px;margin-top:8px"></div>';
+    list.appendChild(c);
+  });
+  list.addEventListener("click",e=>{
+    const b=e.target.closest("[data-check]"); if(!b)return;
+    grab(); runTask(+b.dataset.check); rebuild();
+  });
+  $("#checkAllTasks").addEventListener("click",()=>{grab();TASKS.forEach((_,i)=>runTask(i));rebuild()});
+  const hw=$("#hwList");
+  HOMEWORK.forEach(([t,d],i)=>{
+    const dt=document.createElement("details"); dt.className="hw";
+    dt.innerHTML="<summary>Zadanie domowe "+(i+1)+" — "+t+'</summary><div class="hwBody"><p>'+d+"</p></div>";
+    hw.appendChild(dt);
+  });
+  paintTaskBadges();
+}
+function runTask(i){
+  const res=TASKS[i].check();
+  const msg=$("#taskMsg"+i);
+  if(res===true){taskState[i]=true;store.set("tasks",taskState);msg.textContent="✔ Zaliczone — aplikacja działa!";msg.style.color="var(--ok)";}
+  else{taskState[i]=false;store.set("tasks",taskState);msg.textContent=res;msg.style.color="var(--err)";}
+  paintTaskBadges();
+}
+
+/* ---------- QUIZ ---------- */
+const QUIZ=[
+["W którym katalogu projektu znajdują się pliki układów (layouty)?",["res/layout","java","manifests","res/values"],0,"Układy to pliki .xml w katalogu res/layout. W res/values leży m.in. strings.xml."],
+["Zostawiasz w kodzie Warning (żółte ostrzeżenie). Co się stanie?",["Aplikacja uruchomi się normalnie","Aplikacja się nie skompiluje","Emulator się wyłączy","Plik XML zostanie usunięty"],0,"Warning to sygnał „można lepiej” — aplikacja działa. Error (czerwony) blokuje uruchomienie."],
+["Toast został utworzony, ale nie pokazuje się na ekranie. Najczęstszy powód?",["Brak .show() na końcu","Za długi tekst","Zły kolor tła","Brak internetu"],0,"Toast.makeText(...) tylko tworzy komunikat — wyświetla go dopiero .show()."],
+["Która kolejność w onCreate() jest poprawna?",["setContentView(), potem findViewById()","findViewById(), potem setContentView()","Kolejność nie ma znaczenia","Obie metody wywołujemy poza onCreate()"],0,"Najpierw ładujemy układ (setContentView), dopiero potem szukamy w nim widżetów."],
+["Co oznacza wartość wrap_content?",["Rozmiar dopasowany do zawartości","Rozciągnięcie na cały ekran","Ukrycie widżetu","Wyśrodkowanie tekstu"],0,"wrap_content = tyle miejsca, ile potrzebuje treść. match_parent = rozmiar rodzica (np. cała szerokość)."],
+["Jak poprawnie nadać widżetowi identyfikator w XML?",['android:id="@+id/poleImie"','android:id="poleImie"','android:name="@id/poleImie"','id="#poleImie"'],0,"@+id/nazwa tworzy nowy identyfikator w zasobach R. W Javie odwołujemy się przez R.id.poleImie."],
+["Jak pobrać tekst wpisany przez użytkownika w EditText?",["poleImie.getText().toString()","poleImie.text()","poleImie.getString()","poleImie.value"],0,"getText() zwraca obiekt Editable, dlatego dokładamy .toString()."],
+["Do czego służy metoda findViewById()?",["Odnajduje widżet z XML po jego id","Tworzy nowy widżet","Usuwa widżet z ekranu","Zmienia kolor widżetu"],0,"findViewById(R.id.nazwa) zwraca obiekt widżetu, którym sterujemy w Javie."],
+["Gdzie powinny trafić napisy zamiast „hardcoded text”?",["Do strings.xml w res/values","Do MainActivity.java","Do AndroidManifest.xml","Do build.gradle"],0,"Napisy trzymamy w strings.xml i wstawiamy przez @string/nazwa — łatwiej wtedy tłumaczyć aplikację."],
+["Ile parametrów przyjmuje Toast.makeText()?",["3 — kontekst, tekst, czas wyświetlania","1 — tylko tekst","2 — tekst i kolor","4 — tekst, czas, kolor, rozmiar"],0,"Toast.makeText(getApplicationContext(), tekst, Toast.LENGTH_SHORT) — i na końcu .show()."],
+["Jak sprawdzić w Javie, który RadioButton jest zaznaczony w RadioGroup?",["rgTyp.getCheckedRadioButtonId()","rgTyp.getText()","rgTyp.isChecked()","rgTyp.getProgress()"],0,"getCheckedRadioButtonId() zwraca id zaznaczonego przycisku — porównujemy je z R.id.nazwa. isChecked() to metoda pojedynczego CheckBoxa/RadioButtona."],
+["Zmienna licząca kliknięcia przycisku powinna być zadeklarowana…",["Jako pole klasy, poza onClick()","Wewnątrz onClick()","W pliku XML","W strings.xml"],0,"Zadeklarowana w onClick() zerowałaby się przy każdym kliknięciu. Jako pole klasy zachowuje wartość."]
+];
+const AMOUNTS=[500,1000,2000,5000,10000,20000,40000,75000,125000,250000,500000,1000000];
+const SAFE=[1,6];
+const fmtZl=a=>a.toLocaleString("pl-PL")+" zł";
+let mil=null;
+function milGuaranteed(l){let g=0;SAFE.forEach(s=>{if(l>s)g=AMOUNTS[s]});return g}
+function milPerm(){if(!mil.perm)mil.perm=[0,1,2,3].sort(()=>Math.random()-.5);return mil.perm}
+function milBestPaint(){const b=store.get("milBest",0);
+  $("#milBestLine").textContent=b?"Rekord na tym komputerze: "+fmtZl(b):"Zagraj — Twój rekord zapisze się na tym komputerze.";}
+function milSaveBest(v){const b=store.get("milBest",0);if(v>b)store.set("milBest",v);milBestPaint();}
+function milStart(){
+  mil={order:[...QUIZ.keys()].sort(()=>Math.random()-.5),lvl:0,fifty:true,aud:true,perm:null,dead:[],locked:false,over:false};
+  milRender();
+}
+function milRender(){
+  $("#milLadder").innerHTML=AMOUNTS.map((a,i)=>{
+    const cls=(i===mil.lvl&&!mil.over?"cur ":i<mil.lvl?"passed ":"")+(SAFE.includes(i)?"safeRow":"");
+    return '<li class="'+cls+'"><b>'+(i+1)+"</b><span>"+fmtZl(a)+"</span></li>";
+  }).join("");
+  $("#mil50").disabled=!mil.fifty||mil.locked||mil.over;
+  $("#milAud").disabled=!mil.aud||mil.locked||mil.over;
+  $("#milAmt").textContent="Pytanie "+(mil.lvl+1)+"/12 o "+fmtZl(AMOUNTS[mil.lvl]);
+  const q=QUIZ[mil.order[mil.lvl]], perm=milPerm(), letters=["A","B","C","D"];
+  $("#milQ").textContent=q[0];
+  $("#milAns").innerHTML=perm.map((oi,pos)=>'<button data-oi="'+oi+'"'+(mil.dead.includes(oi)?' class="dead"':"")+'><i>'+letters[pos]+":</i><span>"+esc(q[1][oi])+"</span></button>").join("");
+  $("#milMsg").innerHTML=""; $("#milCtl").innerHTML="";
+  $("#milAudBars").hidden=true;
+  milBestPaint();
+}
+$("#milAns").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-oi]"); if(!b||mil.locked||mil.over)return;
+  mil.locked=true; b.classList.add("lockedA");
+  $("#mil50").disabled=true; $("#milAud").disabled=true;
+  const q=QUIZ[mil.order[mil.lvl]], correct=q[2], expl=q[3];
+  setTimeout(()=>{
+    const chosen=+b.dataset.oi;
+    $$("#milAns button").forEach(x=>{if(+x.dataset.oi===correct)x.classList.add("goodA")});
+    if(chosen===correct){
+      b.classList.remove("lockedA");
+      if(mil.lvl===AMOUNTS.length-1){
+        mil.over=true; milSaveBest(1000000);
+        $("#milMsg").innerHTML="🏆 <strong>MILION! Wygrywasz grę!</strong> "+esc(expl);
+        $("#milCtl").innerHTML='<button class="btn" id="milAgain">Zagraj jeszcze raz</button>';
+      }else{
+        $("#milMsg").innerHTML="✔ Dobrze! "+esc(expl);
+        $("#milCtl").innerHTML='<button class="btn" id="milNext">Następne pytanie →</button>';
+      }
+    }else{
+      b.classList.add("badA");
+      mil.over=true; const g=milGuaranteed(mil.lvl); milSaveBest(g);
+      $("#milMsg").innerHTML="✘ "+esc(expl)+"<br>Kończysz z gwarantowanym: <strong>"+fmtZl(g)+"</strong>.";
+      $("#milCtl").innerHTML='<button class="btn" id="milAgain">Zagraj od nowa</button>';
+    }
+  },REDUCED?0:900);
+});
+$("#milCtl").addEventListener("click",e=>{
+  if(e.target.id==="milNext"){mil.lvl++;mil.perm=null;mil.dead=[];mil.locked=false;milRender()}
+  else if(e.target.id==="milAgain")milStart();
+});
+$("#mil50").addEventListener("click",()=>{
+  if(!mil.fifty||mil.locked||mil.over)return; mil.fifty=false;
+  const correct=QUIZ[mil.order[mil.lvl]][2];
+  mil.dead=[0,1,2,3].filter(o=>o!==correct).sort(()=>Math.random()-.5).slice(0,2);
+  $$("#milAns button").forEach(x=>{if(mil.dead.includes(+x.dataset.oi))x.classList.add("dead")});
+  $("#mil50").disabled=true;
+});
+$("#milAud").addEventListener("click",()=>{
+  if(!mil.aud||mil.locked||mil.over)return; mil.aud=false; $("#milAud").disabled=true;
+  const correct=QUIZ[mil.order[mil.lvl]][2];
+  const alive=[0,1,2,3].filter(o=>!mil.dead.includes(o));
+  const perc={}; let base=(alive.length===2?60:48)+Math.floor(Math.random()*22);
+  perc[correct]=base; let rest=100-base;
+  const others=alive.filter(o=>o!==correct);
+  others.forEach((o,i)=>{const v=(i===others.length-1)?rest:Math.floor(Math.random()*(rest+1));perc[o]=v;rest-=v});
+  const letters=["A","B","C","D"];
+  $("#milAudBars").innerHTML=milPerm().map((oi,pos)=>{const p=perc[oi]??0;
+    return '<div class="bar" style="height:'+Math.max(4,Math.round(p*0.72))+'px"><b>'+p+'%</b><span>'+letters[pos]+"</span></div>"}).join("");
+  $("#milAudBars").hidden=false;
+});
+milStart();
+
+/* ---------- BUGS ---------- */
+const BUGS=[
+ {title:"Fragment 1 — Toast, który nigdy się nie pokazał",lang:"Java",
+  lines:['Button btn = (Button) findViewById(R.id.btnWitaj);','btn.setOnClickListener(new View.OnClickListener() {','    @Override','    public void onClick(View v) {','        Toast.makeText(getApplicationContext(),','            "Witaj!", Toast.LENGTH_SHORT);','    }','});'],
+  correct:[4,5],expl:"Brakuje .show() na końcu — Toast.makeText(...) tylko tworzy komunikat. Poprawnie: Toast.makeText(...).show();"},
+ {title:"Fragment 2 — aplikacja wywala się na starcie",lang:"Java",
+  lines:['@Override','protected void onCreate(Bundle savedInstanceState) {','    super.onCreate(savedInstanceState);','    TextView label = (TextView) findViewById(R.id.label);','    setContentView(R.layout.activity_main);','    label.setText("Start");','}'],
+  correct:[3,4],expl:"findViewById() stoi PRZED setContentView() — układ nie jest jeszcze załadowany, więc label będzie null. Najpierw setContentView, potem findViewById."},
+ {title:"Fragment 3 — XML, który nie przejdzie kompilacji",lang:"XML",
+  lines:['<Button','    android:id="@+id/btnWyczysc"','    android:layout_width="match_height"','    android:layout_height="wrap_content"','    android:text="Wyczyść" />'],
+  correct:[2],expl:"Wartość match_height nie istnieje! Dozwolone: match_parent, wrap_content albo konkretny wymiar w dp. (Ta literówka zdarza się nawet w oficjalnych materiałach — czytaj kod uważnie.)"},
+ {title:"Fragment 4 — „cannot resolve symbol”",lang:"XML + Java",
+  lines:['<!-- activity_main.xml -->','<Button android:id="@+id/przyciskStart"','    android:layout_width="wrap_content"','    android:layout_height="wrap_content" />','','// MainActivity.java','Button b = (Button) findViewById(R.id.przyciskstart);'],
+  correct:[6],expl:"Niezgodność id: w XML jest przyciskStart, a w Javie przyciskstart. Wielkość liter ma znaczenie — nazwy muszą być identyczne."}
+];
+function buildBugs(){
+  const list=$("#bugList");
+  BUGS.forEach((b,bi)=>{
+    const c=document.createElement("div"); c.className="card bug";
+    let h="<h3 style='font-size:15.5px'>"+esc(b.title)+" <span class='muted' style='font-weight:400;font-size:12.5px'>("+b.lang+")</span></h3><pre>";
+    b.lines.forEach((ln,li)=>{h+='<div class="ln" data-li="'+li+'"><span class="no">'+(li+1)+"</span><span>"+esc(ln)+"</span></div>"});
+    h+='</pre><div class="verdict" id="bugV'+bi+'"></div>';
+    c.innerHTML=h;
+    c.addEventListener("click",e=>{
+      const ln=e.target.closest(".ln"); if(!ln)return;
+      const li=+ln.dataset.li, v=$("#bugV"+bi);
+      c.querySelectorAll(".ln").forEach(x=>x.classList.remove("miss"));
+      if(b.correct.includes(li)){
+        b.correct.forEach(ci=>c.querySelector('.ln[data-li="'+ci+'"]').classList.add("hit"));
+        v.className="verdict good"; v.textContent="✔ Trafione! "+b.expl;
+      }else{
+        ln.classList.add("miss");
+        v.className="verdict bad"; v.textContent="✘ Nie tutaj — czytaj uważnie i spróbuj jeszcze raz.";
+      }
+    });
+    list.appendChild(c);
+  });
+}
+
+/* ---------- CHEATSHEET ---------- */
+const SHEET=[
+ ["Szkielet układu — LinearLayout",`<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:padding="16dp">
+
+  <!-- tu widżety -->
+
+</LinearLayout>`],
+ ["Widżet z id + podpowiedź",`<EditText
+  android:id="@+id/poleImie"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:hint="Wpisz swoje imię"
+  android:inputType="textPersonName" />`],
+ ["findViewById — łączenie XML z Javą",`// zawsze PO setContentView()!
+TextView label = (TextView) findViewById(R.id.label);
+EditText pole  = (EditText) findViewById(R.id.poleImie);
+Button przycisk = (Button)  findViewById(R.id.przycisk);`],
+ ["Obsługa kliknięcia przycisku",`przycisk.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        String imie = pole.getText().toString();
+        label.setText("Witaj, " + imie + "!");
+    }
+});`],
+ ["Toast — pamiętaj o .show()",`Toast.makeText(
+    getApplicationContext(),
+    "Komunikat dla użytkownika",
+    Toast.LENGTH_SHORT
+).show();   // bez .show() nic się nie pokaże!`],
+ ["CheckBox i RadioGroup",`// CheckBox — czy zaznaczony?
+if (cbRezerwacja.isChecked()) {
+    cena = cena + 5;
+}
+// RadioGroup — który RadioButton wybrany?
+if (rgTyp.getCheckedRadioButtonId() == R.id.rbUlgowy) {
+    cena = 12;
+}`],
+ ["SeekBar — reakcja na suwak",`suwak.setOnSeekBarChangeListener(
+  new SeekBar.OnSeekBarChangeListener() {
+    @Override
+    public void onProgressChanged(SeekBar s,
+            int progress, boolean fromUser) {
+        label.setText("Wartość: " + progress);
+    }
+    @Override public void onStartTrackingTouch(SeekBar s) {}
+    @Override public void onStopTrackingTouch(SeekBar s) {}
+});`],
+ ["Tablica + cykliczne przełączanie",`String[] cytaty = {"Dzień dobry",
+    "Good morning", "Buenos dias"};
+int aktualny = 0;   // pole klasy!
+
+// w onClick:
+aktualny++;
+if (aktualny >= cytaty.length) { aktualny = 0; }
+labelCytat.setText(cytaty[aktualny]);`],
+ ["Liczby z pola tekstowego",`String tekst = pole.getText().toString().trim();
+if (tekst.isEmpty()) {
+    // puste pole -> komunikat, nie crash!
+    return;
+}
+int liczba = Integer.parseInt(tekst);`],
+ ["Kolory i wymiary (styl egzaminacyjny)",`android:background="#558B2F"      <!-- tło -->
+android:backgroundTint="#558B2F"  <!-- tło przycisku -->
+android:textColor="#FFFFFF"
+android:textSize="34sp"           <!-- tekst: sp -->
+android:textStyle="bold"
+android:padding="20dp"            <!-- wymiary: dp -->`]
+];
+function buildSheet(){
+  const list=$("#sheetList");
+  SHEET.forEach(([t,code])=>{
+    const c=document.createElement("div"); c.className="card";
+    c.innerHTML="<h3>"+esc(t)+"</h3><pre>"+esc(code)+'</pre><button class="btn ghost small">Kopiuj</button>';
+    c.querySelector("button").addEventListener("click",e=>{
+      navigator.clipboard&&navigator.clipboard.writeText(code).then(()=>{e.target.textContent="Skopiowano!";setTimeout(()=>e.target.textContent="Kopiuj",1500)}).catch(()=>{});
+    });
+    list.appendChild(c);
+  });
+}
+
+/* ---------- init ---------- */
+(function init(){
+  const t=new Date(); $("#clock").textContent=String(t.getHours()).padStart(2,"0")+":"+String(t.getMinutes()).padStart(2,"0");
+  const sx=store.get("xml",null);
+  if(sx!=null){
+    xmlText=sx; strText=store.get("str",PRESETS.default.strings); javaText=store.get("java",PRESETS.default.java);
+    $("#xmlSrc").value=xmlText; $("#strSrc").value=strText; $("#javaSrc").value=javaText;
+    rebuild();
+  }else loadPreset("default");
+  buildTasks(); buildBugs(); buildSheet();
+  const h=(location.hash||"").slice(1);
+  if(["teoria","play","tasks","quiz","bugs","sheet"].includes(h))showTab(h);
+})();
+</script>
+
+</html>
