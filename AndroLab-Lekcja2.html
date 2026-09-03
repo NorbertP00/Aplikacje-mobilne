@@ -190,6 +190,11 @@ textarea.code[readonly]{color:#8A9A8E}
 .task p{margin:8px 0 10px;max-width:78ch}
 details.hint{font-size:13.5px;margin-top:8px}
 details.hint summary{cursor:pointer;color:var(--accent);font-weight:500}
+.hintLines{display:grid;gap:4px;margin-top:8px}
+.hintLines>div{display:grid;grid-template-columns:minmax(250px,max-content) 1fr;gap:4px 14px;align-items:baseline;padding:5px 8px;border-radius:8px;background:var(--surface2)}
+@media(max-width:820px){.hintLines>div{grid-template-columns:1fr}}
+.hintLines code{background:var(--code-bg);color:#E8E8E8;padding:2px 8px;border-radius:5px;font-size:12px;white-space:pre;overflow-x:auto;display:block;width:fit-content;max-width:100%;font-family:"JetBrains Mono",monospace}
+.hintLines span{font-size:12.5px;color:var(--muted)}
 details.hint pre{background:var(--code-bg);color:#E8E8E8;padding:10px;border-radius:8px;overflow-x:auto;font-size:12.5px;font-family:"JetBrains Mono";line-height:1.55}
 .homework details.hw{border:1px solid var(--line);border-radius:10px;background:var(--surface);margin-bottom:10px}
 .homework summary{padding:12px 16px;cursor:pointer;font-weight:500}
@@ -235,7 +240,6 @@ details.hint pre{background:var(--code-bg);color:#E8E8E8;padding:10px;border-rad
     <button data-tab="tasks">Zadania</button>
     <button data-tab="quiz">Milionerzy</button>
     <button data-tab="bugs">Znajdź błąd</button>
-    <button data-tab="sheet">Ściąga</button>
   </nav>
 </header>
 
@@ -287,7 +291,7 @@ details.hint pre{background:var(--code-bg);color:#E8E8E8;padding:10px;border-rad
     <h4 class="hHead">Schemat każdego zadania egzaminacyjnego</h4>
     <div class="hFlow"><span>Kliknięcie</span>→<span>onClick()</span>→<span>pobierz dane</span>→<span>wyświetl wynik</span></div>
     <p style="margin-bottom:0">Bez względu na treść zadania zawsze powtarza się ten sam wzorzec: kliknięcie → pobranie danych →
-    przetworzenie → wyświetlenie wyniku. Gotowe wzorce kodu znajdziesz w zakładce <strong>Ściąga</strong>,
+    przetworzenie → wyświetlenie wyniku. Gotowe wzorce kodu znajdziesz w zakładce <strong>Teoria</strong>,
     a wszystko przećwiczysz w <strong>Placu zabaw</strong>.</p>
   </div>
 
@@ -818,12 +822,6 @@ val tekst = editText.text.toString()</pre></div>
   <div id="bugList"></div>
 </section>
 
-<!-- ============ SHEET ============ -->
-<section id="tab-sheet" hidden>
-  <div class="secHead"><h2>Ściąga</h2>
-  <p>Najważniejsze wzorce z lekcji — dokładnie w tej formie zapisujesz je na egzaminie INF.04. Przycisk kopiuje fragment do schowka.</p></div>
-  <div class="sheet" id="sheetList"></div>
-</section>
 </div>
 
 <script>
@@ -838,7 +836,7 @@ const REDUCED=matchMedia("(prefers-reduced-motion: reduce)").matches;
 /* ---------- main tabs ---------- */
 function showTab(name){
   $$("#mainTabs button").forEach(b=>b.setAttribute("aria-current",b.dataset.tab===name));
-  ["start","teoria","play","tasks","quiz","bugs","sheet"].forEach(t=>{$("#tab-"+t).hidden=(t!==name)});
+  ["start","teoria","play","tasks","quiz","bugs"].forEach(t=>{$("#tab-"+t).hidden=(t!==name)});
   try{history.replaceState(null,"","#"+name)}catch(e){}
 }
 $("#mainTabs").addEventListener("click",e=>{const b=e.target.closest("button[data-tab]");if(b)showTab(b.dataset.tab)});
@@ -1553,7 +1551,18 @@ function anyTVIncludes(txt){return ids("TextView").some(t=>norm(widgets[t].el.te
 const TASKS=[
  {t:"Zadanie 1 — „Witaj, świecie!”",
   d:'W pliku <code>activity_main.xml</code> umieść <code>TextView</code> z tekstem <strong>„Witaj, świecie!”</strong> oraz <code>Button</code> z napisem <strong>„Kliknij mnie”</strong>. (Podpowiedź: wczytaj przykład „Pusty projekt” i dopisz widżety.)',
-  hint:'<pre>&lt;TextView\n    android:id="@+id/labelWynik"\n    android:layout_width="match_parent"\n    android:layout_height="wrap_content"\n    android:text="Witaj, świecie!" /&gt;\n\n&lt;Button\n    android:id="@+id/btnKliknij"\n    android:layout_width="match_parent"\n    android:layout_height="wrap_content"\n    android:text="Kliknij mnie" /&gt;</pre>',
+  hint:'<div class="hintLines">'
+   +'<div><code>&lt;TextView</code><span>początek widżetu TextView — pola z tekstem, które tylko wyświetlamy (użytkownik go nie edytuje)</span></div>'
+   +'<div><code>  android:id="@+id/labelWynik"</code><span>nadajemy identyfikator: zapis @+id/ znaczy „utwórz NOWE id o nazwie labelWynik”. Dzięki id odnajdziemy widżet w Javie jako R.id.labelWynik</span></div>'
+   +'<div><code>  android:layout_width="match_parent"</code><span>szerokość: rozciągnij do rozmiaru rodzica — czyli na całą szerokość ekranu</span></div>'
+   +'<div><code>  android:layout_height="wrap_content"</code><span>wysokość: dopasuj do zawartości — tyle, ile zajmuje tekst</span></div>'
+   +'<div><code>  android:text="Witaj, świecie!" /&gt;</code><span>tekst do wyświetlenia; znak /&gt; zamyka cały widżet</span></div>'
+   +'<div><code>&lt;Button</code><span>początek widżetu przycisku</span></div>'
+   +'<div><code>  android:id="@+id/btnKliknij"</code><span>id przycisku — przyda się w zadaniu 2, żeby podpiąć kliknięcie w Javie</span></div>'
+   +'<div><code>  android:layout_width="match_parent"</code><span>przycisk na całą szerokość ekranu</span></div>'
+   +'<div><code>  android:layout_height="wrap_content"</code><span>wysokość dopasowana do napisu</span></div>'
+   +'<div><code>  android:text="Kliknij mnie" /&gt;</code><span>napis na przycisku (Android wyświetli go WIELKIMI LITERAMI)</span></div>'
+   +'</div>',
   check(){ freshRun();
     const tv=Object.values(widgets).some(w=>w.type==="TextView"&&norm(w.el.textContent).includes("witaj, świecie"));
     const bt=Object.values(widgets).some(w=>w.type==="Button"&&norm(w.node.getAttribute("android:text"))==="kliknij mnie");
@@ -1562,7 +1571,16 @@ const TASKS=[
     return true;}},
  {t:"Zadanie 2 — Przycisk zmienia tekst",
   d:'Nadaj obu widżetom <code>android:id</code>. W <code>MainActivity.java</code> pobierz je przez <code>findViewById()</code> i podepnij <code>setOnClickListener()</code> tak, aby po kliknięciu TextView pokazywał <strong>„Przycisk został kliknięty!”</strong>. Kliknij przycisk na telefonie i sprawdź, czy działa.',
-  hint:'<pre>TextView labelWynik = (TextView) findViewById(R.id.labelWynik);\nButton btnKliknij   = (Button)   findViewById(R.id.btnKliknij);\n\nbtnKliknij.setOnClickListener(new View.OnClickListener() {\n    @Override\n    public void onClick(View v) {\n        labelWynik.setText("Przycisk został kliknięty!");\n    }\n});</pre>',
+  hint:'<div class="hintLines">'
+   +'<div><code>TextView labelWynik = (TextView) findViewById(R.id.labelWynik);</code><span>odnajdujemy w układzie widżet o id labelWynik i zapisujemy go do zmiennej. (TextView) to rzutowanie — mówimy Javie, jakiego typu jest ten widżet. R.id.nazwa musi być IDENTYCZNA jak w android:id!</span></div>'
+   +'<div><code>Button btnKliknij = (Button) findViewById(R.id.btnKliknij);</code><span>tak samo pobieramy przycisk — od teraz zmienna btnKliknij steruje przyciskiem z ekranu</span></div>'
+   +'<div><code>btnKliknij.setOnClickListener(new View.OnClickListener() {</code><span>podpinamy pod przycisk „nasłuchiwacz kliknięć” — obiekt, który zareaguje na każde dotknięcie</span></div>'
+   +'<div><code>    @Override</code><span>adnotacja: nadpisujemy metodę onClick odziedziczoną z OnClickListener</span></div>'
+   +'<div><code>    public void onClick(View v) {</code><span>ta metoda wykona się automatycznie przy KAŻDYM kliknięciu przycisku</span></div>'
+   +'<div><code>        labelWynik.setText("Przycisk został kliknięty!");</code><span>setText() podmienia tekst w TextView — użytkownik widzi efekt kliknięcia</span></div>'
+   +'<div><code>    }</code><span>koniec metody onClick</span></div>'
+   +'<div><code>});</code><span>zamknięcia: } kończy obiekt nasłuchiwacza, ) nawias metody, a ; całą instrukcję</span></div>'
+   +'</div>',
   check(){ if(!freshRun())return "Najpierw popraw błędy Javy z Logcata.";
     for(const b of ids("Button")){
       freshRun(); widgets[b].el.click();
@@ -1571,7 +1589,12 @@ const TASKS=[
     return "Po kliknięciu żaden TextView nie pokazuje „Przycisk został kliknięty!”. Sprawdź setOnClickListener() i setText().";}},
  {t:"Zadanie 3 — Pole tekstowe i powitanie",
   d:'Dodaj <code>EditText</code> z podpowiedzią (<code>android:hint</code>) <strong>„Wpisz swoje imię”</strong>. Zmień kod tak, aby po kliknięciu TextView pokazywał <strong>„Cześć, [imię]!”</strong> — pobierz tekst przez <code>getText().toString()</code>.',
-  hint:'<pre>String imie = poleImie.getText().toString();\nlabelWynik.setText("Cześć, " + imie + "!");</pre>',
+  hint:'<div class="hintLines">'
+   +'<div><code>android:id="@+id/poleImie"</code><span>(w XML) bez id nie pobierzemy pola w Javie — @+id/ tworzy identyfikator poleImie</span></div>'
+   +'<div><code>android:hint="Wpisz swoje imię"</code><span>(w XML) szara podpowiedź w pustym polu — znika, gdy użytkownik zacznie pisać</span></div>'
+   +'<div><code>String imie = poleImie.getText().toString();</code><span>pobieramy wpis użytkownika: getText() zwraca obiekt tekstowy, a toString() zamienia go na zwykły napis (String) zapisany w zmiennej imie</span></div>'
+   +'<div><code>labelWynik.setText("Cześć, " + imie + "!");</code><span>plus skleja napisy: „Cześć, ” + zawartość zmiennej + „!” — wynik trafia do TextView</span></div>'
+   +'</div>',
   check(){ if(!freshRun())return "Najpierw popraw błędy Javy z Logcata.";
     const ets=ids("EditText").filter(e=>norm(widgets[e].el.placeholder).includes("imię"));
     if(!ets.length)return "Brakuje EditText z hint zawierającym „imię”.";
@@ -1582,7 +1605,13 @@ const TASKS=[
     return "Wpisałem „Ala” i poklikałem przyciski — nie zobaczyłem „Cześć, Ala!”. Sprawdź getText().toString() i sklejanie tekstu plusem.";}},
  {t:"Zadanie 4 — Toast z imieniem",
   d:'Po kliknięciu wyświetl dodatkowo <code>Toast</code> z komunikatem <strong>„Witaj, [imię]! Miło Cię poznać.”</strong> Pamiętaj o <code>.show()</code> na końcu!',
-  hint:'<pre>Toast.makeText(getApplicationContext(),\n        "Witaj, " + imie + "! Miło Cię poznać.",\n        Toast.LENGTH_SHORT).show();</pre>',
+  hint:'<div class="hintLines">'
+   +'<div><code>Toast.makeText(</code><span>tworzymy Toast — krótki „dymek” z komunikatem; makeText przyjmuje 3 parametry (poniżej)</span></div>'
+   +'<div><code>    getApplicationContext(),</code><span>parametr 1: kontekst — informacja, w której aplikacji pokazać komunikat</span></div>'
+   +'<div><code>    "Witaj, " + imie + "! Miło Cię poznać.",</code><span>parametr 2: treść komunikatu — sklejona plusem z imieniem pobranym z pola</span></div>'
+   +'<div><code>    Toast.LENGTH_SHORT</code><span>parametr 3: czas wyświetlania — LENGTH_SHORT ≈ 2 sekundy (LENGTH_LONG ≈ 3,5 s)</span></div>'
+   +'<div><code>).show();</code><span>.show() faktycznie WYŚWIETLA Toast — bez niego komunikat powstaje, ale nigdy się nie pokaże (najczęstszy błąd egzaminacyjny!)</span></div>'
+   +'</div>',
   check(){ if(!freshRun())return "Najpierw popraw błędy Javy z Logcata.";
     const ets=ids("EditText");
     for(const e of ets)for(const b of ids("Button")){
@@ -1593,7 +1622,16 @@ const TASKS=[
     return "Nie zobaczyłem Toasta „Witaj, Ala! Miło Cię poznać.”. Sprawdź Toast.makeText(…) i czy na końcu jest .show().";}},
  {t:"Zadanie 5 — Dwa przyciski",
   d:'Dodaj drugi przycisk <strong>„Wyczyść”</strong>. Po jego kliknięciu: wyczyść pole EditText (<code>setText("")</code>) i przywróć w TextView tekst <strong>„Wpisz swoje imię powyżej”</strong>.',
-  hint:'<pre>btnWyczysc.setOnClickListener(new View.OnClickListener() {\n    @Override\n    public void onClick(View v) {\n        poleImie.setText("");\n        labelWynik.setText("Wpisz swoje imię powyżej");\n    }\n});</pre>',
+  hint:'<div class="hintLines">'
+   +'<div><code>android:id="@+id/btnWyczysc"</code><span>(w XML) drugi przycisk z napisem „Wyczyść” musi dostać własne, inne id</span></div>'
+   +'<div><code>btnWyczysc.setOnClickListener(new View.OnClickListener() {</code><span>drugi przycisk dostaje OSOBNY nasłuchiwacz — każdy przycisk ma swój własny onClick</span></div>'
+   +'<div><code>    @Override</code><span>nadpisujemy metodę onClick</span></div>'
+   +'<div><code>    public void onClick(View v) {</code><span>kod, który wykona się po kliknięciu „Wyczyść”</span></div>'
+   +'<div><code>        poleImie.setText("");</code><span>ustawiamy w polu pusty napis "" — to właśnie czyści EditText</span></div>'
+   +'<div><code>        labelWynik.setText("Wpisz swoje imię powyżej");</code><span>przywracamy w TextView domyślny tekst zachęty</span></div>'
+   +'<div><code>    }</code><span>koniec metody onClick</span></div>'
+   +'<div><code>});</code><span>koniec nasłuchiwacza i średnik kończący instrukcję</span></div>'
+   +'</div>',
   check(){ if(!freshRun())return "Najpierw popraw błędy Javy z Logcata.";
     if(ids("Button").length<2)return "Potrzebne są dwa przyciski (dodaj „Wyczyść” w XML).";
     for(const e of ids("EditText"))for(const b of ids("Button")){
@@ -1618,7 +1656,7 @@ function buildTasks(){
     c.innerHTML='<div class="thead"><h3>'+t.t+'</h3><span class="pill todo" id="taskBadge'+i+'">do zrobienia</span>'
       +'<button class="btn small" style="margin-left:auto" data-check="'+i+'">Sprawdź</button></div>'
       +"<p>"+t.d+"</p>"
-      +'<details class="hint"><summary>Podpowiedź (kod)</summary>'+t.hint+"</details>"
+      +'<details class="hint"><summary>Podpowiedź — kod z objaśnieniami linijka po linijce</summary>'+t.hint+"</details>"
       +'<div class="verdict muted" id="taskMsg'+i+'" style="font-size:13.5px;margin-top:8px"></div>';
     list.appendChild(c);
   });
@@ -1777,7 +1815,7 @@ function buildBugs(){
   });
 }
 
-/* ---------- CHEATSHEET ---------- */
+/* ---------- CHEATSHEET (zakładka usunięta — dane nieużywane) ---------- */
 const SHEET=[
  ["Szkielet układu — LinearLayout",`<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
@@ -1852,7 +1890,7 @@ android:textStyle="bold"
 android:padding="20dp"            <!-- wymiary: dp -->`]
 ];
 function buildSheet(){
-  const list=$("#sheetList");
+  const list=$("#sheetList"); if(!list)return;
   SHEET.forEach(([t,code])=>{
     const c=document.createElement("div"); c.className="card";
     c.innerHTML="<h3>"+esc(t)+"</h3><pre>"+esc(code)+'</pre><button class="btn ghost small">Kopiuj</button>';
@@ -1872,9 +1910,9 @@ function buildSheet(){
     $("#xmlSrc").value=xmlText; $("#strSrc").value=strText; $("#javaSrc").value=javaText;
     rebuild();
   }else loadPreset("default");
-  buildTasks(); buildBugs(); buildSheet();
+  buildTasks(); buildBugs();
   const h=(location.hash||"").slice(1);
-  if(["teoria","play","tasks","quiz","bugs","sheet"].includes(h))showTab(h);
+  if(["teoria","play","tasks","quiz","bugs"].includes(h))showTab(h);
 })();
 </script>
 
