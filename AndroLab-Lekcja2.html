@@ -61,7 +61,7 @@ code{background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:.9em
 .steps .card b{display:block;font-size:15px;margin-bottom:4px}
 .steps .card span.n{font-family:"JetBrains Mono";font-size:12px;color:var(--accent);font-weight:600;display:block;margin-bottom:6px}
 .credit{margin-top:26px;font-size:13px;color:var(--muted);max-width:70ch}
-/* handout — kartka teorii w stylu materiałów z lekcji (celowo stały, jasny papier) */
+/* handout - kartka teorii w stylu materiałów z lekcji (celowo stały, jasny papier) */
 .handout{background:#F7F2E1;color:#42362D;border:1px solid #E3D9BE;border-radius:14px;padding:28px 30px;max-width:920px;margin:26px 0 6px;box-shadow:var(--shadow)}
 .hTitle{font-family:"Playfair Display",Georgia,serif;font-weight:500;font-size:clamp(24px,3.2vw,32px);line-height:1.25;color:#4A3527;margin:0 0 12px;text-wrap:balance}
 .hSub{font-family:"Playfair Display",Georgia,serif;font-weight:500;font-size:22px;color:#4A3527;margin:10px 0 8px;text-wrap:balance}
@@ -248,30 +248,30 @@ details.hint pre{background:var(--code-bg);color:#E8E8E8;padding:10px;border-rad
   <h1>Zbuduj aplikację Android.<br>Bez Android Studio.</h1>
   <p class="lead">Dziś pracujesz jak w prawdziwym IDE: piszesz układ ekranu w <code>activity_main.xml</code>
   i <strong>prawdziwy kod Java</strong> w <code>MainActivity.java</code>, a telefon w panelu Running Devices
-  pokazuje działającą aplikację — dokładnie jak na egzaminie <strong>INF.04</strong>, tylko bez czekania na emulator.</p>
+  pokazuje działającą aplikację - dokładnie jak na egzaminie <strong>INF.04</strong>, tylko bez czekania na emulator.</p>
 
   <div class="handout">
-    <h3 class="hTitle">2. Tworzenie aplikacji Android — od układu do działającego przycisku</h3>
-    <p>Nauczysz się budować ekran aplikacji w XML i reagować na kliknięcia przycisku w Javie —
+    <h3 class="hTitle">2. Tworzenie aplikacji Android - od układu do działającego przycisku</h3>
+    <p>Nauczysz się budować ekran aplikacji w XML i reagować na kliknięcia przycisku w Javie -
     materiał przygotowujący do egzaminu <strong>INF.04 CKE</strong> dla technikum, kierunek technik programista.</p>
     <hr class="hRule">
     <span class="hTag">TEMAT 2</span>
     <h4 class="hSub">Układy, widoki i pierwsza interakcja z użytkownikiem</h4>
-    <p>Poznaj LinearLayout, kluczowe widżety i naucz się łączyć kod XML z logiką w Javie —
+    <p>Poznaj LinearLayout, kluczowe widżety i naucz się łączyć kod XML z logiką w Javie -
     to fundament każdego zadania na egzaminie.</p>
 
     <h4 class="hHead">Co musisz umieć na egzaminie INF.04?</h4>
     <div class="hGrid">
-      <div><b>Układ ekranu (XML)</b><p>Poprawna budowa layoutu: LinearLayout z widżetami TextView, EditText i Button — każdy na właściwym miejscu.</p></div>
-      <div><b>Atrybut android:id</b><p>Unikalny identyfikator każdego widżetu — niezbędny, by pobrać go w Javie metodą findViewById().</p></div>
-      <div><b>Obsługa kliknięcia</b><p>Podpięcie akcji do przycisku przez setOnClickListener() i wyświetlenie wyniku — np. Toast albo zmiana tekstu.</p></div>
+      <div><b>Układ ekranu (XML)</b><p>Poprawna budowa layoutu: LinearLayout z widżetami TextView, EditText i Button - każdy na właściwym miejscu.</p></div>
+      <div><b>Atrybut android:id</b><p>Unikalny identyfikator każdego widżetu - niezbędny, by pobrać go w Javie metodą findViewById().</p></div>
+      <div><b>Obsługa kliknięcia</b><p>Podpięcie akcji do przycisku przez setOnClickListener() i wyświetlenie wyniku - np. Toast albo zmiana tekstu.</p></div>
       <div><b>Pobranie danych z pola</b><p>Odczyt tego, co użytkownik wpisał w EditText, przez .getText().toString() i użycie tego w logice aplikacji.</p></div>
     </div>
 
     <h4 class="hHead">Trzy pojęcia, które będą w każdym zadaniu</h4>
     <div class="hGrid">
-      <div><b>Układ (Layout)</b><p>JAK wygląda aplikacja. Pliki .xml w katalogu res/layout — sposób rozmieszczenia elementów na ekranie.</p></div>
-      <div><b>Aktywność (Activity)</b><p>CO robi aplikacja. Pliki .java w katalogu java — np. reakcja na wciśnięcie przycisku.</p></div>
+      <div><b>Układ (Layout)</b><p>JAK wygląda aplikacja. Pliki .xml w katalogu res/layout - sposób rozmieszczenia elementów na ekranie.</p></div>
+      <div><b>Aktywność (Activity)</b><p>CO robi aplikacja. Pliki .java w katalogu java - np. reakcja na wciśnięcie przycisku.</p></div>
       <div><b>Widok (View / widżet)</b><p>Element umieszczony w układzie: pole tekstowe TextView, pole edycyjne EditText, przycisk Button.</p></div>
     </div>
 
@@ -280,12 +280,12 @@ details.hint pre{background:var(--code-bg);color:#E8E8E8;padding:10px;border-rad
     a <strong>wrap_content</strong> dopasowuje go do zawartości (np. do długości napisu na przycisku).
     W LinearLayout atrybut <strong>android:orientation</strong> ustawia elementy jeden pod drugim (vertical)
     albo obok siebie (horizontal). Napisy trzymamy w pliku <strong>strings.xml</strong> (katalog res/values)
-    i wstawiamy przez <code>@string/nazwa</code> — tekst wpisany na sztywno to żółte ostrzeżenie <em>hardcoded text</em>.</p>
+    i wstawiamy przez <code>@string/nazwa</code> - tekst wpisany na sztywno to żółte ostrzeżenie <em>hardcoded text</em>.</p>
 
     <h4 class="hHead">Warning kontra Error</h4>
     <div class="hGrid">
-      <div><b>⚠ Warning (żółty)</b><p>Sygnał „można napisać lepiej” — aplikacja mimo to się uruchomi. Przykład: hardcoded text.</p></div>
-      <div><b>⛔ Error (czerwony)</b><p>Emulator nie uruchomi aplikacji z błędem — najpierw trzeba go naprawić. Przykład: błąd składni XML, nieznany symbol.</p></div>
+      <div><b>⚠ Warning (żółty)</b><p>Sygnał „można napisać lepiej” - aplikacja mimo to się uruchomi. Przykład: hardcoded text.</p></div>
+      <div><b>⛔ Error (czerwony)</b><p>Emulator nie uruchomi aplikacji z błędem - najpierw trzeba go naprawić. Przykład: błąd składni XML, nieznany symbol.</p></div>
     </div>
 
     <h4 class="hHead">Schemat każdego zadania egzaminacyjnego</h4>
@@ -299,42 +299,42 @@ details.hint pre{background:var(--code-bg);color:#E8E8E8;padding:10px;border-rad
   <div class="steps">
     <div class="card"><span class="n">KROK 1</span><b>Plac zabaw</b>Otwórz <em>Plac zabaw</em>: po lewej drzewo projektu, w środku edytor XML i Javy, po prawej telefon. Zmień coś i kliknij zielone ▶.</div>
     <div class="card"><span class="n">KROK 2</span><b>Zadania</b>Wykonaj 5 zadań z lekcji, pisząc XML i Javę. Przycisk <em>Sprawdź</em> naprawdę klika Twoją aplikację i ocenia, czy działa.</div>
-    <div class="card"><span class="n">KROK 3</span><b>Quiz i Znajdź błąd</b>Na koniec sprawdź teorię w quizie i wytrop błędy w kodzie — takie same, jakie łapią uczniów na egzaminie.</div>
+    <div class="card"><span class="n">KROK 3</span><b>Quiz i Znajdź błąd</b>Na koniec sprawdź teorię w quizie i wytrop błędy w kodzie - takie same, jakie łapią uczniów na egzaminie.</div>
   </div>
   <div style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="goPlay">Zaczynamy →</button>
   <a class="btn ghost" id="linkL1" href="AndroLab-Lekcja1.html" style="text-decoration:none;display:inline-flex;align-items:center">← Lekcja 1: historia, środowisko, cykl życia</a></div>
-  <p class="credit">Zakres: temat 2 „Tworzenie aplikacji Android — od układu do działającego przycisku" (LinearLayout, TextView, EditText, Button, CheckBox, RadioGroup, SeekBar, findViewById, setOnClickListener, Toast). Przygotowanie do egzaminu zawodowego INF.04 — technik programista. Uwaga: to symulator dydaktyczny obsługujący lekcyjny podzbiór Javy — prawdziwe aplikacje kompilujemy w Android Studio.</p>
+  <p class="credit">Zakres: temat 2 „Tworzenie aplikacji Android - od układu do działającego przycisku" (LinearLayout, TextView, EditText, Button, CheckBox, RadioGroup, SeekBar, findViewById, setOnClickListener, Toast). Przygotowanie do egzaminu zawodowego INF.04 - technik programista. Uwaga: to symulator dydaktyczny obsługujący lekcyjny podzbiór Javy - prawdziwe aplikacje kompilujemy w Android Studio.</p>
 </section>
 
 <!-- ============ TEORIA ============ -->
 <section id="tab-teoria" hidden>
-  <div class="secHead"><h2>Teoria — temat 2 krok po kroku</h2>
-  <p>Kompletny materiał lekcji. Czytaj po kolei — każdy KROK oznaczony „EGZAMIN!" to umiejętność sprawdzana wprost na INF.04. Wszystko przećwiczysz potem w <strong>Placu zabaw</strong>.</p></div>
+  <div class="secHead"><h2>Teoria - temat 2 krok po kroku</h2>
+  <p>Kompletny materiał lekcji. Czytaj po kolei - każdy KROK oznaczony „EGZAMIN!" to umiejętność sprawdzana wprost na INF.04. Wszystko przećwiczysz potem w <strong>Placu zabaw</strong>.</p></div>
 
   <div class="handout"><span class="hKrok">KROK 1</span>
-    <h4 class="hSub">Tworzenie nowej aplikacji — krok po kroku</h4>
+    <h4 class="hSub">Tworzenie nowej aplikacji - krok po kroku</h4>
     <p>Tworzenie nowej aplikacji zawsze rozpoczynamy od otwarcia nowego projektu. W lewym górnym rogu okna wybieramy <strong>File → New → New Project</strong>.</p>
     <div class="hMini">
       <div><b>File → New → New Project</b><p>Otwieramy menu File w lewym górnym rogu Android Studio.</p></div>
-      <div><b>Wybieramy: Empty Views Activity</b><p>Jeżeli w zadaniu egzaminacyjnym nie podano innego szablonu — zawsze wybieramy właśnie ten.</p></div>
+      <div><b>Wybieramy: Empty Views Activity</b><p>Jeżeli w zadaniu egzaminacyjnym nie podano innego szablonu - zawsze wybieramy właśnie ten.</p></div>
       <div><b>Konfiguracja projektu</b><p>Uzupełniamy: Name (np. Aplikacja2), Package name (np. przyklad.nr2), Language → Java, Minimum SDK → najwyższy dostępny.</p></div>
       <div><b>Finish</b><p>Android Studio generuje strukturę projektu z plikami MainActivity.java i activity_main.xml.</p></div>
     </div>
   </div>
 
   <div class="handout"><span class="hKrok">KROK 2</span>
-    <h4 class="hSub">Podstawowe pojęcia — Układ, Aktywność, Widok</h4>
+    <h4 class="hSub">Podstawowe pojęcia - Układ, Aktywność, Widok</h4>
     <p>Te trzy pojęcia będą się pojawiać w każdym zadaniu egzaminacyjnym.</p>
     <div class="hMini">
       <div><b>Układ (Layout)</b><p>Sposób rozmieszczenia elementów na ekranie. Pliki układów leżą w katalogu res/layout i zawsze mają rozszerzenie .xml. To tu definiujemy, JAK wygląda aplikacja.</p></div>
-      <div><b>Aktywność (Activity)</b><p>Działanie, jakie wykonuje aplikacja — np. reakcja na wciśnięcie przycisku. Pliki .java w katalogu java. To tu definiujemy, CO robi aplikacja.</p></div>
+      <div><b>Aktywność (Activity)</b><p>Działanie, jakie wykonuje aplikacja - np. reakcja na wciśnięcie przycisku. Pliki .java w katalogu java. To tu definiujemy, CO robi aplikacja.</p></div>
       <div><b>Widok (View / widżet)</b><p>Element umieszczony w układzie: pole tekstowe TextView, pole edycyjne EditText, przycisk Button.</p></div>
     </div>
   </div>
 
   <div class="handout"><span class="hKrok">KROK 3</span>
-    <h4 class="hSub">Układ liniowy — LinearLayout</h4>
-    <p>Cecha charakterystyczna LinearLayout: każdy element jest układany <strong>jeden po drugim</strong> — w kolejności, w jakiej jest wpisany w pliku XML.</p>
+    <h4 class="hSub">Układ liniowy - LinearLayout</h4>
+    <p>Cecha charakterystyczna LinearLayout: każdy element jest układany <strong>jeden po drugim</strong> - w kolejności, w jakiej jest wpisany w pliku XML.</p>
 <pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
@@ -359,15 +359,15 @@ details.hint pre{background:var(--code-bg);color:#E8E8E8;padding:10px;border-rad
 
 &lt;/LinearLayout&gt;</pre>
     <div class="hMini">
-      <div><b>android:orientation</b><p><strong>vertical</strong> — elementy jeden pod drugim; <strong>horizontal</strong> — elementy obok siebie.</p></div>
-      <div><b>match_parent</b><p>Rozciąga element do rozmiaru rodzica — np. do pełnej szerokości ekranu.</p></div>
-      <div><b>wrap_content</b><p>Dopasowuje rozmiar do zawartości — np. do długości napisu na przycisku.</p></div>
+      <div><b>android:orientation</b><p><strong>vertical</strong> - elementy jeden pod drugim; <strong>horizontal</strong> - elementy obok siebie.</p></div>
+      <div><b>match_parent</b><p>Rozciąga element do rozmiaru rodzica - np. do pełnej szerokości ekranu.</p></div>
+      <div><b>wrap_content</b><p>Dopasowuje rozmiar do zawartości - np. do długości napisu na przycisku.</p></div>
     </div>
     <p style="margin-top:10px">Po uruchomieniu Przycisk 1 (match_parent) jest rozciągnięty na pełną szerokość ekranu, a Przycisk 2 (wrap_content) ma szerokość dopasowaną do napisu.</p>
   </div>
 
   <div class="handout"><span class="hKrok">KROK 4</span>
-    <h4 class="hSub">Plik strings.xml — zasoby tekstowe</h4>
+    <h4 class="hSub">Plik strings.xml - zasoby tekstowe</h4>
     <div class="hCols">
       <div>
         <p><strong>Dlaczego unikać hardcoded text?</strong> Android Studio zgłasza ostrzeżenie (warning), gdy tekst jest wpisany bezpośrednio w układzie. Hardcoding utrudnia też tłumaczenie aplikacji na inne języki.</p>
@@ -383,24 +383,24 @@ details.hint pre{background:var(--code-bg);color:#E8E8E8;padding:10px;border-rad
 <pre>android:text="@string/tekst1"
 android:text="@string/przycisk1"
 android:text="@string/przycisk2"</pre>
-        <p>Wygląd aplikacji nie zmienia się — z edytora znikają tylko żółte ostrzeżenia.</p>
+        <p>Wygląd aplikacji nie zmienia się - z edytora znikają tylko żółte ostrzeżenia.</p>
       </div>
     </div>
     <p style="margin-top:10px">Trzy najważniejsze katalogi projektu to: <strong>manifests</strong>, <strong>java</strong> i <strong>res</strong>. Plik strings.xml znajdziemy w katalogu res/values.</p>
   </div>
 
   <div class="handout"><span class="hKrok">KROK 5</span>
-    <h4 class="hSub">Warning a Error — rodzaje błędów</h4>
+    <h4 class="hSub">Warning a Error - rodzaje błędów</h4>
     <div class="hMini">
-      <div><b>⚠ Warning (ostrzeżenie)</b><p>Oznaczony żółtym kolorem. Sygnał, że coś można napisać lepiej — ale aplikacja uruchomi się mimo ostrzeżeń. Przykład: hardcoded text.</p></div>
-      <div><b>⛔ Error (błąd)</b><p>Oznaczony czerwonym kolorem. Emulator nie uruchomi aplikacji, w której znajdzie Error — np. brakującą klasę, nieznany symbol, błąd składni XML. Napraw go przed uruchomieniem!</p></div>
+      <div><b>⚠ Warning (ostrzeżenie)</b><p>Oznaczony żółtym kolorem. Sygnał, że coś można napisać lepiej - ale aplikacja uruchomi się mimo ostrzeżeń. Przykład: hardcoded text.</p></div>
+      <div><b>⛔ Error (błąd)</b><p>Oznaczony czerwonym kolorem. Emulator nie uruchomi aplikacji, w której znajdzie Error - np. brakującą klasę, nieznany symbol, błąd składni XML. Napraw go przed uruchomieniem!</p></div>
     </div>
-    <p style="margin-top:10px"><strong>Jak ponownie uruchomić aplikację po zmianach?</strong> Kliknij zieloną zaokrągloną strzałkę (przycisk Rerun) w górnym pasku narzędzi — Android Studio skompiluje projekt od nowa i załaduje zmiany w emulatorze.</p>
+    <p style="margin-top:10px"><strong>Jak ponownie uruchomić aplikację po zmianach?</strong> Kliknij zieloną zaokrągloną strzałkę (przycisk Rerun) w górnym pasku narzędzi - Android Studio skompiluje projekt od nowa i załaduje zmiany w emulatorze.</p>
   </div>
 
-  <div class="handout"><span class="hKrok exam">KROK 6 — EGZAMIN!</span>
-    <h4 class="hSub">Atrybut android:id — klucz do Javy</h4>
-    <p>Do tej pory budowaliśmy tylko wygląd aplikacji. Czas połączyć interfejs XML z kodem Java — podstawą tego połączenia jest atrybut <strong>android:id</strong>, który nadaje widżetowi unikalny identyfikator.</p>
+  <div class="handout"><span class="hKrok exam">KROK 6 - EGZAMIN!</span>
+    <h4 class="hSub">Atrybut android:id - klucz do Javy</h4>
+    <p>Do tej pory budowaliśmy tylko wygląd aplikacji. Czas połączyć interfejs XML z kodem Java - podstawą tego połączenia jest atrybut <strong>android:id</strong>, który nadaje widżetowi unikalny identyfikator.</p>
 <pre>&lt;TextView
     android:id="@+id/tekstPowitania"
     android:layout_width="match_parent"
@@ -420,23 +420,23 @@ android:text="@string/przycisk2"</pre>
     android:text="Przywitaj mnie" /&gt;</pre>
     <div class="hMini">
       <div><b>Składnia: @+id/nazwaWidzetu</b><p>Znak @+id/ tworzy nowy identyfikator w pliku zasobów R.java. Nazwę po ukośniku nadawaj opisowo, np. poleImie, przyciskWitaj.</p></div>
-      <div><b>android:hint — podpowiedź</b><p>Wyświetla szarą podpowiedź wewnątrz pustego pola EditText. Znika automatycznie, gdy użytkownik zaczyna pisać.</p></div>
+      <div><b>android:hint - podpowiedź</b><p>Wyświetla szarą podpowiedź wewnątrz pustego pola EditText. Znika automatycznie, gdy użytkownik zaczyna pisać.</p></div>
     </div>
   </div>
 
-  <div class="handout"><span class="hKrok exam">KROK 7 — EGZAMIN!</span>
-    <h4 class="hSub">Nowy widżet: EditText — pole do wpisywania tekstu</h4>
-    <p>EditText to pole edycyjne, w którym użytkownik może wpisać tekst — pojawia się w niemal każdym zadaniu mobilnym INF.04.</p>
+  <div class="handout"><span class="hKrok exam">KROK 7 - EGZAMIN!</span>
+    <h4 class="hSub">Nowy widżet: EditText - pole do wpisywania tekstu</h4>
+    <p>EditText to pole edycyjne, w którym użytkownik może wpisać tekst - pojawia się w niemal każdym zadaniu mobilnym INF.04.</p>
     <div class="hMini">
-      <div><b>android:hint</b><p>Szara podpowiedź w pustym polu — informuje użytkownika, co wpisać.</p></div>
-      <div><b>android:inputType</b><p>Typ klawiatury: text, textPersonName, number, phone — dopasowuje klawiaturę do rodzaju danych.</p></div>
-      <div><b>android:id — obowiązkowy!</b><p>Bez id nie pobierzemy wartości pola w Javie. Zawsze nadawaj id widżetom używanym w kodzie.</p></div>
+      <div><b>android:hint</b><p>Szara podpowiedź w pustym polu - informuje użytkownika, co wpisać.</p></div>
+      <div><b>android:inputType</b><p>Typ klawiatury: text, textPersonName, number, phone - dopasowuje klawiaturę do rodzaju danych.</p></div>
+      <div><b>android:id - obowiązkowy!</b><p>Bez id nie pobierzemy wartości pola w Javie. Zawsze nadawaj id widżetom używanym w kodzie.</p></div>
     </div>
   </div>
 
-  <div class="handout"><span class="hKrok exam">KROK 8 — EGZAMIN!</span>
-    <h4 class="hSub">Łączenie XML z Javą — metoda findViewById()</h4>
-    <p>Aby używać widżetów w kodzie Java, musimy je najpierw „odnaleźć" metodą <strong>findViewById()</strong> — przekazujemy jej identyfikator, a ona zwraca obiekt, którym możemy sterować.</p>
+  <div class="handout"><span class="hKrok exam">KROK 8 - EGZAMIN!</span>
+    <h4 class="hSub">Łączenie XML z Javą - metoda findViewById()</h4>
+    <p>Aby używać widżetów w kodzie Java, musimy je najpierw „odnaleźć" metodą <strong>findViewById()</strong> - przekazujemy jej identyfikator, a ona zwraca obiekt, którym możemy sterować.</p>
 <pre>public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -457,8 +457,8 @@ android:text="@string/przycisk2"</pre>
     </div>
   </div>
 
-  <div class="handout"><span class="hKrok exam">KROK 9 — EGZAMIN!</span>
-    <h4 class="hSub">Obsługa kliknięcia — setOnClickListener()</h4>
+  <div class="handout"><span class="hKrok exam">KROK 9 - EGZAMIN!</span>
+    <h4 class="hSub">Obsługa kliknięcia - setOnClickListener()</h4>
     <p>Gdy użytkownik klika przycisk, Java musi zareagować. Metodę <strong>setOnClickListener()</strong> podpinamy pod obiekt Button, a wewnątrz piszemy kod, który ma się wykonać po kliknięciu.</p>
 <pre>przyciskWitaj.setOnClickListener(new View.OnClickListener() {
     @Override
@@ -470,15 +470,15 @@ android:text="@string/przycisk2"</pre>
     }
 });</pre>
     <div class="hMini">
-      <div><b>setOnClickListener()</b><p>Metoda przypisana do obiektu Button — reaguje na każde kliknięcie przycisku.</p></div>
+      <div><b>setOnClickListener()</b><p>Metoda przypisana do obiektu Button - reaguje na każde kliknięcie przycisku.</p></div>
       <div><b>onClick(View v)</b><p>Wywoływana automatycznie przy każdym kliknięciu. Tu piszemy całą logikę działania przycisku.</p></div>
       <div><b>.getText().toString()</b><p>Pobiera tekst wpisany w EditText i zamienia go na typ String.</p></div>
-      <div><b>.setText("tekst")</b><p>Ustawia nowy tekst w widżecie TextView — wyświetla wynik na ekranie.</p></div>
+      <div><b>.setText("tekst")</b><p>Ustawia nowy tekst w widżecie TextView - wyświetla wynik na ekranie.</p></div>
     </div>
   </div>
 
-  <div class="handout"><span class="hKrok exam">KROK 10 — EGZAMIN!</span>
-    <h4 class="hSub">Toast — krótki komunikat wyskakujący</h4>
+  <div class="handout"><span class="hKrok exam">KROK 10 - EGZAMIN!</span>
+    <h4 class="hSub">Toast - krótki komunikat wyskakujący</h4>
     <p>Toast pojawia się na ekranie na kilka sekund i znika automatycznie. Na egzaminie to częsty sposób wyświetlania wyniku działania przycisku.</p>
 <pre>Toast.makeText(
     getApplicationContext(),
@@ -493,11 +493,11 @@ android:text="@string/przycisk2"</pre>
     <p style="margin-top:10px">Aby użyć Toast, dodaj import na początku pliku: <code>import android.widget.Toast;</code></p>
   </div>
 
-  <div class="handout"><span class="hKrok exam">KROK 11 — EGZAMIN!</span>
-    <h4 class="hSub">Widżety egzaminacyjne — SeekBar i kolory tła</h4>
+  <div class="handout"><span class="hKrok exam">KROK 11 - EGZAMIN!</span>
+    <h4 class="hSub">Widżety egzaminacyjne - SeekBar i kolory tła</h4>
     <div class="hCols">
       <div>
-        <p><strong>SeekBar (suwak)</strong> pozwala wybrać wartość z zakresu — pojawia się w wielu zadaniach (np. „Właściwości czcionki" 2023, „Urządzenia domowe" 2025).</p>
+        <p><strong>SeekBar (suwak)</strong> pozwala wybrać wartość z zakresu - pojawia się w wielu zadaniach (np. „Właściwości czcionki" 2023, „Urządzenia domowe" 2025).</p>
 <pre>&lt;SeekBar
   android:id="@+id/suwak"
   android:layout_width="match_parent"
@@ -534,16 +534,16 @@ android:text="@string/przycisk2"</pre>
   android:padding="20dp" /&gt;</pre>
       </div>
     </div>
-    <div class="hNote">Na egzaminie zawsze czytaj uważnie wymagania dotyczące kolorów i marginesów — są podane wprost w arkuszu i sprawdzane przez egzaminatora!</div>
+    <div class="hNote">Na egzaminie zawsze czytaj uważnie wymagania dotyczące kolorów i marginesów - są podane wprost w arkuszu i sprawdzane przez egzaminatora!</div>
   </div>
 
-  <div class="handout"><span class="hKrok exam">KROK 12 — EGZAMIN!</span>
-    <h4 class="hSub">Tablice w Javie — cykliczne przełączanie treści</h4>
+  <div class="handout"><span class="hKrok exam">KROK 12 - EGZAMIN!</span>
+    <h4 class="hSub">Tablice w Javie - cykliczne przełączanie treści</h4>
     <p>Częste zadanie CKE: przycisk cyklicznie przełącza między kilkoma wartościami. Rozwiązanie: <strong>tablica + licznik indeksu jako pole klasy</strong>.</p>
 <pre>public class MainActivity extends AppCompatActivity {
 
     String[] cytaty = {"Dzień dobry", "Good morning", "Buenos dias"};
-    int aktualny = 0;   // pole klasy — POZA onCreate!
+    int aktualny = 0;   // pole klasy - POZA onCreate!
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -568,17 +568,17 @@ android:text="@string/przycisk2"</pre>
     }
 }</pre>
     <div class="hMini">
-      <div><b>cytaty[0]</b><p>Dostęp do elementu tablicy po indeksie — numeracja od zera.</p></div>
+      <div><b>cytaty[0]</b><p>Dostęp do elementu tablicy po indeksie - numeracja od zera.</p></div>
       <div><b>cytaty.length</b><p>Długość tablicy (liczba elementów).</p></div>
       <div><b>aktualny++</b><p>Zwiększenie indeksu o 1.</p></div>
       <div><b>Zmienna „aktualny"</b><p>Musi być polem klasy (poza onCreate), żeby zachować wartość między kliknięciami.</p></div>
     </div>
-    <div class="hNote">Ten schemat pojawił się na egzaminie w czerwcu 2023 („Właściwości czcionki") — tablica 3 cytatów przełączanych przyciskiem. Zapamiętaj go! W Placu zabaw wczytasz go jako gotowy przykład.</div>
+    <div class="hNote">Ten schemat pojawił się na egzaminie w czerwcu 2023 („Właściwości czcionki") - tablica 3 cytatów przełączanych przyciskiem. Zapamiętaj go! W Placu zabaw wczytasz go jako gotowy przykład.</div>
   </div>
 
   <div class="handout"><span class="hKrok">PODSUMOWANIE</span>
-    <h4 class="hSub">Kompletna aplikacja — XML + Java razem</h4>
-    <p>Aplikacja pobiera imię użytkownika i wyświetla powitanie — dokładnie tak, jak wiele zadań egzaminacyjnych. Te same pliki masz wczytane w Placu zabaw jako przykład „Powitanie".</p>
+    <h4 class="hSub">Kompletna aplikacja - XML + Java razem</h4>
+    <p>Aplikacja pobiera imię użytkownika i wyświetla powitanie - dokładnie tak, jak wiele zadań egzaminacyjnych. Te same pliki masz wczytane w Placu zabaw jako przykład „Powitanie".</p>
     <div class="hCols">
       <div><p><strong>Plik activity_main.xml</strong></p>
 <pre>&lt;LinearLayout
@@ -652,25 +652,25 @@ public class MainActivity
   </div>
 
   <div class="handout">
-    <h4 class="hSub">Diagram przepływu — od kliknięcia do wyniku</h4>
+    <h4 class="hSub">Diagram przepływu - od kliknięcia do wyniku</h4>
     <div class="hFlow"><span>Kliknięcie</span>→<span>onClick()</span>→<span>Pobierz tekst</span>→<span>Wyświetl wynik</span></div>
     <div class="hMini">
-      <div><b>Kliknięcie</b><p>Użytkownik dotyka przycisku na ekranie — punkt startowy całej akcji.</p></div>
-      <div><b>onClick()</b><p>Java automatycznie wywołuje tę metodę w odpowiedzi na kliknięcie — tu piszemy logikę.</p></div>
+      <div><b>Kliknięcie</b><p>Użytkownik dotyka przycisku na ekranie - punkt startowy całej akcji.</p></div>
+      <div><b>onClick()</b><p>Java automatycznie wywołuje tę metodę w odpowiedzi na kliknięcie - tu piszemy logikę.</p></div>
       <div><b>Pobierz tekst</b><p>Odczytujemy wpis użytkownika przez .getText().toString().</p></div>
       <div><b>Wyświetl wynik</b><p>Pokazujemy efekt przez setText() na TextView albo przez Toast.</p></div>
     </div>
-    <div class="hNote">Zapamiętaj ten schemat — bez względu na treść zadania zawsze powtarza się ten sam wzorzec: kliknięcie → pobranie danych → przetworzenie → wyświetlenie wyniku.</div>
+    <div class="hNote">Zapamiętaj ten schemat - bez względu na treść zadania zawsze powtarza się ten sam wzorzec: kliknięcie → pobranie danych → przetworzenie → wyświetlenie wyniku.</div>
   </div>
 
   <div class="handout">
-    <h4 class="hSub">Najczęstsze błędy uczniów — i jak ich unikać</h4>
+    <h4 class="hSub">Najczęstsze błędy uczniów - i jak ich unikać</h4>
     <div class="hMini">
-      <div><b>findViewById() przed setContentView()</b><p>Odwrócona kolejność powoduje Error — najpierw zawsze setContentView(R.layout.activity_main).</p></div>
+      <div><b>findViewById() przed setContentView()</b><p>Odwrócona kolejność powoduje Error - najpierw zawsze setContentView(R.layout.activity_main).</p></div>
       <div><b>Brak .show() przy Toast</b><p>Najczęstszy błąd! Toast zostaje stworzony, ale nigdy się nie wyświetli. Zawsze kończ wywołaniem .show().</p></div>
       <div><b>Brak android:id na widżecie</b><p>Bez id nie pobierzemy widżetu przez findViewById(). Nadawaj id wszystkim widżetom obsługiwanym w Javie.</p></div>
-      <div><b>Brakujące importy</b><p>Toast, Button, EditText wymagają linii import android.widget.XXX. Android Studio podpowie — Alt+Enter.</p></div>
-      <div><b>Niezgodność id w XML i w Javie</b><p>android:id="@+id/btnWitaj" w XML = R.id.btnWitaj w Javie — dokładnie ta sama nazwa. Literówka = błąd kompilacji.</p></div>
+      <div><b>Brakujące importy</b><p>Toast, Button, EditText wymagają linii import android.widget.XXX. Android Studio podpowie - Alt+Enter.</p></div>
+      <div><b>Niezgodność id w XML i w Javie</b><p>android:id="@+id/btnWitaj" w XML = R.id.btnWitaj w Javie - dokładnie ta sama nazwa. Literówka = błąd kompilacji.</p></div>
     </div>
   </div>
 
@@ -685,9 +685,9 @@ public class MainActivity
     </div>
   </div>
 
-  <div class="handout"><span class="hKrok exam">WAŻNE — EGZAMIN</span>
-    <h4 class="hSub">Java czy Kotlin? — wybór języka na egzaminie</h4>
-    <p>Na INF.04 możesz pisać aplikację mobilną w Javie LUB Kotlinie — oba języki akceptuje CKE (oficjalne rozwiązania CKE często używają Kotlina). Wybierz ten, który znasz lepiej.</p>
+  <div class="handout"><span class="hKrok exam">WAŻNE - EGZAMIN</span>
+    <h4 class="hSub">Java czy Kotlin? - wybór języka na egzaminie</h4>
+    <p>Na INF.04 możesz pisać aplikację mobilną w Javie LUB Kotlinie - oba języki akceptuje CKE (oficjalne rozwiązania CKE często używają Kotlina). Wybierz ten, który znasz lepiej.</p>
     <div class="hCols">
       <div><p><strong>Java (ten kurs):</strong></p>
 <pre>// Pobranie widżetu
@@ -707,7 +707,7 @@ String tekst = editText.getText().toString();</pre></div>
 <pre>// Pobranie widżetu
 val label = findViewById&lt;TextView&gt;(R.id.label)
 
-// Obsługa kliknięcia — krócej!
+// Obsługa kliknięcia - krócej!
 button.setOnClickListener {
     label.text = "Kliknięto!"
 }
@@ -715,21 +715,21 @@ button.setOnClickListener {
 // Pobranie tekstu z EditText
 val tekst = editText.text.toString()</pre></div>
     </div>
-    <div class="hNote">Ten kurs uczy Javy — dobry wybór dla początkujących, bo Java jest bardziej „gadatliwa" i łatwiej zrozumieć, co się dzieje. Na egzaminie liczy się działający kod — nie język.</div>
+    <div class="hNote">Ten kurs uczy Javy - dobry wybór dla początkujących, bo Java jest bardziej „gadatliwa" i łatwiej zrozumieć, co się dzieje. Na egzaminie liczy się działający kod - nie język.</div>
   </div>
 </section>
 
 <!-- ============ PLAYGROUND ============ -->
 <section id="tab-play" hidden>
   <div class="secHead"><h2>Plac zabaw</h2>
-  <p>Układ jak w Android Studio: drzewo projektu, edytor z zakładkami plików, panel Running Devices. Piszesz prawdziwą Javę — po zmianach kliknij zielone <strong>▶ Uruchom</strong> (albo poczekaj chwilę: projekt przebuduje się sam). Błędy zobaczysz w <strong>Logcat</strong> na dole.</p></div>
+  <p>Układ jak w Android Studio: drzewo projektu, edytor z zakładkami plików, panel Running Devices. Piszesz prawdziwą Javę - po zmianach kliknij zielone <strong>▶ Uruchom</strong> (albo poczekaj chwilę: projekt przebuduje się sam). Błędy zobaczysz w <strong>Logcat</strong> na dole.</p></div>
   <div class="edToolbar">
     <label class="muted" for="preset" style="font-size:13px">Wczytaj przykład:</label>
     <select id="preset">
-      <option value="default">Powitanie — kompletna aplikacja z lekcji</option>
+      <option value="default">Powitanie - kompletna aplikacja z lekcji</option>
       <option value="empty">Pusty projekt (zacznij od zera)</option>
-      <option value="kasa">Kasa biletowa — RadioGroup i CheckBox</option>
-      <option value="exam">Egzamin INF.04 czerwiec 2023 — „Właściwości czcionki"</option>
+      <option value="kasa">Kasa biletowa - RadioGroup i CheckBox</option>
+      <option value="exam">Egzamin INF.04 czerwiec 2023 - „Właściwości czcionki"</option>
     </select>
     <button class="btn ghost small" id="resetAll" title="Czyści zapisany stan i wczytuje domyślny przykład">Resetuj wszystko</button>
   </div>
@@ -763,7 +763,7 @@ val tekst = editText.text.toString()</pre></div>
       <div class="edPane" id="pane-java" hidden><textarea class="code" id="javaSrc" spellcheck="false" aria-label="Edytor MainActivity.java" style="min-height:520px"></textarea></div>
       <div class="edPane" id="pane-strings" hidden><textarea class="code" id="strSrc" spellcheck="false" aria-label="Edytor strings.xml"></textarea></div>
       <div class="edPane" id="pane-manifest" hidden><textarea class="code" id="manifestSrc" readonly aria-label="Podgląd AndroidManifest.xml (tylko do odczytu)"></textarea></div>
-      <div class="logcat"><header>Logcat — problemy</header><ul id="problems"></ul></div>
+      <div class="logcat"><header>Logcat - problemy</header><ul id="problems"></ul></div>
     </div>
     <div class="phoneWrap">
       <div class="runHead">Running Devices<button class="runBtn" id="runBtn" title="Przebuduj i uruchom aplikację"><span class="tri">▶</span> Uruchom</button></div>
@@ -784,17 +784,17 @@ val tekst = editText.text.toString()</pre></div>
 <!-- ============ TASKS ============ -->
 <section id="tab-tasks" hidden>
   <div class="secHead"><h2>Zadania na lekcję</h2>
-  <p>Pięć zadań z lekcji — rozwiązujesz je w <strong>Placu zabaw</strong> (XML + Java), a tutaj klikasz <em>Sprawdź</em>. Sprawdzarka naprawdę uruchamia Twoją aplikację, wpisuje dane i klika przyciski. Rób po kolei: każde kolejne rozbudowuje poprzednie.</p></div>
+  <p>Pięć zadań z lekcji - rozwiązujesz je w <strong>Placu zabaw</strong> (XML + Java), a tutaj klikasz <em>Sprawdź</em>. Sprawdzarka naprawdę uruchamia Twoją aplikację, wpisuje dane i klika przyciski. Rób po kolei: każde kolejne rozbudowuje poprzednie.</p></div>
   <div style="margin-bottom:14px"><button class="btn" id="checkAllTasks">Sprawdź wszystkie</button></div>
   <div class="taskGrid" id="taskList"></div>
   <div class="secHead homework"><h2>Praca domowa</h2>
-  <p>Zadania 1–4 możesz w całości przećwiczyć tutaj (Integer.parseInt, if-else, licznik i toUpperCase działają w symulatorze), ale finalnie wykonaj je w prawdziwym Android Studio. Do zadania 5 wczytaj przykład „Egzamin INF.04 czerwiec 2023" i przeanalizuj kod.</p></div>
+  <p>Zadania 1-4 możesz w całości przećwiczyć tutaj (Integer.parseInt, if-else, licznik i toUpperCase działają w symulatorze), ale finalnie wykonaj je w prawdziwym Android Studio. Do zadania 5 wczytaj przykład „Egzamin INF.04 czerwiec 2023" i przeanalizuj kod.</p></div>
   <div class="homework" id="hwList"></div>
 </section>
 
 <!-- ============ QUIZ ============ -->
 <section id="tab-quiz" hidden>
-  <div class="secHead"><h2>Milionerzy — teoria do egzaminu</h2>
+  <div class="secHead"><h2>Milionerzy - teoria do egzaminu</h2>
   <p>12 pytań z lekcji, od 500 zł do miliona. Masz dwa koła ratunkowe (50:50 i głos publiczności) na całą grę.
   Progi gwarantowane: 1 000 zł i 40 000 zł. Zła odpowiedź = spadasz do progu i grasz od nowa.</p></div>
   <div class="milWrap">
@@ -818,7 +818,12 @@ val tekst = editText.text.toString()</pre></div>
 <!-- ============ BUGS ============ -->
 <section id="tab-bugs" hidden>
   <div class="secHead"><h2>Znajdź błąd</h2>
-  <p>Każdy fragment zawiera dokładnie jeden błąd — taki, który naprawdę zdarza się na egzaminie. Kliknij linijkę, w której się czai.</p></div>
+  <p>Każdy fragment zawiera dokładnie jeden błąd - taki, który naprawdę zdarza się na egzaminie. Kliknij linijkę, w której się czai. Liczymy próby - im mniej kliknięć, tym lepiej!</p></div>
+  <div class="card" style="padding:10px 16px;margin-bottom:14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+    <strong id="bugScore">Znalezione: 0/4</strong>
+    <span class="muted" id="bugClicks" style="font-size:13px"></span>
+    <button class="btn ghost small" id="bugsReset" style="margin-left:auto">Od nowa</button>
+  </div>
   <div id="bugList"></div>
 </section>
 
@@ -1188,7 +1193,7 @@ $$(".tree .node[data-open]").forEach(n=>n.addEventListener("click",()=>openEd(n.
     ta.selectionStart=ta.selectionEnd=s+4; ta.dispatchEvent(new Event("input"));}});
 });
 let deb=null;
-function markDirty(){dirty=true;$("#dirtyNote").textContent="Zmieniono kod — przebudowa…";
+function markDirty(){dirty=true;$("#dirtyNote").textContent="Zmieniono kod - przebudowa…";
   clearTimeout(deb);deb=setTimeout(()=>{grab();persist();rebuild()},600)}
 $("#xmlSrc").addEventListener("input",markDirty);
 $("#strSrc").addEventListener("input",markDirty);
@@ -1208,7 +1213,7 @@ function parseStrings(){
   return map;
 }
 function renderManifest(appName){
-  $("#manifestSrc").value='<?xml version="1.0" encoding="utf-8"?>\n<manifest xmlns:android="http://schemas.android.com/apk/res/android">\n\n    <application\n        android:icon="@mipmap/ic_launcher"\n        android:label="@string/app_name"   <!-- '+appName+' -->\n        android:theme="@style/Theme.AppCompat.Light">\n\n        <activity android:name=".MainActivity">\n            <intent-filter>\n                <action android:name="android.intent.action.MAIN" />\n                <category android:name="android.intent.category.LAUNCHER" />\n            </intent-filter>\n        </activity>\n\n    </application>\n\n</manifest>\n\n(plik generowany automatycznie — tylko do odczytu)';
+  $("#manifestSrc").value='<?xml version="1.0" encoding="utf-8"?>\n<manifest xmlns:android="http://schemas.android.com/apk/res/android">\n\n    <application\n        android:icon="@mipmap/ic_launcher"\n        android:label="@string/app_name"   <!-- '+appName+' -->\n        android:theme="@style/Theme.AppCompat.Light">\n\n        <activity android:name=".MainActivity">\n            <intent-filter>\n                <action android:name="android.intent.action.MAIN" />\n                <category android:name="android.intent.category.LAUNCHER" />\n            </intent-filter>\n        </activity>\n\n    </application>\n\n</manifest>\n\n(plik generowany automatycznie - tylko do odczytu)';
 }
 
 /* ---------- XML parse ---------- */
@@ -1222,11 +1227,11 @@ function parseLayout(){
   if(doc.getElementsByTagName("parsererror").length){
     const doc2=new DOMParser().parseFromString('<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical">'+src+"</LinearLayout>","text/xml");
     if(!doc2.getElementsByTagName("parsererror").length){
-      problems.push(["info","Fragment bez elementu głównego — owinięto go automatycznie w pionowy LinearLayout"]);
+      problems.push(["info","Fragment bez elementu głównego - owinięto go automatycznie w pionowy LinearLayout"]);
       return doc2.documentElement;
     }
     const msg=doc.getElementsByTagName("parsererror")[0].textContent.split("\n")[0];
-    problems.push(["err","Błąd składni XML — sprawdź nawiasy < >, cudzysłowy i / na końcu widżetów. ("+msg.slice(0,120)+")"]);
+    problems.push(["err","Błąd składni XML - sprawdź nawiasy < >, cudzysłowy i / na końcu widżetów. ("+msg.slice(0,120)+")"]);
     return null;
   }
   return doc.documentElement;
@@ -1246,7 +1251,7 @@ function applyCommon(el,node){
   const w=node.getAttribute("android:layout_width"), h=node.getAttribute("android:layout_height");
   for(const[attr,name]of[[w,"layout_width"],[h,"layout_height"]]){
     if(attr&&!["match_parent","wrap_content","fill_parent"].includes(attr)&&dp(attr)==null)
-      problems.push(["err",'Wartość „'+attr+'” nie istnieje — '+name+' przyjmuje match_parent, wrap_content lub liczbę z dp']);
+      problems.push(["err",'Wartość „'+attr+'” nie istnieje - '+name+' przyjmuje match_parent, wrap_content lub liczbę z dp']);
   }
   if(w==="match_parent"||w==="fill_parent")el.style.width="100%";
   else if(w==="wrap_content")el.style.width="fit-content";
@@ -1261,7 +1266,7 @@ function applyCommon(el,node){
 function getId(node){
   const raw=node.getAttribute("android:id"); if(!raw)return null;
   const m=/^@\+?id\/(\w+)$/.exec(raw.trim());
-  if(!m){problems.push(["err",'Niepoprawny zapis id: „'+raw+'” — użyj @+id/nazwa']);return null;}
+  if(!m){problems.push(["err",'Niepoprawny zapis id: „'+raw+'” - użyj @+id/nazwa']);return null;}
   return m[1];
 }
 function reg(id,type,el,node,extra){ if(!id)return;
@@ -1280,7 +1285,7 @@ function renderNode(node,parent,strings,groupName){
     const or=node.getAttribute("android:orientation");
     el.style.flexDirection=(tag==="RadioGroup")?(or==="horizontal"?"row":"column"):(or==="vertical"?"column":"row");
     if(tag==="LinearLayout"&&or!=="vertical"&&or!=="horizontal"&&[...node.children].length>1)
-      problems.push(["warn","LinearLayout bez android:orientation — domyślnie horizontal (elementy obok siebie)"]);
+      problems.push(["warn","LinearLayout bez android:orientation - domyślnie horizontal (elementy obok siebie)"]);
     applyCommon(el,node);
     reg(id,tag,el,node,tag==="RadioGroup"?{group:"rg-"+(id||Math.random().toString(36).slice(2))}:null);
     const gname=tag==="RadioGroup"?widgets[id]?widgets[id].group:"rg-anon":groupName;
@@ -1291,7 +1296,7 @@ function renderNode(node,parent,strings,groupName){
     const el=document.createElement("div"); el.className="aw-tv";
     const t=resolveText(node.getAttribute("android:text"),strings);
     if(node.getAttribute("android:text")&&!/^@string\//.test(node.getAttribute("android:text")))
-      problems.push(["warn",'Hardcoded string „'+(node.getAttribute("android:text")||"").slice(0,30)+'” — na egzaminie OK, ale docelowo używaj @string/…']);
+      problems.push(["warn",'Hardcoded string „'+(node.getAttribute("android:text")||"").slice(0,30)+'” - na egzaminie OK, ale docelowo używaj @string/…']);
     el.textContent=t??"";
     applyTextAttrs(el,node);
     applyCommon(el,node); reg(id,"TextView",el,node); parent.appendChild(el); return;
@@ -1346,7 +1351,7 @@ function renderPhone(){
 }
 function paintProblems(){
   const ul=$("#problems"); ul.innerHTML="";
-  if(!problems.length){const li=document.createElement("li");li.className="okrow";li.innerHTML="<b>OK</b> Build successful — brak problemów!";ul.appendChild(li);}
+  if(!problems.length){const li=document.createElement("li");li.className="okrow";li.innerHTML="<b>OK</b> Build successful - brak problemów!";ul.appendChild(li);}
   problems.forEach(([lv,msg])=>{const li=document.createElement("li");li.className=lv;
     li.innerHTML="<b>"+(lv==="err"?"Error":lv==="warn"?"Warning":"Info")+"</b> "+esc(msg);ul.appendChild(li);});
 }
@@ -1433,7 +1438,7 @@ function transpile(java){
       throw new Error("Nie znaleziono metody onCreate(...) w klasie MainActivity");
     }
   }else{
-    body=src; /* tryb fragmentu — cały kod traktujemy jak wnętrze onCreate */
+    body=src; /* tryb fragmentu - cały kod traktujemy jak wnętrze onCreate */
   }
   fields=fields.replace(/(?:@Override\s*)?(?:public|private|protected)\s+(?:static\s+)?(?:void|int|String|double|boolean|float)\s+(\w+)\s*\(([^)]*)\)\s*\{/g,
     (m0,name,args)=>"function "+name+"("+stripParamTypes(args)+"){");
@@ -1503,7 +1508,7 @@ function runJava(){
   const Rstr=new Proxy({},{get:(t,k)=>String(k)});
   const R={id:Rid,layout:{activity_main:0},string:Rstr};
   const shims={
-    findViewById:id=>{ if(!widgets[id])throw new Error("findViewById: nie znaleziono widżetu o id „"+id+"” — sprawdź android:id w activity_main.xml");
+    findViewById:id=>{ if(!widgets[id])throw new Error("findViewById: nie znaleziono widżetu o id „"+id+"” - sprawdź android:id w activity_main.xml");
       return widgetProxy(id); },
     R,
     Toast:{LENGTH_SHORT:0,LENGTH_LONG:1,makeText:(ctx,msg,len)=>({show:()=>showToast(msg)})},
@@ -1549,16 +1554,16 @@ function ids(type){return Object.keys(widgets).filter(k=>widgets[k].type===type)
 function freshRun(){problems=[];renderPhone();const ok=runJava();paintProblems();return ok}
 function anyTVIncludes(txt){return ids("TextView").some(t=>norm(widgets[t].el.textContent).includes(txt))}
 const TASKS=[
- {t:"Zadanie 1 — „Witaj, świecie!”",
+ {t:"Zadanie 1 - „Witaj, świecie!”",
   d:'W pliku <code>activity_main.xml</code> umieść <code>TextView</code> z tekstem <strong>„Witaj, świecie!”</strong> oraz <code>Button</code> z napisem <strong>„Kliknij mnie”</strong>. (Podpowiedź: wczytaj przykład „Pusty projekt” i dopisz widżety.)',
   hint:'<div class="hintLines">'
-   +'<div><code>&lt;TextView</code><span>początek widżetu TextView — pola z tekstem, które tylko wyświetlamy (użytkownik go nie edytuje)</span></div>'
+   +'<div><code>&lt;TextView</code><span>początek widżetu TextView - pola z tekstem, które tylko wyświetlamy (użytkownik go nie edytuje)</span></div>'
    +'<div><code>  android:id="@+id/labelWynik"</code><span>nadajemy identyfikator: zapis @+id/ znaczy „utwórz NOWE id o nazwie labelWynik”. Dzięki id odnajdziemy widżet w Javie jako R.id.labelWynik</span></div>'
-   +'<div><code>  android:layout_width="match_parent"</code><span>szerokość: rozciągnij do rozmiaru rodzica — czyli na całą szerokość ekranu</span></div>'
-   +'<div><code>  android:layout_height="wrap_content"</code><span>wysokość: dopasuj do zawartości — tyle, ile zajmuje tekst</span></div>'
+   +'<div><code>  android:layout_width="match_parent"</code><span>szerokość: rozciągnij do rozmiaru rodzica - czyli na całą szerokość ekranu</span></div>'
+   +'<div><code>  android:layout_height="wrap_content"</code><span>wysokość: dopasuj do zawartości - tyle, ile zajmuje tekst</span></div>'
    +'<div><code>  android:text="Witaj, świecie!" /&gt;</code><span>tekst do wyświetlenia; znak /&gt; zamyka cały widżet</span></div>'
    +'<div><code>&lt;Button</code><span>początek widżetu przycisku</span></div>'
-   +'<div><code>  android:id="@+id/btnKliknij"</code><span>id przycisku — przyda się w zadaniu 2, żeby podpiąć kliknięcie w Javie</span></div>'
+   +'<div><code>  android:id="@+id/btnKliknij"</code><span>id przycisku - przyda się w zadaniu 2, żeby podpiąć kliknięcie w Javie</span></div>'
    +'<div><code>  android:layout_width="match_parent"</code><span>przycisk na całą szerokość ekranu</span></div>'
    +'<div><code>  android:layout_height="wrap_content"</code><span>wysokość dopasowana do napisu</span></div>'
    +'<div><code>  android:text="Kliknij mnie" /&gt;</code><span>napis na przycisku (Android wyświetli go WIELKIMI LITERAMI)</span></div>'
@@ -1569,15 +1574,15 @@ const TASKS=[
     if(!tv)return "Brakuje TextView z tekstem „Witaj, świecie!”.";
     if(!bt)return "Brakuje przycisku z napisem „Kliknij mnie”.";
     return true;}},
- {t:"Zadanie 2 — Przycisk zmienia tekst",
+ {t:"Zadanie 2 - Przycisk zmienia tekst",
   d:'Nadaj obu widżetom <code>android:id</code>. W <code>MainActivity.java</code> pobierz je przez <code>findViewById()</code> i podepnij <code>setOnClickListener()</code> tak, aby po kliknięciu TextView pokazywał <strong>„Przycisk został kliknięty!”</strong>. Kliknij przycisk na telefonie i sprawdź, czy działa.',
   hint:'<div class="hintLines">'
-   +'<div><code>TextView labelWynik = (TextView) findViewById(R.id.labelWynik);</code><span>odnajdujemy w układzie widżet o id labelWynik i zapisujemy go do zmiennej. (TextView) to rzutowanie — mówimy Javie, jakiego typu jest ten widżet. R.id.nazwa musi być IDENTYCZNA jak w android:id!</span></div>'
-   +'<div><code>Button btnKliknij = (Button) findViewById(R.id.btnKliknij);</code><span>tak samo pobieramy przycisk — od teraz zmienna btnKliknij steruje przyciskiem z ekranu</span></div>'
-   +'<div><code>btnKliknij.setOnClickListener(new View.OnClickListener() {</code><span>podpinamy pod przycisk „nasłuchiwacz kliknięć” — obiekt, który zareaguje na każde dotknięcie</span></div>'
+   +'<div><code>TextView labelWynik = (TextView) findViewById(R.id.labelWynik);</code><span>odnajdujemy w układzie widżet o id labelWynik i zapisujemy go do zmiennej. (TextView) to rzutowanie - mówimy Javie, jakiego typu jest ten widżet. R.id.nazwa musi być IDENTYCZNA jak w android:id!</span></div>'
+   +'<div><code>Button btnKliknij = (Button) findViewById(R.id.btnKliknij);</code><span>tak samo pobieramy przycisk - od teraz zmienna btnKliknij steruje przyciskiem z ekranu</span></div>'
+   +'<div><code>btnKliknij.setOnClickListener(new View.OnClickListener() {</code><span>podpinamy pod przycisk „nasłuchiwacz kliknięć” - obiekt, który zareaguje na każde dotknięcie</span></div>'
    +'<div><code>    @Override</code><span>adnotacja: nadpisujemy metodę onClick odziedziczoną z OnClickListener</span></div>'
    +'<div><code>    public void onClick(View v) {</code><span>ta metoda wykona się automatycznie przy KAŻDYM kliknięciu przycisku</span></div>'
-   +'<div><code>        labelWynik.setText("Przycisk został kliknięty!");</code><span>setText() podmienia tekst w TextView — użytkownik widzi efekt kliknięcia</span></div>'
+   +'<div><code>        labelWynik.setText("Przycisk został kliknięty!");</code><span>setText() podmienia tekst w TextView - użytkownik widzi efekt kliknięcia</span></div>'
    +'<div><code>    }</code><span>koniec metody onClick</span></div>'
    +'<div><code>});</code><span>zamknięcia: } kończy obiekt nasłuchiwacza, ) nawias metody, a ; całą instrukcję</span></div>'
    +'</div>',
@@ -1587,13 +1592,13 @@ const TASKS=[
       if(anyTVIncludes("przycisk został kliknięty"))return true;
     }
     return "Po kliknięciu żaden TextView nie pokazuje „Przycisk został kliknięty!”. Sprawdź setOnClickListener() i setText().";}},
- {t:"Zadanie 3 — Pole tekstowe i powitanie",
-  d:'Dodaj <code>EditText</code> z podpowiedzią (<code>android:hint</code>) <strong>„Wpisz swoje imię”</strong>. Zmień kod tak, aby po kliknięciu TextView pokazywał <strong>„Cześć, [imię]!”</strong> — pobierz tekst przez <code>getText().toString()</code>.',
+ {t:"Zadanie 3 - Pole tekstowe i powitanie",
+  d:'Dodaj <code>EditText</code> z podpowiedzią (<code>android:hint</code>) <strong>„Wpisz swoje imię”</strong>. Zmień kod tak, aby po kliknięciu TextView pokazywał <strong>„Cześć, [imię]!”</strong> - pobierz tekst przez <code>getText().toString()</code>.',
   hint:'<div class="hintLines">'
-   +'<div><code>android:id="@+id/poleImie"</code><span>(w XML) bez id nie pobierzemy pola w Javie — @+id/ tworzy identyfikator poleImie</span></div>'
-   +'<div><code>android:hint="Wpisz swoje imię"</code><span>(w XML) szara podpowiedź w pustym polu — znika, gdy użytkownik zacznie pisać</span></div>'
+   +'<div><code>android:id="@+id/poleImie"</code><span>(w XML) bez id nie pobierzemy pola w Javie - @+id/ tworzy identyfikator poleImie</span></div>'
+   +'<div><code>android:hint="Wpisz swoje imię"</code><span>(w XML) szara podpowiedź w pustym polu - znika, gdy użytkownik zacznie pisać</span></div>'
    +'<div><code>String imie = poleImie.getText().toString();</code><span>pobieramy wpis użytkownika: getText() zwraca obiekt tekstowy, a toString() zamienia go na zwykły napis (String) zapisany w zmiennej imie</span></div>'
-   +'<div><code>labelWynik.setText("Cześć, " + imie + "!");</code><span>plus skleja napisy: „Cześć, ” + zawartość zmiennej + „!” — wynik trafia do TextView</span></div>'
+   +'<div><code>labelWynik.setText("Cześć, " + imie + "!");</code><span>plus skleja napisy: „Cześć, ” + zawartość zmiennej + „!” - wynik trafia do TextView</span></div>'
    +'</div>',
   check(){ if(!freshRun())return "Najpierw popraw błędy Javy z Logcata.";
     const ets=ids("EditText").filter(e=>norm(widgets[e].el.placeholder).includes("imię"));
@@ -1602,15 +1607,15 @@ const TASKS=[
       freshRun(); widgets[e].el.value="Ala"; widgets[b].el.click();
       if(anyTVIncludes("cześć, ala"))return true;
     }
-    return "Wpisałem „Ala” i poklikałem przyciski — nie zobaczyłem „Cześć, Ala!”. Sprawdź getText().toString() i sklejanie tekstu plusem.";}},
- {t:"Zadanie 4 — Toast z imieniem",
+    return "Wpisałem „Ala” i poklikałem przyciski - nie zobaczyłem „Cześć, Ala!”. Sprawdź getText().toString() i sklejanie tekstu plusem.";}},
+ {t:"Zadanie 4 - Toast z imieniem",
   d:'Po kliknięciu wyświetl dodatkowo <code>Toast</code> z komunikatem <strong>„Witaj, [imię]! Miło Cię poznać.”</strong> Pamiętaj o <code>.show()</code> na końcu!',
   hint:'<div class="hintLines">'
-   +'<div><code>Toast.makeText(</code><span>tworzymy Toast — krótki „dymek” z komunikatem; makeText przyjmuje 3 parametry (poniżej)</span></div>'
-   +'<div><code>    getApplicationContext(),</code><span>parametr 1: kontekst — informacja, w której aplikacji pokazać komunikat</span></div>'
-   +'<div><code>    "Witaj, " + imie + "! Miło Cię poznać.",</code><span>parametr 2: treść komunikatu — sklejona plusem z imieniem pobranym z pola</span></div>'
-   +'<div><code>    Toast.LENGTH_SHORT</code><span>parametr 3: czas wyświetlania — LENGTH_SHORT ≈ 2 sekundy (LENGTH_LONG ≈ 3,5 s)</span></div>'
-   +'<div><code>).show();</code><span>.show() faktycznie WYŚWIETLA Toast — bez niego komunikat powstaje, ale nigdy się nie pokaże (najczęstszy błąd egzaminacyjny!)</span></div>'
+   +'<div><code>Toast.makeText(</code><span>tworzymy Toast - krótki „dymek” z komunikatem; makeText przyjmuje 3 parametry (poniżej)</span></div>'
+   +'<div><code>    getApplicationContext(),</code><span>parametr 1: kontekst - informacja, w której aplikacji pokazać komunikat</span></div>'
+   +'<div><code>    "Witaj, " + imie + "! Miło Cię poznać.",</code><span>parametr 2: treść komunikatu - sklejona plusem z imieniem pobranym z pola</span></div>'
+   +'<div><code>    Toast.LENGTH_SHORT</code><span>parametr 3: czas wyświetlania - LENGTH_SHORT ≈ 2 sekundy (LENGTH_LONG ≈ 3,5 s)</span></div>'
+   +'<div><code>).show();</code><span>.show() faktycznie WYŚWIETLA Toast - bez niego komunikat powstaje, ale nigdy się nie pokaże (najczęstszy błąd egzaminacyjny!)</span></div>'
    +'</div>',
   check(){ if(!freshRun())return "Najpierw popraw błędy Javy z Logcata.";
     const ets=ids("EditText");
@@ -1620,14 +1625,14 @@ const TASKS=[
       if(t.includes("witaj")&&t.includes("ala")&&t.includes("miło"))return true;
     }
     return "Nie zobaczyłem Toasta „Witaj, Ala! Miło Cię poznać.”. Sprawdź Toast.makeText(…) i czy na końcu jest .show().";}},
- {t:"Zadanie 5 — Dwa przyciski",
+ {t:"Zadanie 5 - Dwa przyciski",
   d:'Dodaj drugi przycisk <strong>„Wyczyść”</strong>. Po jego kliknięciu: wyczyść pole EditText (<code>setText("")</code>) i przywróć w TextView tekst <strong>„Wpisz swoje imię powyżej”</strong>.',
   hint:'<div class="hintLines">'
    +'<div><code>android:id="@+id/btnWyczysc"</code><span>(w XML) drugi przycisk z napisem „Wyczyść” musi dostać własne, inne id</span></div>'
-   +'<div><code>btnWyczysc.setOnClickListener(new View.OnClickListener() {</code><span>drugi przycisk dostaje OSOBNY nasłuchiwacz — każdy przycisk ma swój własny onClick</span></div>'
+   +'<div><code>btnWyczysc.setOnClickListener(new View.OnClickListener() {</code><span>drugi przycisk dostaje OSOBNY nasłuchiwacz - każdy przycisk ma swój własny onClick</span></div>'
    +'<div><code>    @Override</code><span>nadpisujemy metodę onClick</span></div>'
    +'<div><code>    public void onClick(View v) {</code><span>kod, który wykona się po kliknięciu „Wyczyść”</span></div>'
-   +'<div><code>        poleImie.setText("");</code><span>ustawiamy w polu pusty napis "" — to właśnie czyści EditText</span></div>'
+   +'<div><code>        poleImie.setText("");</code><span>ustawiamy w polu pusty napis "" - to właśnie czyści EditText</span></div>'
    +'<div><code>        labelWynik.setText("Wpisz swoje imię powyżej");</code><span>przywracamy w TextView domyślny tekst zachęty</span></div>'
    +'<div><code>    }</code><span>koniec metody onClick</span></div>'
    +'<div><code>});</code><span>koniec nasłuchiwacza i średnik kończący instrukcję</span></div>'
@@ -1642,10 +1647,10 @@ const TASKS=[
 ];
 const HOMEWORK=[
  ["Kalkulator dodawania","Dwa pola EditText (inputType=\"number\") i przycisk „Dodaj”. Po kliknięciu pobierz liczby (Integer.parseInt), zsumuj i pokaż w TextView: „[a] + [b] = [wynik]”. Działa w symulatorze!"],
- ["Sprawdzanie wieku","Pole na wiek i przycisk „Sprawdź”. Jeśli wiek >= 18 — Toast „Jesteś pełnoletni/a”, inaczej „Jesteś niepełnoletni/a”. Użyj if-else. Działa w symulatorze!"],
- ["Licznik kliknięć","Przycisk „Kliknij!” i TextView „Liczba kliknięć: [n]”. Licznik zadeklaruj jako pole klasy, POZA onCreate — inaczej wyzeruje się przy każdym kliknięciu. Działa w symulatorze!"],
+ ["Sprawdzanie wieku","Pole na wiek i przycisk „Sprawdź”. Jeśli wiek >= 18 - Toast „Jesteś pełnoletni/a”, inaczej „Jesteś niepełnoletni/a”. Użyj if-else. Działa w symulatorze!"],
+ ["Licznik kliknięć","Przycisk „Kliknij!” i TextView „Liczba kliknięć: [n]”. Licznik zadeklaruj jako pole klasy, POZA onCreate - inaczej wyzeruje się przy każdym kliknięciu. Działa w symulatorze!"],
  ["Zamiana na WIELKIE litery","Pole tekstowe i przycisk. Po kliknięciu wyświetl tekst zamieniony metodą .toUpperCase(). Działa w symulatorze!"],
- ["Właściwości czcionki (egzamin INF.04, czerwiec 2023)","Tytuł na tle #558B2F, SeekBar (max 40) zmieniający rozmiar cytatu, przycisk „>>” przełączający cytaty z tablicy String[]. Wczytaj gotowy przykład w Placu zabaw, przeanalizuj kod — a potem spróbuj napisać go samodzielnie."]
+ ["Właściwości czcionki (egzamin INF.04, czerwiec 2023)","Tytuł na tle #558B2F, SeekBar (max 40) zmieniający rozmiar cytatu, przycisk „>>” przełączający cytaty z tablicy String[]. Wczytaj gotowy przykład w Placu zabaw, przeanalizuj kod - a potem spróbuj napisać go samodzielnie."]
 ];
 let taskState=store.get("tasks",{});
 function paintTaskBadges(){TASKS.forEach((t,i)=>{const el=$("#taskBadge"+i);if(el){el.className="pill "+(taskState[i]?"ok":"todo");el.textContent=taskState[i]?"zaliczone":"do zrobienia"}})}
@@ -1656,7 +1661,7 @@ function buildTasks(){
     c.innerHTML='<div class="thead"><h3>'+t.t+'</h3><span class="pill todo" id="taskBadge'+i+'">do zrobienia</span>'
       +'<button class="btn small" style="margin-left:auto" data-check="'+i+'">Sprawdź</button></div>'
       +"<p>"+t.d+"</p>"
-      +'<details class="hint"><summary>Podpowiedź — kod z objaśnieniami linijka po linijce</summary>'+t.hint+"</details>"
+      +'<details class="hint"><summary>Podpowiedź - kod z objaśnieniami linijka po linijce</summary>'+t.hint+"</details>"
       +'<div class="verdict muted" id="taskMsg'+i+'" style="font-size:13.5px;margin-top:8px"></div>';
     list.appendChild(c);
   });
@@ -1668,7 +1673,7 @@ function buildTasks(){
   const hw=$("#hwList");
   HOMEWORK.forEach(([t,d],i)=>{
     const dt=document.createElement("details"); dt.className="hw";
-    dt.innerHTML="<summary>Zadanie domowe "+(i+1)+" — "+t+'</summary><div class="hwBody"><p>'+d+"</p></div>";
+    dt.innerHTML="<summary>Zadanie domowe "+(i+1)+" - "+t+'</summary><div class="hwBody"><p>'+d+"</p></div>";
     hw.appendChild(dt);
   });
   paintTaskBadges();
@@ -1676,7 +1681,7 @@ function buildTasks(){
 function runTask(i){
   const res=TASKS[i].check();
   const msg=$("#taskMsg"+i);
-  if(res===true){taskState[i]=true;store.set("tasks",taskState);msg.textContent="✔ Zaliczone — aplikacja działa!";msg.style.color="var(--ok)";}
+  if(res===true){taskState[i]=true;store.set("tasks",taskState);msg.textContent="✔ Zaliczone - aplikacja działa!";msg.style.color="var(--ok)";}
   else{taskState[i]=false;store.set("tasks",taskState);msg.textContent=res;msg.style.color="var(--err)";}
   paintTaskBadges();
 }
@@ -1684,16 +1689,16 @@ function runTask(i){
 /* ---------- QUIZ ---------- */
 const QUIZ=[
 ["W którym katalogu projektu znajdują się pliki układów (layouty)?",["res/layout","java","manifests","res/values"],0,"Układy to pliki .xml w katalogu res/layout. W res/values leży m.in. strings.xml."],
-["Zostawiasz w kodzie Warning (żółte ostrzeżenie). Co się stanie?",["Aplikacja uruchomi się normalnie","Aplikacja się nie skompiluje","Emulator się wyłączy","Plik XML zostanie usunięty"],0,"Warning to sygnał „można lepiej” — aplikacja działa. Error (czerwony) blokuje uruchomienie."],
-["Toast został utworzony, ale nie pokazuje się na ekranie. Najczęstszy powód?",["Brak .show() na końcu","Za długi tekst","Zły kolor tła","Brak internetu"],0,"Toast.makeText(...) tylko tworzy komunikat — wyświetla go dopiero .show()."],
+["Zostawiasz w kodzie Warning (żółte ostrzeżenie). Co się stanie?",["Aplikacja uruchomi się normalnie","Aplikacja się nie skompiluje","Emulator się wyłączy","Plik XML zostanie usunięty"],0,"Warning to sygnał „można lepiej” - aplikacja działa. Error (czerwony) blokuje uruchomienie."],
+["Toast został utworzony, ale nie pokazuje się na ekranie. Najczęstszy powód?",["Brak .show() na końcu","Za długi tekst","Zły kolor tła","Brak internetu"],0,"Toast.makeText(...) tylko tworzy komunikat - wyświetla go dopiero .show()."],
 ["Która kolejność w onCreate() jest poprawna?",["setContentView(), potem findViewById()","findViewById(), potem setContentView()","Kolejność nie ma znaczenia","Obie metody wywołujemy poza onCreate()"],0,"Najpierw ładujemy układ (setContentView), dopiero potem szukamy w nim widżetów."],
 ["Co oznacza wartość wrap_content?",["Rozmiar dopasowany do zawartości","Rozciągnięcie na cały ekran","Ukrycie widżetu","Wyśrodkowanie tekstu"],0,"wrap_content = tyle miejsca, ile potrzebuje treść. match_parent = rozmiar rodzica (np. cała szerokość)."],
 ["Jak poprawnie nadać widżetowi identyfikator w XML?",['android:id="@+id/poleImie"','android:id="poleImie"','android:name="@id/poleImie"','id="#poleImie"'],0,"@+id/nazwa tworzy nowy identyfikator w zasobach R. W Javie odwołujemy się przez R.id.poleImie."],
 ["Jak pobrać tekst wpisany przez użytkownika w EditText?",["poleImie.getText().toString()","poleImie.text()","poleImie.getString()","poleImie.value"],0,"getText() zwraca obiekt Editable, dlatego dokładamy .toString()."],
 ["Do czego służy metoda findViewById()?",["Odnajduje widżet z XML po jego id","Tworzy nowy widżet","Usuwa widżet z ekranu","Zmienia kolor widżetu"],0,"findViewById(R.id.nazwa) zwraca obiekt widżetu, którym sterujemy w Javie."],
-["Gdzie powinny trafić napisy zamiast „hardcoded text”?",["Do strings.xml w res/values","Do MainActivity.java","Do AndroidManifest.xml","Do build.gradle"],0,"Napisy trzymamy w strings.xml i wstawiamy przez @string/nazwa — łatwiej wtedy tłumaczyć aplikację."],
-["Ile parametrów przyjmuje Toast.makeText()?",["3 — kontekst, tekst, czas wyświetlania","1 — tylko tekst","2 — tekst i kolor","4 — tekst, czas, kolor, rozmiar"],0,"Toast.makeText(getApplicationContext(), tekst, Toast.LENGTH_SHORT) — i na końcu .show()."],
-["Jak sprawdzić w Javie, który RadioButton jest zaznaczony w RadioGroup?",["rgTyp.getCheckedRadioButtonId()","rgTyp.getText()","rgTyp.isChecked()","rgTyp.getProgress()"],0,"getCheckedRadioButtonId() zwraca id zaznaczonego przycisku — porównujemy je z R.id.nazwa. isChecked() to metoda pojedynczego CheckBoxa/RadioButtona."],
+["Gdzie powinny trafić napisy zamiast „hardcoded text”?",["Do strings.xml w res/values","Do MainActivity.java","Do AndroidManifest.xml","Do build.gradle"],0,"Napisy trzymamy w strings.xml i wstawiamy przez @string/nazwa - łatwiej wtedy tłumaczyć aplikację."],
+["Ile parametrów przyjmuje Toast.makeText()?",["3 - kontekst, tekst, czas wyświetlania","1 - tylko tekst","2 - tekst i kolor","4 - tekst, czas, kolor, rozmiar"],0,"Toast.makeText(getApplicationContext(), tekst, Toast.LENGTH_SHORT) - i na końcu .show()."],
+["Jak sprawdzić w Javie, który RadioButton jest zaznaczony w RadioGroup?",["rgTyp.getCheckedRadioButtonId()","rgTyp.getText()","rgTyp.isChecked()","rgTyp.getProgress()"],0,"getCheckedRadioButtonId() zwraca id zaznaczonego przycisku - porównujemy je z R.id.nazwa. isChecked() to metoda pojedynczego CheckBoxa/RadioButtona."],
 ["Zmienna licząca kliknięcia przycisku powinna być zadeklarowana…",["Jako pole klasy, poza onClick()","Wewnątrz onClick()","W pliku XML","W strings.xml"],0,"Zadeklarowana w onClick() zerowałaby się przy każdym kliknięciu. Jako pole klasy zachowuje wartość."]
 ];
 const AMOUNTS=[500,1000,2000,5000,10000,20000,40000,75000,125000,250000,500000,1000000];
@@ -1703,7 +1708,7 @@ let mil=null;
 function milGuaranteed(l){let g=0;SAFE.forEach(s=>{if(l>s)g=AMOUNTS[s]});return g}
 function milPerm(){if(!mil.perm)mil.perm=[0,1,2,3].sort(()=>Math.random()-.5);return mil.perm}
 function milBestPaint(){const b=store.get("milBest",0);
-  $("#milBestLine").textContent=b?"Rekord na tym komputerze: "+fmtZl(b):"Zagraj — Twój rekord zapisze się na tym komputerze.";}
+  $("#milBestLine").textContent=b?"Rekord na tym komputerze: "+fmtZl(b):"Zagraj - Twój rekord zapisze się na tym komputerze.";}
 function milSaveBest(v){const b=store.get("milBest",0);if(v>b)store.set("milBest",v);milBestPaint();}
 function milStart(){
   mil={order:[...QUIZ.keys()].sort(()=>Math.random()-.5),lvl:0,fifty:true,aud:true,perm:null,dead:[],locked:false,over:false};
@@ -1778,46 +1783,62 @@ milStart();
 
 /* ---------- BUGS ---------- */
 const BUGS=[
- {title:"Fragment 1 — Toast, który nigdy się nie pokazał",lang:"Java",
+ {title:"Fragment 1 - Toast, który nigdy się nie pokazał",lang:"Java",
   lines:['Button btn = (Button) findViewById(R.id.btnWitaj);','btn.setOnClickListener(new View.OnClickListener() {','    @Override','    public void onClick(View v) {','        Toast.makeText(getApplicationContext(),','            "Witaj!", Toast.LENGTH_SHORT);','    }','});'],
-  correct:[4,5],expl:"Brakuje .show() na końcu — Toast.makeText(...) tylko tworzy komunikat. Poprawnie: Toast.makeText(...).show();"},
- {title:"Fragment 2 — aplikacja wywala się na starcie",lang:"Java",
+  correct:[4,5],expl:"Brakuje .show() na końcu - Toast.makeText(...) tylko tworzy komunikat. Poprawnie: Toast.makeText(...).show();"},
+ {title:"Fragment 2 - aplikacja wywala się na starcie",lang:"Java",
   lines:['@Override','protected void onCreate(Bundle savedInstanceState) {','    super.onCreate(savedInstanceState);','    TextView label = (TextView) findViewById(R.id.label);','    setContentView(R.layout.activity_main);','    label.setText("Start");','}'],
-  correct:[3,4],expl:"findViewById() stoi PRZED setContentView() — układ nie jest jeszcze załadowany, więc label będzie null. Najpierw setContentView, potem findViewById."},
- {title:"Fragment 3 — XML, który nie przejdzie kompilacji",lang:"XML",
+  correct:[3,4],expl:"findViewById() stoi PRZED setContentView() - układ nie jest jeszcze załadowany, więc label będzie null. Najpierw setContentView, potem findViewById."},
+ {title:"Fragment 3 - XML, który nie przejdzie kompilacji",lang:"XML",
   lines:['<Button','    android:id="@+id/btnWyczysc"','    android:layout_width="match_height"','    android:layout_height="wrap_content"','    android:text="Wyczyść" />'],
-  correct:[2],expl:"Wartość match_height nie istnieje! Dozwolone: match_parent, wrap_content albo konkretny wymiar w dp. (Ta literówka zdarza się nawet w oficjalnych materiałach — czytaj kod uważnie.)"},
- {title:"Fragment 4 — „cannot resolve symbol”",lang:"XML + Java",
+  correct:[2],expl:"Wartość match_height nie istnieje! Dozwolone: match_parent, wrap_content albo konkretny wymiar w dp. (Ta literówka zdarza się nawet w oficjalnych materiałach - czytaj kod uważnie.)"},
+ {title:"Fragment 4 - „cannot resolve symbol”",lang:"XML + Java",
   lines:['<!-- activity_main.xml -->','<Button android:id="@+id/przyciskStart"','    android:layout_width="wrap_content"','    android:layout_height="wrap_content" />','','// MainActivity.java','Button b = (Button) findViewById(R.id.przyciskstart);'],
-  correct:[6],expl:"Niezgodność id: w XML jest przyciskStart, a w Javie przyciskstart. Wielkość liter ma znaczenie — nazwy muszą być identyczne."}
+  correct:[6],expl:"Niezgodność id: w XML jest przyciskStart, a w Javie przyciskstart. Wielkość liter ma znaczenie - nazwy muszą być identyczne."}
 ];
+let bugStats=store.get("bugstats",{});
+function bugPaintScore(){
+  const found=BUGS.filter((_,i)=>bugStats[i]&&bugStats[i].found).length;
+  let clicks=0; BUGS.forEach((_,i)=>{if(bugStats[i])clicks+=bugStats[i].tries});
+  $("#bugScore").textContent="Znalezione: "+found+"/"+BUGS.length+(found===BUGS.length?" 🏆":"");
+  $("#bugClicks").textContent=clicks?("kliknięcia (próby) razem: "+clicks+(found===BUGS.length&&clicks===BUGS.length?" - bezbłędnie!":"")):"";
+}
 function buildBugs(){
-  const list=$("#bugList");
+  const list=$("#bugList"); list.innerHTML="";
   BUGS.forEach((b,bi)=>{
+    const st=bugStats[bi]||(bugStats[bi]={tries:0,found:false});
     const c=document.createElement("div"); c.className="card bug";
-    let h="<h3 style='font-size:15.5px'>"+esc(b.title)+" <span class='muted' style='font-weight:400;font-size:12.5px'>("+b.lang+")</span></h3><pre>";
-    b.lines.forEach((ln,li)=>{h+='<div class="ln" data-li="'+li+'"><span class="no">'+(li+1)+"</span><span>"+esc(ln)+"</span></div>"});
-    h+='</pre><div class="verdict" id="bugV'+bi+'"></div>';
+    let h="<h3 style='font-size:15.5px'>"+esc(b.title)+" <span class='muted' style='font-weight:400;font-size:12.5px'>("+b.lang+")</span> <span class='pill "+(st.found?"ok":"todo")+"' id='bugP"+bi+"'>"+(st.found?"znalezione, prób: "+st.tries:(st.tries?"prób: "+st.tries:"nietknięte"))+"</span></h3><pre>";
+    b.lines.forEach((ln,li)=>{h+='<div class="ln'+(st.found&&b.correct.includes(li)?" hit":"")+'" data-li="'+li+'"><span class="no">'+(li+1)+"</span><span>"+esc(ln)+"</span></div>"});
+    h+='</pre><div class="verdict'+(st.found?" good":"")+'" id="bugV'+bi+'">'+(st.found?"✔ Trafione! "+esc(b.expl):"")+"</div>";
     c.innerHTML=h;
     c.addEventListener("click",e=>{
       const ln=e.target.closest(".ln"); if(!ln)return;
-      const li=+ln.dataset.li, v=$("#bugV"+bi);
+      const st2=bugStats[bi]; if(st2.found)return;
+      st2.tries++;
+      const li=+ln.dataset.li, v=$("#bugV"+bi), p=$("#bugP"+bi);
       c.querySelectorAll(".ln").forEach(x=>x.classList.remove("miss"));
       if(b.correct.includes(li)){
+        st2.found=true;
         b.correct.forEach(ci=>c.querySelector('.ln[data-li="'+ci+'"]').classList.add("hit"));
-        v.className="verdict good"; v.textContent="✔ Trafione! "+b.expl;
+        v.className="verdict good"; v.textContent="✔ Trafione za "+st2.tries+". kliknięciem! "+b.expl;
+        p.className="pill ok"; p.textContent="znalezione, prób: "+st2.tries;
       }else{
         ln.classList.add("miss");
-        v.className="verdict bad"; v.textContent="✘ Nie tutaj — czytaj uważnie i spróbuj jeszcze raz.";
+        v.className="verdict bad"; v.textContent="✘ Nie tutaj (próba "+st2.tries+") - czytaj uważnie i spróbuj jeszcze raz.";
+        p.textContent="prób: "+st2.tries;
       }
+      store.set("bugstats",bugStats); bugPaintScore();
     });
     list.appendChild(c);
   });
+  bugPaintScore();
 }
+$("#bugsReset").addEventListener("click",()=>{bugStats={};store.set("bugstats",bugStats);buildBugs()});
 
-/* ---------- CHEATSHEET (zakładka usunięta — dane nieużywane) ---------- */
+/* ---------- CHEATSHEET (zakładka usunięta - dane nieużywane) ---------- */
 const SHEET=[
- ["Szkielet układu — LinearLayout",`<?xml version="1.0" encoding="utf-8"?>
+ ["Szkielet układu - LinearLayout",`<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
@@ -1834,7 +1855,7 @@ const SHEET=[
   android:layout_height="wrap_content"
   android:hint="Wpisz swoje imię"
   android:inputType="textPersonName" />`],
- ["findViewById — łączenie XML z Javą",`// zawsze PO setContentView()!
+ ["findViewById - łączenie XML z Javą",`// zawsze PO setContentView()!
 TextView label = (TextView) findViewById(R.id.label);
 EditText pole  = (EditText) findViewById(R.id.poleImie);
 Button przycisk = (Button)  findViewById(R.id.przycisk);`],
@@ -1845,20 +1866,20 @@ Button przycisk = (Button)  findViewById(R.id.przycisk);`],
         label.setText("Witaj, " + imie + "!");
     }
 });`],
- ["Toast — pamiętaj o .show()",`Toast.makeText(
+ ["Toast - pamiętaj o .show()",`Toast.makeText(
     getApplicationContext(),
     "Komunikat dla użytkownika",
     Toast.LENGTH_SHORT
 ).show();   // bez .show() nic się nie pokaże!`],
- ["CheckBox i RadioGroup",`// CheckBox — czy zaznaczony?
+ ["CheckBox i RadioGroup",`// CheckBox - czy zaznaczony?
 if (cbRezerwacja.isChecked()) {
     cena = cena + 5;
 }
-// RadioGroup — który RadioButton wybrany?
+// RadioGroup - który RadioButton wybrany?
 if (rgTyp.getCheckedRadioButtonId() == R.id.rbUlgowy) {
     cena = 12;
 }`],
- ["SeekBar — reakcja na suwak",`suwak.setOnSeekBarChangeListener(
+ ["SeekBar - reakcja na suwak",`suwak.setOnSeekBarChangeListener(
   new SeekBar.OnSeekBarChangeListener() {
     @Override
     public void onProgressChanged(SeekBar s,
